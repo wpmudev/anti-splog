@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //------------------------------------------------------------------------//
 
 $ust_current_version = '1.0.0';
-$ust_host = 'test.net';
+$ust_host = 'premium.wpmudev.org';
 $ust_path = '/ust-api.php';
 
 //------------------------------------------------------------------------//
