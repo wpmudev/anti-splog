@@ -1,0 +1,152 @@
+<?php
+/*
+Plugin Name: Anti-Splog
+Version: 1.0
+Plugin URI: http://incsub.com
+Description: The ultimate plugin to stop and kill splogs in WPMU
+Author: Aaron Edwards at uglyrobot.com (for Incsub)
+Author URI: http://uglyrobot.com
+
+Copyright 2009 Incsub (http://incsub.com)
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License (Version 2 - GPLv2) as published by
+the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
+
+//return header to remove from search engines
+header('HTTP/1.1 410 Gone');
+
+require_once( ABSPATH . WPINC . '/pluggable.php' );
+
+//process form
+if (isset($_POST['spam-submit']) && !get_option('ust_email_sent')) {
+  $reason = wp_filter_nohtml_kses(stripslashes(trim($_POST['reason'])));  
+  
+  if (strlen($reason) < 10)
+    $error1 = '<p class="error">'.__("Please enter a valid reason.", 'ust').'</p>';
+  
+  //check reCAPTCHA
+  $recaptcha = get_site_option('ust_recaptcha');
+  if ($recaptcha['privkey']) {
+  	require_once('mu-plugins/anti-splog/recaptchalib.php');
+  	$resp = rp_recaptcha_check_answer($recaptcha['privkey'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
+  	
+  	if (!$resp->is_valid) {
+  	  $error2 = '<p class="error">'.__("The reCAPTCHA wasn't entered correctly. Please try again.", 'ust').'</p>';
+  	}
+  }
+  
+  if (!$error1 && !$error2) {
+    
+    $admin_email = get_site_option( "admin_email" );
+    $user_email = get_option('admin_email');
+    $review_url = 'http://' . $current_site->domain . $current_site->path . "wp-admin/wpmu-admin.php?page=ust&tab=splogs&id=$blog_id";
+    $unspam_url = 'http://' . $current_site->domain . $current_site->path . "wp-admin/wpmu-edit.php?action=confirm&action2=unspamblog&id=$blog_id&ref=" . urlencode('http://' . $current_site->domain . $current_site->path . "wp-admin/wpmu-admin.php?page=ust") . "&msg=" . urlencode( sprintf( __( "You are about to unspam the blog %s" ), get_bloginfo('name') ) );
+    $message_headers = "MIME-Version: 1.0\n" . "From: <$user_email>\n" . "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
+    $subject = sprintf(__('Splog Review Request: %s', 'ust'), get_bloginfo('url'));
+    $message = sprintf(__("Someone is disputing the spam status for the blog %s (%s).\nHere is their reason:\n_______________________\n\n%s\n\n_______________________\n", 'ust'), get_bloginfo('name'), get_bloginfo('url'), $reason);
+    $message .= sprintf(__("Review: %s\n", 'ust'), $review_url);
+    $message .= sprintf(__("Unspam: %s\n", 'ust'), $unspam_url);
+    wp_mail($admin_email, $subject, $message, $message_headers);
+    
+    //save that the email was sent
+    update_option('ust_email_sent', '1');
+    $email_sent = true;
+  }
+}
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
+<head>
+	<title><?php echo $current_site->site_name; ?> &rsaquo; <?php _e('Blog Spammed') ?></title>
+	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
+	<meta name="robots" content="noindex, nofollow" />
+	<?php
+	wp_admin_css( 'login', true );
+	wp_admin_css( 'colors-fresh', true );
+
+	if ( $is_iphone ) {
+	?>
+	<meta name="viewport" content="width=320; initial-scale=0.9; maximum-scale=1.0; user-scalable=0;" /> 
+	<style type="text/css" media="screen"> 
+	form { margin-left: 0px; }
+	#login { margin-top: 20px; }
+	</style>
+	<?php
+	}
+  //display modified logo if premium Login Image plugin is installed
+  if (function_exists('login_image_stylesheet')) {
+    login_image_stylesheet();
+  }
+ ?>
+  <style type="text/css" media="screen"> 
+    #login { width: 340px; }
+    #login form p { margin-bottom: 5px; }
+    #login h1 a { width: 340px; }
+    #reCAPTCHA { margin-left: -10px; }
+    p.error { border: 1px solid red; padding: 5px; }
+  </style>
+</head>
+<body class="login">
+
+<div id="login"><h1><a href="<?php echo 'http://' . $current_site->domain . $current_site->path; ?>" title="<?php echo $current_site->site_name; ?>"></a></h1>
+
+<form name="contactform" id="loginform" action="<?php echo trailingslashit( get_bloginfo('url') ); ?>" method="post">
+  
+<?php if ($email_sent) { ?>
+
+  <p><?php _e('The message has been sent. We will review it shortly.', 'ust'); ?></p>
+  
+<?php } else { ?>
+  
+  <p><?php _e('Sorry, but this blog has been marked as spam.', 'ust'); ?></p>
+<?php if (!get_option('ust_email_sent')) { ?>
+  <p><?php _e('If you believe this decision was made in error please contact us with your reasons using the form below:', 'ust'); ?></p>
+  <?php echo $error1; ?>
+  <p>
+		<label><?php _e('Reason:', 'ust') ?><br />
+		<textarea name="reason" style="width: 100%" rows="5" tabindex="20"><?php echo htmlentities($reason); ?></textarea></label>
+	</p>
+	<?php
+    $recaptcha = get_site_option('ust_recaptcha');
+    
+    if ($recaptcha['privkey']) {
+      require_once('mu-plugins/anti-splog/recaptchalib.php');
+      
+      echo "<script type='text/javascript'>var RecaptchaOptions = { theme : 'white', lang : '{$recaptcha['lang']}' , tabindex : 30 };</script>";
+      echo '<p><label>'.__('Human Verification:', 'ust').'</label></p>';
+    	echo $error2;
+      echo '<div id="reCAPTCHA">';
+      echo rp_recaptcha_get_html($recaptcha['pubkey']);
+      echo '</div>&nbsp;<br />';
+    }
+  ?>
+	<br class="clear" />
+	<p class="submit">
+		<input type="submit" name="spam-submit" id="wp-submit" value="<?php _e('Submit', 'ust'); ?>" tabindex="100" />
+	</p>
+<?php } else { ?>
+  <p><?php _e('The admin has already been contacted to review.', 'ust'); ?></p>
+<?php  
+  }
+} ?>
+	
+</form>
+
+</div>
+
+<p id="backtoblog"><a href="<?php echo 'http://' . $current_site->domain . $current_site->path; ?>" title="<?php _e('Are you lost?') ?>"><?php echo sprintf(__('&larr; Back to %s', 'ust'), $current_site->site_name); ?></a></p>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+Plugin Name: Anti-Splog
+Version: 1.0
+Plugin URI: http://incsub.com
+Description: The ultimate plugin to stop and kill splogs in WPMU
+Author: Aaron Edwards at uglyrobot.com (for Incsub)
+Author URI: http://uglyrobot.com
+
+Copyright 2009 Incsub (http://incsub.com)
+
+Fresh Install Instructions:
+----------------------------------------------------------------------
+1) Place the files/folders in the specified directories
+2) If the auto-install does not add the db table(s) for you then run the sql code in "sql.txt" on your wpmu db IN ORDER!
+
+
+Global Tables for Multi-DB db-config.php: (if you use Multi-DB)
+----------------------------------------------------------------------
+wp_ust
+
+
+Files/Folders:
+----------------------------------------------------------------------
+
+anti-splog.php - goes in /wp-content/mu-plugins
+anti-splog - entire folder and contents goes in /wp-content/mu-plugins
+
+blog-suspended.php - goes in /wp-content - highly recommended but optional
