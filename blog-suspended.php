@@ -50,9 +50,9 @@ if (isset($_POST['spam-submit']) && !get_option('ust_email_sent')) {
     
     $admin_email = get_site_option( "admin_email" );
     $user_email = get_option('admin_email');
-    $review_url = 'http://' . $current_site->domain . $current_site->path . "wp-admin/wpmu-admin.php?page=ust&tab=splogs&id=$blog_id";
+    $review_url = 'http://' . $current_site->domain . $current_site->path . "wp-admin/wpmu-admin.php?page=ust&tab=splogs&bid=$blog_id";
     $unspam_url = 'http://' . $current_site->domain . $current_site->path . "wp-admin/wpmu-edit.php?action=confirm&action2=unspamblog&id=$blog_id&ref=" . urlencode('http://' . $current_site->domain . $current_site->path . "wp-admin/wpmu-admin.php?page=ust") . "&msg=" . urlencode( sprintf( __( "You are about to unspam the blog %s" ), get_bloginfo('name') ) );
-    $message_headers = "MIME-Version: 1.0\n" . "From: <$user_email>\n" . "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
+    $message_headers = "MIME-Version: 1.0\n" . "From: $user_email\n" . "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
     $subject = sprintf(__('Splog Review Request: %s', 'ust'), get_bloginfo('url'));
     $message = sprintf(__("Someone is disputing the spam status for the blog %s (%s).\nHere is their reason:\n_______________________\n\n%s\n\n_______________________\n", 'ust'), get_bloginfo('name'), get_bloginfo('url'), $reason);
     $message .= sprintf(__("Review: %s\n", 'ust'), $review_url);
@@ -64,6 +64,8 @@ if (isset($_POST['spam-submit']) && !get_option('ust_email_sent')) {
     $email_sent = true;
   }
 }
+
+$auto_spammed = get_option('ust_auto_spammed');
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -106,14 +108,20 @@ if (isset($_POST['spam-submit']) && !get_option('ust_email_sent')) {
   
 <?php if ($email_sent) { ?>
 
-  <p><?php _e('The message has been sent. We will review it shortly.', 'ust'); ?></p>
+  <p><?php _e('Your message has been sent. We will review it shortly.', 'ust'); ?></p>
   
 <?php } else { ?>
+  <?php if ($auto_spammed) { ?>
+    <p><?php _e('Our automated filters have determined that this blog signup looks like it could be by a spammer. Because of this, to complete you registration please describe in one or two sentences what you intend to use this blog for in the form below. Thank you for your cooperation!', 'ust'); ?></p>
+  <?php } else { ?>
+    <p><?php _e('Sorry, but this blog has been marked as spam.', 'ust'); ?></p>
+  <?php } ?>
   
-  <p><?php _e('Sorry, but this blog has been marked as spam.', 'ust'); ?></p>
 <?php if (!get_option('ust_email_sent')) { ?>
-  <p><?php _e('If you believe this decision was made in error please contact us with your reasons using the form below:', 'ust'); ?></p>
-  <?php echo $error1; ?>
+  <?php if (!$auto_spammed) { ?>
+  <p><?php _e('If you believe this decision was made in error please contact us with your <strong>detailed</strong> reasons using the form below:', 'ust'); ?></p>
+  <?php }
+  echo $error1; ?>
   <p>
 		<label><?php _e('Reason:', 'ust') ?><br />
 		<textarea name="reason" style="width: 100%" rows="5" tabindex="20"><?php echo htmlentities($reason); ?></textarea></label>

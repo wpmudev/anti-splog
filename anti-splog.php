@@ -255,29 +255,33 @@ function ust_wpsignup_shortcode($content) {
 
 function ust_blog_spammed($blog_id) {
   global $wpdb, $current_site;
-  $wpdb->query("UPDATE `" . $wpdb->base_prefix . "ust` SET spammed = '".current_time('mysql')."' WHERE blog_id = '$blog_id' LIMIT 1");
+  $wpdb->query("UPDATE `" . $wpdb->base_prefix . "ust` SET spammed = '".current_time('mysql', true)."' WHERE blog_id = '$blog_id' LIMIT 1");
   
   //update spam stat
   $num = get_site_option('ust_spam_count');
   if (!$num) $num = 0;
   update_site_option('ust_spam_count', ($num+1));
   
-  //collect info
-  $api_data = get_blog_option($blog_id, 'ust_signup_data');
-  if (!$api_data) {
-    $blog = $wpdb->get_row("SELECT * FROM {$wpdb->blogs} WHERE blog_id = '$blog_id'", ARRAY_A);
-    $api_data['activate_user_ip'] = $wpdb->get_var("SELECT `IP` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'");
-    $api_data['user_email'] = $wpdb->get_var("SELECT `email` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'");
-    $api_data['blog_registered'] = $blog['registered'];
-    $api_data['blog_domain'] = ( constant( "VHOST" ) == 'yes' ) ? str_replace('.'.$current_site->domain, '', $blog['domain']) : $blog['path'];
-    $api_data['blog_title'] = get_blog_option($blog_id, 'blogname');
+  //don't send splog data if it was spammed automatically
+  $auto_spammed = get_blog_option($blog_id, 'ust_auto_spammed');
+  if (!auto_spammed) {
+    //collect info
+    $api_data = get_blog_option($blog_id, 'ust_signup_data');
+    if (!$api_data) {
+      $blog = $wpdb->get_row("SELECT * FROM {$wpdb->blogs} WHERE blog_id = '$blog_id'", ARRAY_A);
+      $api_data['activate_user_ip'] = $wpdb->get_var("SELECT `IP` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'");
+      $api_data['user_email'] = $wpdb->get_var("SELECT `email` FROM {$wpdb->registration_log} WHERE blog_id = '$blog_id'");
+      $api_data['blog_registered'] = $blog['registered'];
+      $api_data['blog_domain'] = ( constant( "VHOST" ) == 'yes' ) ? str_replace('.'.$current_site->domain, '', $blog['domain']) : $blog['path'];
+      $api_data['blog_title'] = get_blog_option($blog_id, 'blogname');
+    }
+    $last = $wpdb->get_row("SELECT * FROM {$wpdb->base_prefix}ust WHERE blog_id = '$blog_id'");
+    $api_data['last_user_id'] = $last->last_user_id;
+    $api_data['last_ip'] = $last->last_ip;
+    $api_data['last_user_agent'] = $last->last_user_agent;
+    //send blog info to API
+    ust_http_post('spam_blog', $api_data);
   }
-  $last = $wpdb->get_row("SELECT * FROM {$wpdb->base_prefix}ust WHERE blog_id = '$blog_id'");
-  $api_data['last_user_id'] = $last->last_user_id;
-  $api_data['last_ip'] = $last->last_ip;
-  $api_data['last_user_agent'] = $last->last_user_agent;
-  //send blog info to API
-  ust_http_post('spam_blog', $api_data);
 }
 
 function ust_blog_unspammed($blog_id) {
@@ -290,6 +294,9 @@ function ust_blog_unspammed($blog_id) {
   else
     $num = $num-1;
   update_site_option('ust_spam_count', $num);
+  
+  //remove auto spammed status in case it is manually spammed again later
+  update_blog_option($blog_id, 'ust_auto_spammed', 0);
   
   //collect info
   $api_data = get_blog_option($blog_id, 'ust_signup_data');
@@ -328,12 +335,17 @@ function ust_blog_created($blog_id, $user_id) {
   $api_data['blog_title'] = get_blog_option($blog_id, 'blogname');
   $api_data['blog_registered'] = $blog['registered'];
   
-  //send blog info to API
-  $result = ust_http_post('check_blog', $api_data);
-  if ($result && !is_site_admin()) {
-    $certainty = $result;
-  } else {
+  //don't test if a site admin or supporter or blog-user-creator plugin is creating the blog
+  if (is_site_admin() || (function_exists('is_supporter') && is_supporter()) || strpos($_SERVER['REQUEST_URI'], 'page=blog-user-creator')) {
     $certainty = 0;
+  } else {
+    //send blog info to API
+    $result = ust_http_post('check_blog', $api_data);
+    if ($result) {
+      $certainty = $result;
+    } else {
+      $certainty = 0;
+    }
   }
   
   //create new record in ust table
@@ -345,6 +357,7 @@ function ust_blog_created($blog_id, $user_id) {
   //spam blog if certainty is met
   $ust_settings = get_site_option("ust_settings");
   if ($certainty > $ust_settings['certainty']) {
+    update_blog_option($blog_id, 'ust_auto_spammed', 1);
     update_blog_status($blog_id, "spam", '1', 0);
   }
 }
@@ -871,7 +884,6 @@ function ust_admin_output() {
 		foreach ( (array) $blogs as $key => $details ) {
 			if ( $details->userblog_id == $current_site->blog_id ) { continue; } // main blog not a spam !
 			update_blog_status( $details->userblog_id, "spam", '1' );
-			do_action( "make_spam_blog", $details->userblog_id );
 		}
 		update_user_status( (int)$_GET['spam_user'], "spam", '1', 1 );
 		$_GET['updatedmsg'] = sprintf(__('%s blog(s) spammed for user!', 'ust'), count($blogs));
@@ -890,7 +902,6 @@ function ust_admin_output() {
 		foreach ( (array) $blogs as $blog ) {
       if ( $blog['blog_id'] == $current_site->blog_id ) { continue; } // main blog not a spam !
 			update_blog_status( $blog['blog_id'], "spam", '1' );
-			do_action( "make_spam_blog", $blog['blog_id'] );
 		}
 		$_GET['updatedmsg'] = sprintf(__('%s blog(s) spammed for %s!', 'ust'), count($blogs), $spam_ip);
 		
@@ -1885,9 +1896,10 @@ function ust_admin_output() {
             		for ( $counter = 10; $counter <= 100; $counter += 5 ) {
                   echo '<option value="' . $counter . '"' . ($ust_settings['certainty']==$counter ? ' selected="selected"' : '') . '>' . $counter . '%</option>' . "\n";
             		}
+            		echo '<option value="999"' . ($ust_settings['certainty']==999 ? ' selected="selected"' : '') . '>' . __("Don't Spam", 'ust') . '</option>' . "\n";
               ?>
               </select>
-              <br /><em><?php _e('Blog signups that return a certainty number greater than this will automatically be archived.', 'ust'); ?></em></td> 
+              <br /><em><?php _e('Blog signups that return a certainty number greater than or equal to this will automatically be marked as spam.', 'ust'); ?></em></td> 
               </tr>
               
               <tr valign="top"> 
