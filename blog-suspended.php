@@ -32,7 +32,7 @@ require_once( ABSPATH . WPINC . '/pluggable.php' );
 if (isset($_POST['spam-submit']) && !get_option('ust_email_sent')) {
   $reason = wp_filter_nohtml_kses(stripslashes(trim($_POST['reason'])));  
   
-  if (strlen($reason) < 10)
+  if (strlen($reason) < 20)
     $error1 = '<p class="error">'.__("Please enter a valid reason.", 'ust').'</p>';
   
   //check reCAPTCHA
@@ -112,14 +112,14 @@ $auto_spammed = get_option('ust_auto_spammed');
   
 <?php } else { ?>
   <?php if ($auto_spammed) { ?>
-    <p><?php _e('Our automated filters have determined that this blog signup looks like it could be by a spammer. Because of this, to complete you registration please describe in one or two sentences what you intend to use this blog for in the form below. Thank you for your cooperation!', 'ust'); ?></p>
+    <p><?php _e('Our automated filters have determined that this blog signup looks like it could be by a spammer. Because of this, to complete you registration please describe in one or two sentences what you intend to use this blog for in the form below and we will review your request. Thank you for your cooperation!', 'ust'); ?></p>
   <?php } else { ?>
-    <p><?php _e('Sorry, but this blog has been marked as spam.', 'ust'); ?></p>
+    <p><?php _e('Sorry, but this blog has been marked as spam as defined in our Terms of Service.', 'ust'); ?></p>
   <?php } ?>
   
 <?php if (!get_option('ust_email_sent')) { ?>
   <?php if (!$auto_spammed) { ?>
-  <p><?php _e('If you believe this decision was made in error please contact us with your <strong>detailed</strong> reasons using the form below:', 'ust'); ?></p>
+  <p><?php _e('If you believe this decision was made in error you may contact us with your <strong>detailed</strong> reasons using the form below:', 'ust'); ?></p>
   <?php }
   echo $error1; ?>
   <p>
