@@ -390,7 +390,7 @@ function ust_blog_created($blog_id, $user_id) {
   $ust_settings = get_site_option("ust_settings");
   if ($certainty >= $ust_settings['certainty']) {
     update_blog_option($blog_id, 'ust_auto_spammed', 1);
-    update_blog_status($blog_id, "spam", '1', 0);
+    update_blog_status($blog_id, "spam", '1', 1);
   }
 }
 
@@ -2121,7 +2121,7 @@ function ust_admin_output() {
               <th scope="row"><?php _e('Posting Splog Certainty', 'ust') ?></th> 
               <td><select name="ust[post_certainty]">
             	<?php
-            		for ( $counter = 10; $counter <= 100; $counter += 5 ) {
+            		for ( $counter = 50; $counter <= 100; $counter += 2 ) {
                   echo '<option value="' . $counter . '"' . ($ust_settings['post_certainty']==$counter ? ' selected="selected"' : '') . '>' . $counter . '%</option>' . "\n";
             		}
             		echo '<option value="999"' . ($ust_settings['post_certainty']==999 ? ' selected="selected"' : '') . '>' . __("Don't Spam", 'ust') . '</option>' . "\n";
@@ -2307,10 +2307,10 @@ function ust_admin_output() {
               <li><b>Human tests</b> - answering user defined questions, picking the cat pics, or recaptcha.</li>
             </ul>
           <li><b>The API</b> - when signup is complete (email activated) and blog is first created, or when a user publishes a new post it will send all kinds of blog and signup info to our premium server where we will rate it based on our secret ever-tweaking logic. Our API will then return a splog Certainty number (0%-100%). If that number is greater than the sensitivity preference you set in the settings (80% default) then the blog gets spammed. Since the blog was actually created, it will show up in the site admin still (as spammed) so you can unspam later if there was a mistake (and our API will learn from that).</li>
-          <li><b>The Moderation Queue</b> - for existing blogs or blogs that get past other filters, the queue provides an ongoing way to monitor blogs and spam or flag them as valid (ignore) them more easily as they are updated with new posts. Also if a user tries to visit a blog that has been spammed, it will now show a user-friendly message and form to contact the admin for review if they think it was valid. The email contains links to be able to easily unspam or bring up the last posts.</li>
+          <li><b>The Moderation Queue</b> - for existing blogs or blogs that get past other filters, the queue provides an ongoing way to monitor blogs and spam or flag them as valid (ignore) them more easily as they are updated with new posts. Also if a user tries to visit a blog that has been spammed, it will now show a user-friendly message and form to contact the admin for review if they think it was valid. The email contains links to be able to easily unspam or bring up the last posts. The entire queue is AJAX based so you can moderate blogs with incredible speed.</li>
             <ul style=\"margin-left:20px;\">
-              <li><b>Suspected Blogs</b> - this list pulls in any blogs that the plugin thinks may be splogs. It pulls in blogs that have a greater that 0% certainty as previously returned by our api, and those that contain at least 1 keyword in recent posts from the keyword list you define. The list attempts to bring the most suspected blogs to the top, ordered by # of keyword matches, then % splog certainty (as returned by the API), then finally by last updated. The list has a bunch of improvements for moderation, including last user id, last user ip, links to search for or spam any user and their blogs or blogs tied to an ip (be careful with that one!), ability to ignore (dismiss) valid blogs from the queue, and a list of recent posts and instant previews of their content without leaving the page (the most time saving feature of all!)</li>
-              <li><b>Recent Splogs</b> - this is simply a list of all blogs that have been spammed on the site ever, in order of the time they were spammed. The idea here is that if you make a mistake you can come back here to undo. Also if a user complains that a valid blog was spammed, you can quickly pull it up here and see previews of the latest posts to confirm (normally you wouldn't be able to see blog content at all). Something is not working right with that right now as you said because spamming a blog should make it immediately show up in the list. To be fixed...</li>
+              <li><b>Suspected Blogs</b> - this list pulls in any blogs that the plugin thinks may be splogs. It pulls in blogs that have a greater that 0% certainty as previously returned by our API, and those that contain at least 1 keyword in recent posts from the keyword list you define. The list attempts to bring the most suspected blogs to the top, ordered by # of keyword matches, then % splog certainty (as returned by the API), then finally by last updated. The list has a bunch of improvements for moderation, including last user id, last user ip, links to search for or spam any user and their blogs or blogs tied to an IP (be careful with that one!), ability to ignore (dismiss) valid blogs from the queue, and a list of recent posts and instant previews of their content without leaving the page (the most time saving feature of all!)</li>
+              <li><b>Recent Splogs</b> - this is simply a list of all blogs that have been spammed on the site ever, in order of the time they were spammed. The idea here is that if you make a mistake you can come back here to undo. Also if a user complains that a valid blog was spammed, you can quickly pull it up here and see previews of the latest posts to confirm (normally you wouldn't be able to see blog content at all).</li>
               <li><b>Ignored Blogs</b> - If a valid blog shows up in the suspect list, simply mark it as ignored to get it out of there. It will then show in the ignored list just in case you need to undo.</li>
             </ul>
           </ol>", 'ust');
