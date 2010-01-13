@@ -26,6 +26,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //return header to remove from search engines
 header('HTTP/1.1 410 Gone');
 
+//don't display spam form if archived
+if ($current_blog->archived == '1')
+  graceful_fail(__('This blog has been archived.'));
+
 require_once( ABSPATH . WPINC . '/pluggable.php' );
 
 //process form
