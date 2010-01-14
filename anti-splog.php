@@ -6,6 +6,7 @@ Plugin URI: http://incsub.com
 Description: The ultimate plugin to stop and kill splogs in WPMU
 Author: Aaron Edwards at uglyrobot.com (for Incsub)
 Author URI: http://uglyrobot.com
+WDP ID: 120
 
 Copyright 2010 Incsub (http://incsub.com)
 
@@ -72,7 +73,9 @@ add_filter('bp_signup_usermeta', 'ust_signup_meta'); //buddypress support
 add_action('signup_header', 'ust_signup_css');
 add_action('ust_check_api_cron', 'ust_check_api'); //cron action
 add_action('plugins_loaded', 'ust_show_widget');
+add_action('muplugins_loaded', 'ust_preview_splog');
 add_action('wp_ajax_ust_ajax', 'ust_do_ajax'); //ajax
+remove_action('admin_notices', 'anti_spam_nag'); 
 
 
 //------------------------------------------------------------------------//
@@ -487,6 +490,14 @@ function ust_plug_pages() {
     add_action('admin_print_scripts-' . $page, 'ust_admin_script');
     add_action('admin_print_styles-' . $page, 'ust_admin_style');
   }
+}
+
+function ust_preview_splog() {
+  global $current_blog;
+  
+  //temporarily unspams the blog while previewing from Splogs queue
+  if (strpos($_SERVER['HTTP_REFERER'], 'wpmu-admin.php?page=ust&tab=splogs'))
+    $current_blog->spam = '0';
 }
 
 function ust_do_ajax() {
@@ -1205,6 +1216,15 @@ function ust_admin_output() {
 		  $ust_settings = get_site_option('ust_settings');
       $apage = isset( $_GET['apage'] ) ? intval( $_GET['apage'] ) : 1;
   		$num = isset( $_GET['num'] ) ? intval( $_GET['num'] ) : $ust_settings['paged_blogs'];
+  		$page_link = ($apage > 1) ? '&amp;apage='.$apage : '';
+  		//get sort
+  		if ($_GET['orderby'] == 'lastupdated')
+        $order_by = 'b.last_updated DESC';
+      else if ($_GET['orderby'] == 'registered')
+        $order_by = 'b.registered DESC';
+      else
+        $order_by = 'u.certainty DESC, b.last_updated DESC';
+  		
   		$blogname_columns = ( constant( "VHOST" ) == 'yes' ) ? __('Domain') : __('Path');
   		
   		if (is_array($ust_settings['keywords']) && count($ust_settings['keywords'])) {
@@ -1260,7 +1280,7 @@ function ust_admin_output() {
                     AND b.spam = '0' AND b.deleted = '0' AND b.archived = '0'
                     AND u.ignore = '0' AND b.blog_id != '{$current_site->blog_id}'
                     AND u.certainty > 0
-                  ORDER BY u.certainty DESC, b.last_updated DESC";
+                  ORDER BY $order_by";
         
     		$total = $wpdb->get_var( "SELECT COUNT(b.blog_id)
                           				FROM {$wpdb->blogs} b 
@@ -1277,8 +1297,8 @@ function ust_admin_output() {
     			'ips'          => __('IPs', 'ust'),
     			'users'        => __('Blog Users', 'ust'),
     			'certainty'    => __('Splog Certainty', 'ust'),
-    			'lastupdated'  => __('Last Updated'),
-    			'registered'   => __('Registered'),
+    			'lastupdated'  => '<a href="wpmu-admin.php?page=ust'.$page_link.'&orderby=lastupdated">'.__('Last Updated').'</a>',
+    			'registered'   => '<a href="wpmu-admin.php?page=ust'.$page_link.'&orderby=registered">'.__('Registered').'</a>',
           'posts'        => __('Recent Posts', 'ust')
     		);
       }
@@ -1293,7 +1313,8 @@ function ust_admin_output() {
   			'total' => ceil($total / $num),
   			'current' => $apage
   		));
-  		$page_link = ($apage > 1) ? '&amp;apage='.$apage : '';
+  		if ($_GET['order_by'])
+  		  $page_link = $page_link . '&orderby='.urlencode($_GET['orderby']);
   		?>
   
   		<form id="form-blog-list" action="wpmu-admin.php?page=ust<?php echo $page_link; ?>&amp;action=allblogs&amp;updated=1" method="post">
@@ -1562,8 +1583,8 @@ function ust_admin_output() {
   			'ips'          => __('IPs', 'ust'),
   			'users'        => __('Blog Users', 'ust'),
   			'certainty'    => __('Splog Certainty', 'ust'),
+  			'method'       => __('Method'),
         'spammed'      => __('Spammed', 'ust'),
-  			'lastupdated'  => __('Last Updated'),
   			'registered'   => __('Registered'),
         'posts'        => __('Last Posts', 'ust')
   		);
@@ -1605,7 +1626,7 @@ function ust_admin_output() {
    
   							case 'blogname': ?>
   								<td valign="top">
-  									<a href="wpmu-blogs.php?action=editblog&amp;id=<?php echo $blog['blog_id'] ?>" class="edit"><?php echo $blogname; ?></a>
+  									<a title="<?php _e('Preview', 'ust'); ?>" href="http://<?php echo $blog['domain'].$blog['path']; ?>?KeepThis=true&TB_iframe=true&height=450&width=900" class="thickbox"><?php echo $blogname; ?></a>
   									<br />
   									<?php
   									$controlActions	= array();
@@ -1670,16 +1691,23 @@ function ust_admin_output() {
   							<?php
   							break;
                 
-                case 'spammed': ?>
+                case 'method': ?>
   								<td valign="top">
-  									<?php echo ( $blog['spammed'] == '0000-00-00 00:00:00' ) ? __("Never") : mysql2date(__('Y-m-d \<\b\r \/\> g:i:s a'), $blog['spammed']); ?>
+  									<?php
+                      if (get_blog_option($blog['blog_id'], 'ust_auto_spammed'))
+                        _e('Auto: Signup', 'ust');
+                      else if (get_blog_option($blog['blog_id'], 'ust_post_auto_spammed'))
+                        _e('Auto: Post', 'ust');
+                      else
+                        _e('Manual', 'ust');
+                    ?>
   								</td>
   							<?php
   							break;
                 
-  							case 'lastupdated': ?>
+                case 'spammed': ?>
   								<td valign="top">
-  									<?php echo ( $blog['last_updated'] == '0000-00-00 00:00:00' ) ? __("Never") : mysql2date(__('Y-m-d \<\b\r \/\> g:i:s a'), $blog['last_updated']); ?>
+  									<?php echo ( $blog['spammed'] == '0000-00-00 00:00:00' ) ? __("Never") : mysql2date(__('Y-m-d \<\b\r \/\> g:i:s a'), $blog['spammed']); ?>
   								</td>
   							<?php
   							break;
@@ -2184,15 +2212,16 @@ function ust_admin_output() {
               </tr>
               
               <tr valign="top"> 
-              <th scope="row"><?php _e('Spam Keyword Flagging', 'ust') ?></th> 
+              <th scope="row"><?php _e('Spam Keyword Search', 'ust') ?></th> 
               <td>
+              <em><?php _e('Enter one word or phrase per line. Keywords are not case sensitive and may match any part of a word. Example: "Ugg" would match "s<strong>ugg</strong>estion".', 'ust'); ?></em><br />
               <?php if (!function_exists('post_indexer_post_insert_update')) { ?>
               <p class="error"><?php _e('You must install the <a target="_blank" href="http://premium.wpmudev.org/project/post-indexer">Post Indexer</a> plugin to enable keyword flagging.', 'ust'); ?></p>
               <textarea name="ust[keywords]" style="width:200px" rows="4" disabled="disabled"><?php echo stripslashes(implode("\n", (array)$ust_settings['keywords'])); ?></textarea>
               <?php } else { ?>
               <textarea name="ust[keywords]" style="width:200px" rows="4"><?php echo stripslashes(implode("\n", (array)$ust_settings['keywords'])); ?></textarea>
               <?php } ?>
-              <br /><em><?php _e('Enter one word or phrase per line. Keywords are not case sensitive and may match any part of a word. Blogs that have these keywords in posts will be flagged and added to the potential splogs queue. CAUTION: Do not enter more than a few (2-4) keywords at a time or it may slow down or timeout the Suspected Blogs page depending on the number of site-wide posts and server speed.', 'ust'); ?></em></td> 
+              <br /><strong><em><?php _e('This feature is designed to work in conjunction with our Post Indexer plugin to help you find old and inactive splogs that the API service would no longer catch. Blogs that have these keywords in posts will be temporarily flagged and added to the potential splogs queue. Keywords should only be added here temporarily while searching for splogs. CAUTION: Do not enter more than a few (2-4) keywords at a time or it may slow down or timeout the Suspected Blogs page depending on the number of site-wide posts and server speed.', 'ust'); ?></em></strong></td> 
               </tr>
               
               <tr valign="top"> 
@@ -2375,7 +2404,6 @@ class UST_Widget extends WP_Widget {
 //---Support Functions----------------------------------------------------//
 
 //------------------------------------------------------------------------//
-
 
 
 ?>
