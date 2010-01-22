@@ -848,7 +848,7 @@ Disable these notifications: %6s", 'ust'), $blogname, $siteurl, $_SERVER['REMOTE
 }
 
 function ust_trim_title($title) {
-  $title = htmlentities(strip_tags($title));
+  $title = strip_tags($title);
   
   if (strlen($title) > 20)
     return substr($title, 0, 17).'...';
@@ -1456,7 +1456,11 @@ function ust_admin_output() {
                       foreach ($posts as $post) {
                         $post_preview[$preview_id] = $post['post_content'];
                         $link = '#TB_inline?height=440&width=600&inlineId=post_preview_'.$preview_id;
-                        echo '<a title="'.mysql2date(__('Y-m-d g:i:sa - ', 'ust'), $post['post_date']).htmlentities($post['post_title']).'" href="'.$link.'" class="thickbox">'.ust_trim_title($post['post_title']).'</a><br />';
+                        if (empty($post['post_title']))
+                          $title = __('No Title', 'ust');
+                        else
+                          $title = htmlentities($post['post_title']);
+                        echo '<a title="'.mysql2date(__('Y-m-d g:i:sa - ', 'ust'), $post['post_date']).$title.'" href="'.$link.'" class="thickbox">'.ust_trim_title($title).'</a><br />';
                         $preview_id++;
                       }
                     } else {
@@ -1729,7 +1733,11 @@ function ust_admin_output() {
                       foreach ($posts as $post) {
                         $post_preview[$preview_id] = $post['post_content'];
                         $link = '#TB_inline?height=440&width=600&inlineId=post_preview_'.$preview_id;
-                        echo '<a title="'.mysql2date(__('Y-m-d g:i:sa - ', 'ust'), $post['post_date']).htmlentities($post['post_title']).'" href="'.$link.'" class="thickbox">'.ust_trim_title($post['post_title']).'</a><br />';
+                        if (empty($post['post_title']))
+                          $title = __('No Title', 'ust');
+                        else
+                          $title = htmlentities($post['post_title']);
+                        echo '<a title="'.mysql2date(__('Y-m-d g:i:sa - ', 'ust'), $post['post_date']).$title.'" href="'.$link.'" class="thickbox">'.ust_trim_title($title).'</a><br />';
                         $preview_id++;
                       }
                     } else {
@@ -1977,7 +1985,11 @@ function ust_admin_output() {
                       foreach ($posts as $post) {
                         $post_preview[$preview_id] = $post['post_content'];
                         $link = '#TB_inline?height=440&width=600&inlineId=post_preview_'.$preview_id;
-                        echo '<a title="'.mysql2date(__('Y-m-d g:i:sa - ', 'ust'), $post['post_date']).htmlentities($post['post_title']).'" href="'.$link.'" class="thickbox">'.ust_trim_title($post['post_title']).'</a><br />';
+                        if (empty($post['post_title']))
+                          $title = __('No Title', 'ust');
+                        else
+                          $title = htmlentities($post['post_title']);
+                        echo '<a title="'.mysql2date(__('Y-m-d g:i:sa - ', 'ust'), $post['post_date']).$title.'" href="'.$link.'" class="thickbox">'.ust_trim_title($title).'</a><br />';
                         $preview_id++;
                       }
                     } else {
