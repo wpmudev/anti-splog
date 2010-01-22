@@ -75,7 +75,7 @@ add_action('ust_check_api_cron', 'ust_check_api'); //cron action
 add_action('plugins_loaded', 'ust_show_widget');
 add_action('muplugins_loaded', 'ust_preview_splog');
 add_action('wp_ajax_ust_ajax', 'ust_do_ajax'); //ajax
-remove_action('admin_notices', 'anti_spam_nag'); 
+add_filter('site_option_no_anti_spam_nag', create_function('', 'return 1;')); //remove 2.9 spam nag
 
 
 //------------------------------------------------------------------------//
@@ -325,6 +325,7 @@ function ust_blog_unspammed($blog_id, $ignored=false) {
     
     //remove auto spammed status in case it is manually spammed again later
     update_blog_option($blog_id, 'ust_auto_spammed', 0);
+    update_blog_option($blog_id, 'ust_post_auto_spammed', 0);
   }
   
   //collect info
@@ -371,7 +372,7 @@ function ust_blog_created($blog_id, $user_id) {
   $api_data['blog_registered'] = $blog['registered'];
   
   //don't test if a site admin or supporter or blog-user-creator plugin is creating the blog
-  if (is_site_admin() || (function_exists('is_supporter') && is_supporter()) || strpos($_SERVER['REQUEST_URI'], 'page=blog-user-creator')) {
+  if (is_site_admin() || (function_exists('is_supporter') && is_supporter()) || strpos($_SERVER['REQUEST_URI'], 'blog-user-creator')) {
     $certainty = 0;
   } else {
     //send blog info to API
@@ -911,7 +912,7 @@ function ust_signup_fields($errors) {
   
   } else if($ust_settings['signup_protect'] == 'asirra') {
     
-    echo '<p><label>'.__('Human Verification:', 'ust').'</label>';
+    echo '<p><label>'.__('Human Verification:', 'ust').'</label></p>';
     if ( $errmsg = $errors->get_error_message('asirra') ) {
   		echo '<p class="error">'.$errmsg.'</p>';
   	} else {
@@ -967,7 +968,7 @@ function ust_signup_fields_bp() {
   
   } else if($ust_settings['signup_protect'] == 'asirra') {
     
-    echo '<p><label>'.__('Human Verification:', 'ust').'</label>';
+    echo '<p><label>'.__('Human Verification:', 'ust').'</label></p>';
     do_action( 'bp_asirra_errors' );
     echo '<div id="asirraError"></div>';
     echo '<script type="text/javascript" src="http://challenge.asirra.com/js/AsirraClientSide.js"></script>';
