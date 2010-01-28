@@ -23,19 +23,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-//add_action('admin_head', 'ust_test');
-function ust_test() {
 
-  //collect signup info
-  $api_data['activate_user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-  $api_data['activate_user_ip'] = '118.96.154.6';
-  $api_data['activate_user_referer'] = $_SERVER['HTTP_REFERER'];
-  $api_data['blog_domain'] = 'test';
-
-    //send blog info to API
-    echo 'RESULT: '.ust_http_post('check_blog', $api_data);
-    exit;
-}
 //------------------------------------------------------------------------//
 
 //---Config---------------------------------------------------------------//
