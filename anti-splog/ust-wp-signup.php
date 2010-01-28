@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Anti-Splog
-Version: 1.0 RC2
+Version: 1.0
 Plugin URI: http://incsub.com
 Description: The ultimate plugin to stop and kill splogs in WPMU
 Author: Aaron Edwards at uglyrobot.com (for Incsub)
@@ -397,7 +397,7 @@ $newblogname = isset($_GET['new']) ? strtolower(preg_replace('/^-|-$|[^-a-zA-Z0-
 
 $current_user = wp_get_current_user();
 if( $active_signup == "none" ) {
-	_e( "Registration has been disabled." );
+	echo '<p>' . __( "Registration has been disabled." ) . '</p>';
 } elseif( $active_signup == 'blog' && !is_user_logged_in() ){
 	if( is_ssl() ) {
 		$proto = 'https://';
