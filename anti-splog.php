@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Anti-Splog
-Version: 1.0
+Version: 1.0.1
 Plugin URI: http://incsub.com
 Description: The ultimate plugin to stop and kill splogs in WPMU
 Author: Aaron Edwards at uglyrobot.com (for Incsub)
@@ -48,6 +48,7 @@ add_action('plugins_loaded', 'ust_localization');
 //wp-signup changes
 add_action('plugins_loaded', 'ust_wpsignup_init');
 add_filter('the_content', 'ust_wpsignup_shortcode');
+add_filter('wp_signup_location', 'ust_wpsignup_filter');
 //keep table updated
 add_action('make_spam_blog', 'ust_blog_spammed');
 add_action('make_ham_blog', 'ust_blog_unspammed');
@@ -178,7 +179,6 @@ function ust_wpsignup_init() {
   	add_action('init', 'ust_wpsignup_flush_rewrite');
   	add_action('init', 'ust_wpsignup_change', 99); //run after the flush in case link has expired on already open page
   	add_action('init', 'ust_wpsignup_kill');
-    add_filter('wp_signup_location', 'ust_wpsignup_filter');
   }
 }
 
@@ -272,8 +272,9 @@ function ust_wpsignup_shortcode($content) {
 function ust_blog_spammed($blog_id) {
   global $wpdb, $current_site;
 
-  //prevent the spamming of supporters
-  if (function_exists('is_supporter') && is_supporter($blog_id)) {
+  //prevent the spamming of supporters if free trial is not enabled
+  $free_trial = get_site_option("supporter_free_days");
+  if (function_exists('is_supporter') && is_supporter($blog_id) && $free_trial === 0) {
     update_blog_status( $blog_id, "spam", '0' );
     return;
   }
