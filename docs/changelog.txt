@@ -1,8 +1,8 @@
 Plugin Name: Anti-Splog
-Version: 1.0.1
+Version: 1.0.2
 Plugin URI: http://incsub.com
 Description: The ultimate plugin to stop and kill splogs in WPMU
-Author: Aaron Edwards at uglyrobot.com (for Incsub)
+Author: Aaron Edwards (Incsub)
 Author URI: http://uglyrobot.com
 
 Copyright 2010 Incsub (http://incsub.com)
@@ -10,6 +10,12 @@ Copyright 2010 Incsub (http://incsub.com)
 Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
+
+1.0.2 - 3/09/2010
+----------------------------------------------------------------------
+- Fixed major bug preventing recaptcha, asirra, admin questions from working with BP
+- Added support for spamming/unspamming users of blog when it is spammed/unspammed
+- Highlights in red the spam status of users in Anti-Splog queues
 
 1.0.1 - 2/17/2010
 ----------------------------------------------------------------------
