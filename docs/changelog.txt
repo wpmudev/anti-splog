@@ -1,5 +1,5 @@
 Plugin Name: Anti-Splog
-Version: 1.0.2
+Version: 1.0.3
 Plugin URI: http://incsub.com
 Description: The ultimate plugin to stop and kill splogs in WPMU
 Author: Aaron Edwards (Incsub)
@@ -10,6 +10,10 @@ Copyright 2010 Incsub (http://incsub.com)
 Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
+
+1.0.3 - 3/09/2010
+----------------------------------------------------------------------
+- Bug fix on dynamic signup page when registration is set to users only
 
 1.0.2 - 3/09/2010
 ----------------------------------------------------------------------
