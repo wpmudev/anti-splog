@@ -48,6 +48,7 @@ add_action('plugins_loaded', 'ust_localization');
 //wp-signup changes
 add_action('plugins_loaded', 'ust_wpsignup_init');
 add_filter('the_content', 'ust_wpsignup_shortcode');
+add_filter('widget_text', 'ust_wpsignup_shortcode');
 add_filter('wp_signup_location', 'ust_wpsignup_filter');
 //keep table updated
 add_action('make_spam_blog', 'ust_blog_spammed');
