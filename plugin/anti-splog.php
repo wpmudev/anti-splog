@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 //------------------------------------------------------------------------//
 
-$ust_current_version = '1.0.2';
+$ust_current_version = '1.0.3';
 $ust_api_url = 'http://premium.wpmudev.org/ust-api.php';
 
 //------------------------------------------------------------------------//
@@ -658,7 +658,7 @@ function ust_http_post($action='api_check', $request=false) {
   //create the default request
   if (!$request["API_KEY"])
     $request["API_KEY"] = $ust_settings['api_key'];
-  $request["SITE_DOMAIN"] =  $current_site->domain;
+  $request["SITE_DOMAIN"] = $current_site->domain;
   $request["ACTION"] = $action;
 
 	$query_string = '';
