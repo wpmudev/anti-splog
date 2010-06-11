@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Anti-Splog
-Version: 1.0.3
-Plugin URI: http://incsub.com
+Version: 1.0.4
+Plugin URI: http://premium.wpmudev.org/project/anti-splog
 Description: The ultimate plugin to stop and kill splogs in WPMU
 Author: Aaron Edwards (Incsub)
 Author URI: http://uglyrobot.com
@@ -517,7 +517,7 @@ function ust_blog_updated($blog_id) {
 
 function ust_plug_pages() {
 	if ( is_site_admin() ) {
-		$page = add_submenu_page('wpmu-admin.php', __('Anti-Splog', 'ust'), __('Anti-Splog', 'ust'), 10, 'ust', 'ust_admin_output');
+		$page = add_submenu_page('ms-admin.php', __('Anti-Splog', 'ust'), __('Anti-Splog', 'ust'), 10, 'ust', 'ust_admin_output');
 	  /* Using registered $page handle to hook script load */
     add_action('admin_print_scripts-' . $page, 'ust_admin_script');
     add_action('admin_print_styles-' . $page, 'ust_admin_style');
@@ -528,7 +528,7 @@ function ust_preview_splog() {
   global $current_blog;
 
   //temporarily unspams the blog while previewing from Splogs queue
-  if (strpos($_SERVER['HTTP_REFERER'], 'wpmu-admin.php?page=ust&tab=splogs'))
+  if (strpos($_SERVER['HTTP_REFERER'], 'ms-admin.php?page=ust&tab=splogs'))
     $current_blog->spam = '0';
 }
 
@@ -691,7 +691,7 @@ function ust_http_post($action='api_check', $request=false) {
 
 function ust_check_api() {
   global $current_site;
-  $ust_url = 'http://' . $current_site->domain . $current_site->path . "wp-admin/wpmu-admin.php?page=ust&tab=settings";
+  $ust_url = 'http://' . $current_site->domain . $current_site->path . "wp-admin/ms-admin.php?page=ust&tab=settings";
 
   //check the api key and connection
   $api_response = ust_http_post();
@@ -889,9 +889,9 @@ function ust_newblog_notify_siteadmin( $blog_id, $deprecated = '' ) {
 	$siteurl = get_option( 'siteurl' );
 	restore_current_blog();
 
-	$spam_url = clean_url("http://{$current_site->domain}{$current_site->path}wp-admin/wpmu-edit.php?action=confirm&action2=spamblog&id=$blog_id&ref=" . urlencode("http://{$current_site->domain}{$current_site->path}wp-admin/wpmu-admin.php?page=ust") . "&msg=" . urlencode( sprintf( __( "You are about to mark the blog %s as spam" ), $blogname ) ) );
-	$ust_url = clean_url("http://{$current_site->domain}{$current_site->path}wp-admin/wpmu-admin.php?page=ust");
-	$options_site_url = clean_url("http://{$current_site->domain}{$current_site->path}wp-admin/wpmu-options.php");
+	$spam_url = clean_url("http://{$current_site->domain}{$current_site->path}wp-admin/ms-edit.php?action=confirm&action2=spamblog&id=$blog_id&ref=" . urlencode("http://{$current_site->domain}{$current_site->path}wp-admin/ms-admin.php?page=ust") . "&msg=" . urlencode( sprintf( __( "You are about to mark the blog %s as spam" ), $blogname ) ) );
+	$ust_url = clean_url("http://{$current_site->domain}{$current_site->path}wp-admin/ms-admin.php?page=ust");
+	$options_site_url = clean_url("http://{$current_site->domain}{$current_site->path}wp-admin/ms-options.php");
 
 	$msg = sprintf( __( "New Blog: %1s
 URL: %2s
@@ -928,14 +928,14 @@ function ust_api_warning() {
 
   $ust_settings = get_site_option("ust_settings");
   if (!$ust_settings['api_key'])
-    echo "<div id='ust-warning' class='updated fade'><p><strong>".__('Anti-Splog is almost ready.')."</strong> ".sprintf(__('You must <a href="%1$s">enter your WPMU DEV Premium API key</a> for it to work.'), "wpmu-admin.php?page=ust&tab=settings")."</p></div>";
+    echo "<div id='ust-warning' class='updated fade'><p><strong>".__('Anti-Splog is almost ready.')."</strong> ".sprintf(__('You must <a href="%1$s">enter your WPMU DEV Premium API key</a> for it to work.'), "ms-admin.php?page=ust&tab=settings")."</p></div>";
 }
 
 function ust_wpsignup_url($echo=true) {
   global $current_site;
   $ust_signup = get_site_option('ust_signup');
-  $original_url = "http://" . $current_site->domain . $current_site->path . "wp-signup.php";
-  $new_url = "http://" . $current_site->domain . $current_site->path . $ust_signup['slug'] . "/";
+  $original_url = network_home_url( 'wp-signup.php' );
+  $new_url = network_home_url( trailingslashit($ust_signup['slug']) );
 
   if (!$ust_signup['active']) {
     if ($echo) {
@@ -1269,11 +1269,11 @@ function ust_admin_output() {
 	$tabs = apply_filters( 'ust_tabs', $tabs );
 
 	$class = ( 'queue' == $tab ) ? ' class="current"' : '';
-	$tabhtml[] = '		<li><a href="' . admin_url( 'wpmu-admin.php?page=ust' ) . '"' . $class . '>' . __('Suspected Blogs', 'ust') . '</a>';
+	$tabhtml[] = '		<li><a href="' . admin_url( 'ms-admin.php?page=ust' ) . '"' . $class . '>' . __('Suspected Blogs', 'ust') . '</a>';
 
 	foreach ( $tabs as $stub => $title ) {
 		$class = ( $stub == $tab ) ? ' class="current"' : '';
-		$tabhtml[] = '		<li><a href="' . admin_url( 'wpmu-admin.php?page=ust&amp;tab=' . $stub ) . '"' . $class . ">$title</a>";
+		$tabhtml[] = '		<li><a href="' . admin_url( 'ms-admin.php?page=ust&amp;tab=' . $stub ) . '"' . $class . ">$title</a>";
 	}
 
 	echo implode( " |</li>\n", $tabhtml ) . '</li>';
@@ -1374,8 +1374,8 @@ function ust_admin_output() {
     			'ips'          => __('IPs', 'ust'),
     			'users'        => __('Blog Users', 'ust'),
     			'certainty'    => __('Splog Certainty', 'ust'),
-    			'lastupdated'  => '<a href="wpmu-admin.php?page=ust'.$page_link.'&orderby=lastupdated">'.__('Last Updated').'</a>',
-    			'registered'   => '<a href="wpmu-admin.php?page=ust'.$page_link.'&orderby=registered">'.__('Registered').'</a>',
+    			'lastupdated'  => '<a href="ms-admin.php?page=ust'.$page_link.'&orderby=lastupdated">'.__('Last Updated').'</a>',
+    			'registered'   => '<a href="ms-admin.php?page=ust'.$page_link.'&orderby=registered">'.__('Registered').'</a>',
           'posts'        => __('Recent Posts', 'ust')
     		);
       }
@@ -1394,7 +1394,7 @@ function ust_admin_output() {
   		  $page_link = $page_link . '&orderby='.urlencode($_GET['orderby']);
   		?>
 
-  		<form id="form-blog-list" action="wpmu-admin.php?page=ust<?php echo $page_link; ?>&amp;action=allblogs&amp;updated=1" method="post">
+  		<form id="form-blog-list" action="ms-admin.php?page=ust<?php echo $page_link; ?>&amp;action=allblogs&amp;updated=1" method="post">
 
   		<div class="tablenav">
   			<?php if ( $blog_navigation ) echo "<div class='tablenav-pages'>$blog_navigation</div>"; ?>
@@ -1447,8 +1447,8 @@ function ust_admin_output() {
   									<a title="<?php _e('Preview', 'ust'); ?>" href="http://<?php echo $blog['domain'].$blog['path']; ?>?KeepThis=true&TB_iframe=true&height=450&width=900" class="thickbox"><?php echo $blogname; ?></a>
   									<br />
   									<div class="row-actions">
-  										<?php echo '<a class="delete ust_ignore" href="wpmu-admin.php?page=ust'.$page_link.'&amp;ignore_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __('Blog Ignored!', 'ust')).'">' . __('Ignore', 'ust') . '</a>'; ?> |
-  										<?php echo '<a class="delete ust_spam" href="wpmu-admin.php?page=ust'.$page_link.'&amp;spam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __('Blog marked as spam!', 'ust')).'">' . __('Spam') . '</a>'; ?>
+  										<?php echo '<a class="delete ust_ignore" href="ms-admin.php?page=ust'.$page_link.'&amp;ignore_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __('Blog Ignored!', 'ust')).'">' . __('Ignore', 'ust') . '</a>'; ?> |
+  										<?php echo '<a class="delete ust_spam" href="ms-admin.php?page=ust'.$page_link.'&amp;spam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __('Blog marked as spam!', 'ust')).'">' . __('Spam') . '</a>'; ?>
   									</div>
   								</td>
   							<?php
@@ -1460,17 +1460,17 @@ function ust_admin_output() {
                   $user_spam = $result->spam;
                 ?>
   								<td valign="top">
-  									Registered: <a title="<?php _e('Search for IP', 'ust') ?>" href="wpmu-blogs.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1" class="edit"><?php echo $blog['IP']; ?></a>
-                    <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="wpmu-admin.php?page=ust<?php echo $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['IP']; ?>"><?php _e('Spam', 'ust') ?></a></small><br />
+  									Registered: <a title="<?php _e('Search for IP', 'ust') ?>" href="ms-sites.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1" class="edit"><?php echo $blog['IP']; ?></a>
+                    <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="ms-admin.php?page=ust<?php echo $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['IP']; ?>"><?php _e('Spam', 'ust') ?></a></small><br />
                   <?php if ($blog['last_user_id']) : ?>
                     <?php $spm_class = ($user_spam) ? ' style="color:red;"' : ''; ?>
-                    Last User: <a<?php echo $spm_class ?> title="<?php _e('Search for User Blogs', 'ust') ?>" href="wpmu-users.php?s=<?php echo $user_login; ?>" class="edit"><?php echo $user_login; ?></a>
-                    <?php if ($user_spam == 0) : ?><small class="row-actions"><a class="ust_spamuser" title="<?php _e('Spam all blogs tied to this User', 'ust') ?>" href="wpmu-admin.php?page=ust<?php echo $page_link; ?>&updated=1&spam_user=<?php echo $blog['last_user_id']; ?>"><?php _e('Spam', 'ust') ?></a></small><?php endif; ?>
+                    Last User: <a<?php echo $spm_class ?> title="<?php _e('Search for User Blogs', 'ust') ?>" href="ms-users.php?s=<?php echo $user_login; ?>" class="edit"><?php echo $user_login; ?></a>
+                    <?php if ($user_spam == 0) : ?><small class="row-actions"><a class="ust_spamuser" title="<?php _e('Spam all blogs tied to this User', 'ust') ?>" href="ms-admin.php?page=ust<?php echo $page_link; ?>&updated=1&spam_user=<?php echo $blog['last_user_id']; ?>"><?php _e('Spam', 'ust') ?></a></small><?php endif; ?>
                     <br />
                   <?php endif; ?>
                   <?php if ($blog['last_ip']) : ?>
-                    Last IP: <a title="<?php _e('Search for IP', 'ust') ?>" href="wpmu-blogs.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1" class="edit"><?php echo $blog['last_ip']; ?></a>
-                    <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="wpmu-admin.php?page=ust<?php echo $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['last_ip']; ?>"><?php _e('Spam', 'ust') ?></a></small>
+                    Last IP: <a title="<?php _e('Search for IP', 'ust') ?>" href="ms-sites.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1" class="edit"><?php echo $blog['last_ip']; ?></a>
+                    <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="ms-admin.php?page=ust<?php echo $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['last_ip']; ?>"><?php _e('Spam', 'ust') ?></a></small>
   								<?php endif; ?>
                   </td>
   							<?php
@@ -1490,9 +1490,9 @@ function ust_admin_output() {
   										foreach ( $blogusers as $key => $val ) {
                         $spm_class = ($val->spam) ? ' style="color:red;"' : '';
   											echo '<a'.$spm_class.' title="Edit User: ' . $val->display_name . ' ('.$val->user_email.')" href="user-edit.php?user_id=' . $val->user_id . '">' . $val->user_login . '</a> ';
-                        echo '<small class="row-actions"><a title="' . __('All Blogs of User', 'ust') . '" href="wpmu-users.php?s=' . $val->user_login . '">' . __('Blogs', 'ust') . '</a>';
+                        echo '<small class="row-actions"><a title="' . __('All Blogs of User', 'ust') . '" href="ms-users.php?s=' . $val->user_login . '">' . __('Blogs', 'ust') . '</a>';
                         if ($val->spam == 0)
-                          echo ' | <a class="ust_spamuser" title="' . __('Spam all blogs tied to this User', 'ust') . '" href="wpmu-admin.php?page=ust'.$page_link.'&updated=1&spam_user=' . $val->user_id . '">' . __('Spam', 'ust') . '</a></small>';
+                          echo ' | <a class="ust_spamuser" title="' . __('Spam all blogs tied to this User', 'ust') . '" href="ms-admin.php?page=ust'.$page_link.'&updated=1&spam_user=' . $val->user_id . '">' . __('Spam', 'ust') . '</a></small>';
                         echo '<br />';
                       }
   										if( $blogusers_warning != '' ) {
@@ -1651,7 +1651,7 @@ function ust_admin_output() {
   		$page_link = ($apage > 1) ? '&amp;apage='.$apage : '';
   		?>
 
-  		<form id="form-blog-list" action="wpmu-edit.php?action=allblogs&amp;updatedmsg=Settings+Saved" method="post">
+  		<form id="form-blog-list" action="ms-edit.php?action=allblogs&amp;updatedmsg=Settings+Saved" method="post">
 
   		<div class="tablenav">
   			<?php if ( $blog_navigation ) echo "<div class='tablenav-pages'>$blog_navigation</div>"; ?>
@@ -1723,8 +1723,8 @@ function ust_admin_output() {
   									<br />
   									<?php
   									$controlActions	= array();
-  									$controlActions[]	= '<a class="delete ust_unspam" href="wpmu-admin.php?page=ust&amp;tab=splogs'.$page_link.'&amp;unspam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __('Blog marked as not spam!', 'ust')).'">' . __('Not Spam') . '</a>';
-  									$controlActions[]	= '<a class="delete" href="wpmu-edit.php?action=confirm&amp;action2=deleteblog&amp;id=' . $blog['blog_id'] . '&amp;msg=' . urlencode( sprintf( __( "You are about to delete the blog %s" ), $blogname ) ) . '&amp;updatedmsg=' . urlencode( __('Blog Deleted!', 'ust')).'">' . __("Delete") . '</a>';
+  									$controlActions[]	= '<a class="delete ust_unspam" href="ms-admin.php?page=ust&amp;tab=splogs'.$page_link.'&amp;unspam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __('Blog marked as not spam!', 'ust')).'">' . __('Not Spam') . '</a>';
+  									$controlActions[]	= '<a class="delete" href="ms-edit.php?action=confirm&amp;action2=deleteblog&amp;id=' . $blog['blog_id'] . '&amp;msg=' . urlencode( sprintf( __( "You are about to delete the blog %s" ), $blogname ) ) . '&amp;updatedmsg=' . urlencode( __('Blog Deleted!', 'ust')).'">' . __("Delete") . '</a>';
   									?>
 
   									<?php if (count($controlActions)) : ?>
@@ -1742,17 +1742,17 @@ function ust_admin_output() {
                   $user_spam = $result->spam;
                 ?>
   								<td valign="top">
-  									Registered: <a title="<?php _e('Search for IP', 'ust') ?>" href="wpmu-blogs.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1" class="edit"><?php echo $blog['IP']; ?></a>
-                    <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="wpmu-admin.php?page=ust<?php echo $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['IP']; ?>"><?php _e('Spam', 'ust') ?></a></small><br />
+  									Registered: <a title="<?php _e('Search for IP', 'ust') ?>" href="ms-sites.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1" class="edit"><?php echo $blog['IP']; ?></a>
+                    <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="ms-admin.php?page=ust<?php echo $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['IP']; ?>"><?php _e('Spam', 'ust') ?></a></small><br />
                   <?php if ($blog['last_user_id']) : ?>
                     <?php $spm_class = ($user_spam) ? ' style="color:red;"' : ''; ?>
-                    Last User: <a<?php echo $spm_class ?> title="<?php _e('Search for User Blogs', 'ust') ?>" href="wpmu-users.php?s=<?php echo $user_login; ?>" class="edit"><?php echo $user_login; ?></a>
-                    <?php if ($user_spam == 0) : ?><small class="row-actions"><a class="ust_spamuser" title="<?php _e('Spam all blogs tied to this User', 'ust') ?>" href="wpmu-admin.php?page=ust<?php echo $page_link; ?>&updated=1&spam_user=<?php echo $blog['last_user_id']; ?>"><?php _e('Spam', 'ust') ?></a></small><?php endif; ?>
+                    Last User: <a<?php echo $spm_class ?> title="<?php _e('Search for User Blogs', 'ust') ?>" href="ms-users.php?s=<?php echo $user_login; ?>" class="edit"><?php echo $user_login; ?></a>
+                    <?php if ($user_spam == 0) : ?><small class="row-actions"><a class="ust_spamuser" title="<?php _e('Spam all blogs tied to this User', 'ust') ?>" href="ms-admin.php?page=ust<?php echo $page_link; ?>&updated=1&spam_user=<?php echo $blog['last_user_id']; ?>"><?php _e('Spam', 'ust') ?></a></small><?php endif; ?>
                     <br />
                   <?php endif; ?>
                   <?php if ($blog['last_ip']) : ?>
-                    Last IP: <a title="<?php _e('Search for IP', 'ust') ?>" href="wpmu-blogs.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1" class="edit"><?php echo $blog['last_ip']; ?></a>
-                    <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="wpmu-admin.php?page=ust<?php echo $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['last_ip']; ?>"><?php _e('Spam', 'ust') ?></a></small>
+                    Last IP: <a title="<?php _e('Search for IP', 'ust') ?>" href="ms-sites.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1" class="edit"><?php echo $blog['last_ip']; ?></a>
+                    <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="ms-admin.php?page=ust<?php echo $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['last_ip']; ?>"><?php _e('Spam', 'ust') ?></a></small>
   								<?php endif; ?>
                   </td>
   							<?php
@@ -1772,9 +1772,9 @@ function ust_admin_output() {
   										foreach ( $blogusers as $key => $val ) {
                         $spm_class = ($val->spam) ? ' style="color:red;"' : '';
   											echo '<a'.$spm_class.' title="Edit User: ' . $val->display_name . ' ('.$val->user_email.')" href="user-edit.php?user_id=' . $val->user_id . '">' . $val->user_login . '</a> ';
-                        echo '<small class="row-actions"><a title="' . __('All Blogs of User', 'ust') . '" href="wpmu-users.php?s=' . $val->user_login . '">' . __('Blogs', 'ust') . '</a>';
+                        echo '<small class="row-actions"><a title="' . __('All Blogs of User', 'ust') . '" href="ms-users.php?s=' . $val->user_login . '">' . __('Blogs', 'ust') . '</a>';
                         if ($val->spam == 0)
-                          echo ' | <a class="ust_spamuser" title="' . __('Spam all blogs tied to this User', 'ust') . '" href="wpmu-admin.php?page=ust'.$page_link.'&updated=1&spam_user=' . $val->user_id . '">' . __('Spam', 'ust') . '</a></small>';
+                          echo ' | <a class="ust_spamuser" title="' . __('Spam all blogs tied to this User', 'ust') . '" href="ms-admin.php?page=ust'.$page_link.'&updated=1&spam_user=' . $val->user_id . '">' . __('Spam', 'ust') . '</a></small>';
                         echo '<br />';
                       }
   										if( $blogusers_warning != '' ) {
@@ -1938,7 +1938,7 @@ function ust_admin_output() {
   		$page_link = ($apage > 1) ? '&amp;apage='.$apage : '';
   		?>
 
-  		<form id="form-blog-list" action="wpmu-admin.php?page=ust&amp;tab=ignored<?php echo $page_link; ?>&amp;action=allblogs&amp;updated=1" method="post">
+  		<form id="form-blog-list" action="ms-admin.php?page=ust&amp;tab=ignored<?php echo $page_link; ?>&amp;action=allblogs&amp;updated=1" method="post">
 
   		<div class="tablenav">
   			<?php if ( $blog_navigation ) echo "<div class='tablenav-pages'>$blog_navigation</div>"; ?>
@@ -2007,8 +2007,8 @@ function ust_admin_output() {
   									<a title="<?php _e('Preview', 'ust'); ?>" href="http://<?php echo $blog['domain'].$blog['path']; ?>?KeepThis=true&TB_iframe=true&height=450&width=900" class="thickbox"><?php echo $blogname; ?></a>
   									<br />
   									<div class="row-actions">
-  										<?php echo '<a class="delete ust_unignore" href="wpmu-admin.php?page=ust&amp;tab=ignored'.$page_link.'&amp;unignore_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __('Blog Un-ignored!', 'ust')).'">' . __('Un-ignore', 'ust') . '</a>'; ?> |
-  										<?php echo '<a class="delete ust_spam" href="wpmu-admin.php?page=ust&amp;tab=ignored'.$page_link.'&amp;spam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __('Blog marked as spam!', 'ust')).'">' . __('Spam') . '</a>'; ?>
+  										<?php echo '<a class="delete ust_unignore" href="ms-admin.php?page=ust&amp;tab=ignored'.$page_link.'&amp;unignore_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __('Blog Un-ignored!', 'ust')).'">' . __('Un-ignore', 'ust') . '</a>'; ?> |
+  										<?php echo '<a class="delete ust_spam" href="ms-admin.php?page=ust&amp;tab=ignored'.$page_link.'&amp;spam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __('Blog marked as spam!', 'ust')).'">' . __('Spam') . '</a>'; ?>
   									</div>
   								</td>
   							<?php
@@ -2020,17 +2020,17 @@ function ust_admin_output() {
                   $user_spam = $result->spam;
                 ?>
   								<td valign="top">
-  									Registered: <a title="<?php _e('Search for IP', 'ust') ?>" href="wpmu-blogs.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1" class="edit"><?php echo $blog['IP']; ?></a>
-                    <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="wpmu-admin.php?page=ust<?php echo $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['IP']; ?>"><?php _e('Spam', 'ust') ?></a></small><br />
+  									Registered: <a title="<?php _e('Search for IP', 'ust') ?>" href="ms-sites.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1" class="edit"><?php echo $blog['IP']; ?></a>
+                    <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="ms-admin.php?page=ust<?php echo $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['IP']; ?>"><?php _e('Spam', 'ust') ?></a></small><br />
                   <?php if ($blog['last_user_id']) : ?>
                     <?php $spm_class = ($user_spam) ? ' style="color:red;"' : ''; ?>
-                    Last User: <a<?php echo $spm_class ?> title="<?php _e('Search for User Blogs', 'ust') ?>" href="wpmu-users.php?s=<?php echo $user_login; ?>" class="edit"><?php echo $user_login; ?></a>
-                    <?php if ($user_spam == 0) : ?><small class="row-actions"><a class="ust_spamuser" title="<?php _e('Spam all blogs tied to this User', 'ust') ?>" href="wpmu-admin.php?page=ust<?php echo $page_link; ?>&updated=1&spam_user=<?php echo $blog['last_user_id']; ?>"><?php _e('Spam', 'ust') ?></a></small><?php endif; ?>
+                    Last User: <a<?php echo $spm_class ?> title="<?php _e('Search for User Blogs', 'ust') ?>" href="ms-users.php?s=<?php echo $user_login; ?>" class="edit"><?php echo $user_login; ?></a>
+                    <?php if ($user_spam == 0) : ?><small class="row-actions"><a class="ust_spamuser" title="<?php _e('Spam all blogs tied to this User', 'ust') ?>" href="ms-admin.php?page=ust<?php echo $page_link; ?>&updated=1&spam_user=<?php echo $blog['last_user_id']; ?>"><?php _e('Spam', 'ust') ?></a></small><?php endif; ?>
                     <br />
                   <?php endif; ?>
                   <?php if ($blog['last_ip']) : ?>
-                    Last IP: <a title="<?php _e('Search for IP', 'ust') ?>" href="wpmu-blogs.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1" class="edit"><?php echo $blog['last_ip']; ?></a>
-                    <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="wpmu-admin.php?page=ust<?php echo $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['last_ip']; ?>"><?php _e('Spam', 'ust') ?></a></small>
+                    Last IP: <a title="<?php _e('Search for IP', 'ust') ?>" href="ms-sites.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1" class="edit"><?php echo $blog['last_ip']; ?></a>
+                    <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="ms-admin.php?page=ust<?php echo $page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['last_ip']; ?>"><?php _e('Spam', 'ust') ?></a></small>
   								<?php endif; ?>
                   </td>
   							<?php
@@ -2050,9 +2050,9 @@ function ust_admin_output() {
   										foreach ( $blogusers as $key => $val ) {
                         $spm_class = ($val->spam) ? ' style="color:red;"' : '';
   											echo '<a'.$spm_class.' title="Edit User: ' . $val->display_name . ' ('.$val->user_email.')" href="user-edit.php?user_id=' . $val->user_id . '">' . $val->user_login . '</a> ';
-                        echo '<small class="row-actions"><a title="' . __('All Blogs of User', 'ust') . '" href="wpmu-users.php?s=' . $val->user_login . '">' . __('Blogs', 'ust') . '</a>';
+                        echo '<small class="row-actions"><a title="' . __('All Blogs of User', 'ust') . '" href="ms-users.php?s=' . $val->user_login . '">' . __('Blogs', 'ust') . '</a>';
                         if ($val->spam == 0)
-                          echo ' | <a class="ust_spamuser" title="' . __('Spam all blogs tied to this User', 'ust') . '" href="wpmu-admin.php?page=ust'.$page_link.'&updated=1&spam_user=' . $val->user_id . '">' . __('Spam', 'ust') . '</a></small>';
+                          echo ' | <a class="ust_spamuser" title="' . __('Spam all blogs tied to this User', 'ust') . '" href="ms-admin.php?page=ust'.$page_link.'&updated=1&spam_user=' . $val->user_id . '">' . __('Spam', 'ust') . '</a></small>';
                         echo '<br />';
                       }
   										if( $blogusers_warning != '' ) {
@@ -2244,7 +2244,7 @@ function ust_admin_output() {
 
 
 			?>
-          <form method="post" action="wpmu-admin.php?page=ust&tab=settings">
+          <form method="post" action="ms-admin.php?page=ust&tab=settings">
           <input type="hidden" name="ust_settings" value="1" />
           <h3><?php _e('Settings', 'ust') ?></h3>
           <p><?php _e("You must enter an API key and register the IP (<strong>$ip</strong>) and WPMU Site Domain (<strong>$domain</strong>) of this server to enable live splog checking. <a href='$register_url' target='_blank'>Get your API key and register your server here.</a> You must be a current WPMU DEV Premium subscriber to access our API.", 'ust') ?></p>
