@@ -221,8 +221,7 @@ function ust_wpsignup_queryvars($vars) {
 	return $vars;
 }
 
-function ust_wpsignup_page() {
-	global $wp_query;
+function ust_wpsignup_page($wp_query) {
 
 	if(isset($wp_query->query_vars['namespace']) && $wp_query->query_vars['namespace'] == 'ust') {
 
@@ -231,6 +230,7 @@ function ust_wpsignup_page() {
 
 		//include the signup page
     $wp_query->is_home = false;
+    $wp_query->is_page = 1;
 		require_once('anti-splog/ust-wp-signup.php');
 
 		die();
