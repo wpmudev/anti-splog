@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Anti-Splog (Feature: Spammed Notice and Splog Review Form)
-Version: 1.0.4
+Version: 1.0.5
 Plugin URI: http://premium.wpmudev.org/project/anti-splog
 Description: The ultimate plugin to stop and kill splogs in WPMU
 Author: Aaron Edwards (Incsub)
-Author URI: http://uglyrobot.com
+Author URI: http://premium.wpmudev.org
 
 Copyright 2010 Incsub (http://incsub.com)
 

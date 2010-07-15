@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Anti-Splog
-Version: 1.0.4
+Version: 1.0.5
 Plugin URI: http://premium.wpmudev.org/project/anti-splog
 Description: The ultimate plugin to stop and kill splogs in WPMU
 Author: Aaron Edwards (Incsub)
-Author URI: http://uglyrobot.com
+Author URI: http://premium.wpmudev.org
 WDP ID: 120
 
 Copyright 2010 Incsub (http://incsub.com)
@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 //------------------------------------------------------------------------//
 
-$ust_current_version = '1.0.3';
+$ust_current_version = '1.0.5';
 $ust_api_url = 'http://premium.wpmudev.org/ust-api.php';
 
 //------------------------------------------------------------------------//
@@ -402,7 +402,7 @@ function ust_blog_created($blog_id, $user_id) {
   $api_data['blog_registered'] = $blog['registered'];
 
   //don't test if a site admin or supporter or blog-user-creator plugin is creating the blog
-  if (is_site_admin() || (function_exists('is_supporter') && is_supporter()) || strpos($_SERVER['REQUEST_URI'], 'blog-user-creator')) {
+  if (is_super_admin() || strpos($_SERVER['REQUEST_URI'], 'blog-user-creator')) {
     $certainty = 0;
   } else {
     //send blog info to API
@@ -888,8 +888,7 @@ function ust_newblog_notify_siteadmin( $blog_id, $deprecated = '' ) {
 	$blogname = get_option( 'blogname' );
 	$siteurl = get_option( 'siteurl' );
 	restore_current_blog();
-
-	$spam_url = clean_url("http://{$current_site->domain}{$current_site->path}wp-admin/ms-edit.php?action=confirm&action2=spamblog&id=$blog_id&ref=" . urlencode("http://{$current_site->domain}{$current_site->path}wp-admin/ms-admin.php?page=ust") . "&msg=" . urlencode( sprintf( __( "You are about to mark the blog %s as spam" ), $blogname ) ) );
+	$spam_url = clean_url("http://{$current_site->domain}{$current_site->path}wp-admin/ms-admin.php?page=ust&spam_blog=1&id=$blog_id&updated=1&updatedmsg=Blog+marked+as+spam%21" );
 	$ust_url = clean_url("http://{$current_site->domain}{$current_site->path}wp-admin/ms-admin.php?page=ust");
 	$options_site_url = clean_url("http://{$current_site->domain}{$current_site->path}wp-admin/ms-options.php");
 
