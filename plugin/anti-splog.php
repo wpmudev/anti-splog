@@ -2246,7 +2246,7 @@ function ust_admin_output() {
           <form method="post" action="ms-admin.php?page=ust&tab=settings">
           <input type="hidden" name="ust_settings" value="1" />
           <h3><?php _e('Settings', 'ust') ?></h3>
-          <p><?php _e("You must enter an API key and register the IP (<strong>$ip</strong>) and WPMU Site Domain (<strong>$domain</strong>) of this server to enable live splog checking. <a href='$register_url' target='_blank'>Get your API key and register your server here.</a> You must be a current WPMU DEV Premium subscriber to access our API.", 'ust') ?></p>
+          <p><?php _e("You must enter an API key and register the WordPress Multisite Domain (<strong>$domain</strong>) of this server to enable live splog checking. <a href='$register_url' target='_blank'>Get your API key and register your server here.</a> You must be a current WPMU DEV Premium subscriber to access our API.", 'ust') ?></p>
           <table class="form-table">
               <tr valign="top">
               <th scope="row"><?php _e('API Key', 'ust') ?>*</th>
