@@ -1,26 +1,10 @@
 <?php
 /*
 Plugin Name: Anti-Splog (Feature: Spammed Notice and Splog Review Form)
-Version: 1.0.5
 Plugin URI: http://premium.wpmudev.org/project/anti-splog
-Description: The ultimate plugin to stop and kill splogs in WPMU
+Description: The ultimate plugin and service to stop and kill splogs in WordPress Multisite and BuddyPress
 Author: Aaron Edwards (Incsub)
 Author URI: http://premium.wpmudev.org
-
-Copyright 2010 Incsub (http://incsub.com)
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License (Version 2 - GPLv2) as published by
-the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 //return header to remove from search engines
@@ -31,6 +15,13 @@ if ($current_blog->archived == '1')
   graceful_fail(__('This blog has been archived.'));
 
 require_once( ABSPATH . WPINC . '/pluggable.php' );
+
+//setup proper urls
+if ( version_compare($wp_version, '3.0.9', '>') ) {
+  $ust_admin_url = network_admin_url('settings.php?page=ust');
+} else {
+  $ust_admin_url = network_admin_url('ms-admin.php?page=ust');
+}
 
 //process form
 if (isset($_POST['spam-submit']) && !get_option('ust_email_sent')) {
@@ -54,8 +45,8 @@ if (isset($_POST['spam-submit']) && !get_option('ust_email_sent')) {
     
     $admin_email = get_site_option( "admin_email" );
     $user_email = get_option('admin_email');
-    $review_url = 'http://' . $current_site->domain . $current_site->path . "wp-admin/ms-admin.php?page=ust&tab=splogs&bid=$blog_id";
-    $unspam_url = 'http://' . $current_site->domain . $current_site->path . "wp-admin/ms-edit.php?action=confirm&action2=unspamblog&id=$blog_id&ref=" . urlencode('http://' . $current_site->domain . $current_site->path . "wp-admin/ms-admin.php?page=ust") . "&msg=" . urlencode( sprintf( __( "You are about to unspam the blog %s" ), get_bloginfo('name') ) );
+    $review_url = $ust_admin_url . "&tab=splogs&bid=$blog_id";
+    $unspam_url = 'http://' . $current_site->domain . $current_site->path . "wp-admin/ms-edit.php?action=confirm&action2=unspamblog&id=$blog_id&ref=" . urlencode($ust_admin_url) . "&msg=" . urlencode( sprintf( __( "You are about to unspam the blog %s" ), get_bloginfo('name') ) );
     $message_headers = "MIME-Version: 1.0\n" . "From: $user_email\n" . "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
     $subject = sprintf(__('Splog Review Request: %s', 'ust'), get_bloginfo('url'));
     $message = sprintf(__("Someone is disputing the spam status for the blog %s (%s).\nHere is their reason:\n_______________________\n\n%s\n\n_______________________\n", 'ust'), get_bloginfo('name'), get_bloginfo('url'), $reason);
