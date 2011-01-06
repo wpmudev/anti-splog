@@ -5,6 +5,7 @@ Plugin URI: http://premium.wpmudev.org/project/anti-splog
 Description: The ultimate plugin and service to stop and kill splogs in WordPress Multisite and BuddyPress
 Author: Aaron Edwards (Incsub)
 Author URI: http://premium.wpmudev.org
+Version: 1.0.6
 */
 
 //return header to remove from search engines
@@ -46,7 +47,7 @@ if (isset($_POST['spam-submit']) && !get_option('ust_email_sent')) {
     $admin_email = get_site_option( "admin_email" );
     $user_email = get_option('admin_email');
     $review_url = $ust_admin_url . "&tab=splogs&bid=$blog_id";
-    $unspam_url = 'http://' . $current_site->domain . $current_site->path . "wp-admin/ms-edit.php?action=confirm&action2=unspamblog&id=$blog_id&ref=" . urlencode($ust_admin_url) . "&msg=" . urlencode( sprintf( __( "You are about to unspam the blog %s" ), get_bloginfo('name') ) );
+    $unspam_url = network_admin_url("edit.php?action=confirm&action2=unspamblog&id=$blog_id&ref=" . urlencode($ust_admin_url) . "&msg=" . urlencode( sprintf( __( "You are about to unspam the blog %s" ), get_bloginfo('name') ) ) );
     $message_headers = "MIME-Version: 1.0\n" . "From: $user_email\n" . "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
     $subject = sprintf(__('Splog Review Request: %s', 'ust'), get_bloginfo('url'));
     $message = sprintf(__("Someone is disputing the spam status for the blog %s (%s).\nHere is their reason:\n_______________________\n\n%s\n\n_______________________\n", 'ust'), get_bloginfo('name'), get_bloginfo('url'), $reason);

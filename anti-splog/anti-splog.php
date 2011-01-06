@@ -6,8 +6,11 @@ Description: The ultimate plugin and service to stop and kill splogs in WordPres
 Author: Aaron Edwards (Incsub)
 Author URI: http://premium.wpmudev.org
 Version: 1.0.6
+Network: true
 WDP ID: 120
+*/
 
+/*
 Copyright 2010-2011 Incsub (http://incsub.com)
 
 This program is free software; you can redistribute it and/or modify
@@ -39,6 +42,12 @@ $ust_api_url = 'http://premium.wpmudev.org/ust-api.php';
 
 //------------------------------------------------------------------------//
 
+//force multisite
+if ( !is_multisite() )
+  die( __('Anti-Splog is only compatible with Multisite installs.', 'ust') );
+else if ( version_compare($wp_version, '3.0.9', '<=') )
+  die( __('This version of Anti-Splog is only compatible with WordPress 3.1 and greater.', 'ust') );
+
 //check for activating
 if ($_GET['key'] == '' || $_GET['key'] === '') {
 	add_action('admin_head', 'ust_make_current');
@@ -66,8 +75,8 @@ add_action('admin_init', 'ust_admin_scripts_init');
 add_action('save_post', 'ust_check_post');
 add_action('admin_menu', 'ust_plug_pages');
 add_action('network_admin_menu', 'ust_plug_pages');
-add_action('admin_notices', 'ust_api_warning');
 add_action('network_admin_notices', 'ust_api_warning');
+add_action('network_admin_notices', 'ust_install_notice');
 add_action('signup_blogform', 'ust_signup_fields', 50);
 add_action('bp_before_registration_submit_buttons', 'ust_signup_fields_bp', 50); //buddypress support
 add_filter('wpmu_validate_blog_signup', 'ust_signup_errorcheck');
@@ -102,6 +111,15 @@ function ust_admin_url() {
   }
 }
 
+function ust_install_notice() {
+  if ( !is_super_admin() )
+    return;
+
+  if ( !file_exists( WP_CONTENT_DIR . '/blog-suspended.php' ) ) {
+    ?><div class="error fade"><p><?php _e('Please move the blog-suspended.php file from the Anti-Splog plugin to the /wp-content/ directory.', 'ust'); ?></p></div><?php
+  }
+}
+
 function ust_show_widget() {
 	global $current_site, $blog_id;
 
@@ -112,7 +130,7 @@ function ust_show_widget() {
 function ust_localization() {
   // Load up the localization file if we're using WordPress in a different language
 	// Place it in this plugin's "languages" folder and name it "ust-[locale].mo"
-	load_muplugin_textdomain( 'ust', false, '/anti-splog/languages' );
+	load_plugin_textdomain( 'ust', false, '/anti-splog/languages' );
 }
 
 function ust_make_current() {
@@ -180,7 +198,7 @@ function ust_global_install() {
 		update_site_option( "ust_installed", "yes" );
 	}
 }
-
+ 
 function ust_wpsignup_init() {
   global $blog_id, $current_site;
 
@@ -245,7 +263,7 @@ function ust_wpsignup_page($wp_query) {
 		//include the signup page
     $wp_query->is_home = false;
     $wp_query->is_page = 1;
-		require_once('anti-splog/ust-wp-signup.php');
+		require_once('includes/ust-wp-signup.php');
 
 		die();
 	}
@@ -689,7 +707,7 @@ function ust_http_post($action='api_check', $request=false) {
 	}
 
 	//build args
-	$args['user-agent'] = "WordPress MU/$wp_version | Anti-Splog/$ust_current_version";
+	$args['user-agent'] = "WordPress/$wp_version | Anti-Splog/$ust_current_version";
 	$args['body'] = $query_string;
 
 	$response = wp_remote_post($ust_api_url, $args);
@@ -747,7 +765,7 @@ function ust_signup_errorcheck($content) {
 
     //check reCAPTCHA
     $recaptcha = get_site_option('ust_recaptcha');
-  	require_once('anti-splog/recaptchalib.php');
+  	require_once('includes/recaptchalib.php');
   	$resp = rp_recaptcha_check_answer($recaptcha['privkey'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
 
   	if (!$resp->is_valid) {
@@ -756,7 +774,7 @@ function ust_signup_errorcheck($content) {
 
   } else if($ust_settings['signup_protect'] == 'asirra') {
 
-    require_once('anti-splog/asirra.php');
+    require_once('includes/asirra.php');
     $asirra = new AsirraValidator($_POST['Asirra_Ticket']);
   	if (!$asirra->passed)
       $content['errors']->add('asirra', __("Please try to correctly identify the cats again.", 'ust'));
@@ -803,7 +821,7 @@ function ust_signup_errorcheck_bp() {
 
     //check reCAPTCHA
     $recaptcha = get_site_option('ust_recaptcha');
-  	require_once('anti-splog/recaptchalib.php');
+  	require_once('includes/recaptchalib.php');
   	$resp = rp_recaptcha_check_answer($recaptcha['privkey'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
 
   	if (!$resp->is_valid) {
@@ -812,7 +830,7 @@ function ust_signup_errorcheck_bp() {
 
   } else if($ust_settings['signup_protect'] == 'asirra') {
 
-    require_once('anti-splog/asirra.php');
+    require_once('includes/asirra.php');
     $asirra = new AsirraValidator($_POST['Asirra_Ticket']);
   	if (!$asirra->passed)
       $bp->signup->errors['asirra'] = __("Please try to correctly identify the cats again.", 'ust');
@@ -911,7 +929,7 @@ function ust_newblog_notify_siteadmin( $blog_id, $deprecated = '' ) {
 	restore_current_blog();
 	$spam_url = clean_url("$ust_admin_url&spam_blog=1&id=$blog_id&updated=1&updatedmsg=Blog+marked+as+spam%21" );
 	$ust_url = clean_url($ust_admin_url);
-	$options_site_url = clean_url("http://{$current_site->domain}{$current_site->path}wp-admin/ms-options.php");
+	$options_site_url = clean_url( network_admin_url("settings.php") );
 
 	$msg = sprintf( __( "New Blog: %1s
 URL: %2s
@@ -980,7 +998,7 @@ function ust_signup_fields($errors) {
   if($ust_settings['signup_protect'] == 'recaptcha') {
 
     $recaptcha = get_site_option('ust_recaptcha');
-    require_once('anti-splog/recaptchalib.php');
+    require_once('includes/recaptchalib.php');
 
     echo "<script type='text/javascript'>var RecaptchaOptions = { theme : '{$recaptcha['theme']}', lang : '{$recaptcha['lang']}' , tabindex : 30 };</script>";
     echo '<p><label>'.__('Human Verification:', 'ust').'</label>';
@@ -1059,7 +1077,7 @@ function ust_signup_fields_bp() {
   if($ust_settings['signup_protect'] == 'recaptcha') {
 
     $recaptcha = get_site_option('ust_recaptcha');
-    require_once('anti-splog/recaptchalib.php');
+    require_once('includes/recaptchalib.php');
 
     echo '<div class="register-section" id="antisplog">';
     echo "<script type='text/javascript'>var RecaptchaOptions = { theme : '{$recaptcha['theme']}', lang : '{$recaptcha['lang']}' , tabindex : 30 };</script>";
@@ -1161,7 +1179,7 @@ function ust_admin_scripts_init() {
   global $ust_current_version;
 
   /* Register our scripts. */
-  wp_register_script('anti-splog', WPMU_PLUGIN_URL.'/anti-splog/anti-splog.js', array('jquery'), $ust_current_version );
+  wp_register_script('anti-splog', WP_PLUGIN_URL.'/anti-splog/includes/anti-splog.js', array('jquery'), $ust_current_version );
 }
 
 function ust_admin_script() {
@@ -1268,7 +1286,7 @@ function ust_admin_output() {
 
   }
 
-	if (isset($_GET['updated'])) {
+	if (isset($_GET['updated']) && $_GET['updatedmsg']) {
 		?><div id="message" class="updated fade"><p><?php echo urldecode($_GET['updatedmsg']); ?></p></div><?php
 	}
 	?>
@@ -1482,7 +1500,7 @@ function ust_admin_output() {
                   $user_spam = $result->spam;
                 ?>
   								<td valign="top">
-  									Registered: <a title="<?php _e('Search for IP', 'ust') ?>" href="ms-sites.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1" class="edit"><?php echo $blog['IP']; ?></a>
+  									Registered: <a title="<?php _e('Search for IP', 'ust') ?>" href="sites.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1" class="edit"><?php echo $blog['IP']; ?></a>
                     <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="<?php echo $ust_admin_url.$page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['IP']; ?>"><?php _e('Spam', 'ust') ?></a></small><br />
                   <?php if ($blog['last_user_id']) : ?>
                     <?php $spm_class = ($user_spam) ? ' style="color:red;"' : ''; ?>
@@ -1491,7 +1509,7 @@ function ust_admin_output() {
                     <br />
                   <?php endif; ?>
                   <?php if ($blog['last_ip']) : ?>
-                    Last IP: <a title="<?php _e('Search for IP', 'ust') ?>" href="ms-sites.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1" class="edit"><?php echo $blog['last_ip']; ?></a>
+                    Last IP: <a title="<?php _e('Search for IP', 'ust') ?>" href="sites.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1" class="edit"><?php echo $blog['last_ip']; ?></a>
                     <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="<?php echo $ust_admin_url.$page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['last_ip']; ?>"><?php _e('Spam', 'ust') ?></a></small>
   								<?php endif; ?>
                   </td>
@@ -1673,15 +1691,19 @@ function ust_admin_output() {
   		$page_link = ($apage > 1) ? '&amp;apage='.$apage : '';
   		?>
 
-  		<form id="form-blog-list" action="ms-edit.php?action=allblogs&amp;updatedmsg=Settings+Saved" method="post">
+  		<form id="form-blog-list" action="edit.php?action=allblogs" method="post">
 
   		<div class="tablenav">
   			<?php if ( $blog_navigation ) echo "<div class='tablenav-pages'>$blog_navigation</div>"; ?>
 
   			<div class="alignleft">
-  				<input type="submit" value="<?php _e('Delete') ?>" name="allblog_delete" class="button-secondary delete" />
-  				<input type="submit" value="<?php _e('Not Spam') ?>" name="allblog_notspam" class="button-secondary allblog_notspam" />
-  				<?php wp_nonce_field( 'allblogs' ); ?>
+  				<select name="action">
+            <option selected="selected" value="-1"><?php _e('Bulk Actions') ?></option>
+          	<option value="delete"><?php _e('Delete') ?></option>
+          	<option value="notspam"><?php _e('Not Spam') ?></option>
+          </select>
+          <input type="submit" value="Apply" class="button-secondary action" id="doaction" name="doaction">
+          <?php wp_nonce_field( 'bulk-sites' ); ?>
   				<br class="clear" />
   			</div>
   		</div>
@@ -1746,7 +1768,7 @@ function ust_admin_output() {
   									<?php
   									$controlActions	= array();
   									$controlActions[]	= '<a class="delete ust_unspam" href="'.$ust_admin_url.'&amp;tab=splogs'.$page_link.'&amp;unspam_blog=1&amp;id=' . $blog['blog_id'] . '&amp;updated=1&amp;updatedmsg=' . urlencode( __('Blog marked as not spam!', 'ust')).'">' . __('Not Spam') . '</a>';
-  									$controlActions[]	= '<a class="delete" href="ms-edit.php?action=confirm&amp;action2=deleteblog&amp;id=' . $blog['blog_id'] . '&amp;msg=' . urlencode( sprintf( __( "You are about to delete the blog %s" ), $blogname ) ) . '&amp;updatedmsg=' . urlencode( __('Blog Deleted!', 'ust')).'">' . __("Delete") . '</a>';
+  									$controlActions[]	= '<a class="delete" href="' . wp_nonce_url('edit.php?action=confirm&amp;action2=deleteblog&amp;id=' . $blog['blog_id'] . '&amp;msg=' . urlencode( sprintf( __( "You are about to delete the blog %s" ), $blogname ) ) . '&amp;updatedmsg=' . urlencode( __('Blog Deleted!', 'ust')), 'confirm').'">' . __("Delete") . '</a>';
   									?>
 
   									<?php if (count($controlActions)) : ?>
@@ -1764,7 +1786,7 @@ function ust_admin_output() {
                   $user_spam = $result->spam;
                 ?>
   								<td valign="top">
-  									Registered: <a title="<?php _e('Search for IP', 'ust') ?>" href="ms-sites.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1" class="edit"><?php echo $blog['IP']; ?></a>
+  									Registered: <a title="<?php _e('Search for IP', 'ust') ?>" href="sites.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1" class="edit"><?php echo $blog['IP']; ?></a>
                     <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="<?php echo $ust_admin_url.$page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['IP']; ?>"><?php _e('Spam', 'ust') ?></a></small><br />
                   <?php if ($blog['last_user_id']) : ?>
                     <?php $spm_class = ($user_spam) ? ' style="color:red;"' : ''; ?>
@@ -1773,7 +1795,7 @@ function ust_admin_output() {
                     <br />
                   <?php endif; ?>
                   <?php if ($blog['last_ip']) : ?>
-                    Last IP: <a title="<?php _e('Search for IP', 'ust') ?>" href="ms-sites.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1" class="edit"><?php echo $blog['last_ip']; ?></a>
+                    Last IP: <a title="<?php _e('Search for IP', 'ust') ?>" href="sites.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1" class="edit"><?php echo $blog['last_ip']; ?></a>
                     <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="<?php echo $ust_admin_url.$page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['last_ip']; ?>"><?php _e('Spam', 'ust') ?></a></small>
   								<?php endif; ?>
                   </td>
@@ -1899,8 +1921,12 @@ function ust_admin_output() {
   			<?php if ( $blog_navigation ) echo "<div class='tablenav-pages'>$blog_navigation</div>"; ?>
 
   			<div class="alignleft">
-  				<input type="submit" value="<?php _e('Delete') ?>" name="allblog_delete" class="button-secondary delete" />
-  				<input type="submit" value="<?php _e('Not Spam') ?>" name="allblog_notspam" class="button-secondary allblog_notspam" />
+          <select name="action2">
+            <option selected="selected" value="-1"><?php _e('Bulk Actions') ?></option>
+          	<option value="delete"><?php _e('Delete') ?></option>
+          	<option value="notspam"><?php _e('Not Spam') ?></option>
+          </select>
+          <input type="submit" value="Apply" class="button-secondary action" id="doaction2" name="doaction2">
   				<br class="clear" />
   			</div>
   		</div>
@@ -2042,7 +2068,7 @@ function ust_admin_output() {
                   $user_spam = $result->spam;
                 ?>
   								<td valign="top">
-  									Registered: <a title="<?php _e('Search for IP', 'ust') ?>" href="ms-sites.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1" class="edit"><?php echo $blog['IP']; ?></a>
+  									Registered: <a title="<?php _e('Search for IP', 'ust') ?>" href="sites.php?action=blogs&amp;s=<?php echo $blog['IP'] ?>&blog_ip=1" class="edit"><?php echo $blog['IP']; ?></a>
                     <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="<?php echo $ust_admin_url.$page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['IP']; ?>"><?php _e('Spam', 'ust') ?></a></small><br />
                   <?php if ($blog['last_user_id']) : ?>
                     <?php $spm_class = ($user_spam) ? ' style="color:red;"' : ''; ?>
@@ -2051,7 +2077,7 @@ function ust_admin_output() {
                     <br />
                   <?php endif; ?>
                   <?php if ($blog['last_ip']) : ?>
-                    Last IP: <a title="<?php _e('Search for IP', 'ust') ?>" href="ms-sites.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1" class="edit"><?php echo $blog['last_ip']; ?></a>
+                    Last IP: <a title="<?php _e('Search for IP', 'ust') ?>" href="sites.php?action=blogs&amp;s=<?php echo $blog['last_ip']; ?>&blog_ip=1" class="edit"><?php echo $blog['last_ip']; ?></a>
                     <small class="row-actions"><a class="ust_spamip" title="<?php _e('Spam all blogs tied to this IP', 'ust') ?>" href="<?php echo $ust_admin_url.$page_link; ?>&updated=1&id=<?php echo $blog['blog_id']; ?>&spam_ip=<?php echo $blog['last_ip']; ?>"><?php _e('Spam', 'ust') ?></a></small>
   								<?php endif; ?>
                   </td>
@@ -2499,7 +2525,7 @@ function ust_admin_output() {
               <li><b>Ignored Blogs</b> - If a valid blog shows up in the suspect list, simply mark it as ignored to get it out of there. It will then show in the ignored list just in case you need to undo.</li>
             </ul>
           </ol>", 'ust');
-        echo '<p style="text-align:center;"><img src="'.WPMU_PLUGIN_URL.'/anti-splog/anti-splog.gif" /></p>';
+        echo '<p style="text-align:center;"><img src="'.WP_PLUGIN_URL.'/anti-splog/includes/anti-splog.gif" /></p>';
 
 		break;
 
