@@ -5,7 +5,7 @@ Plugin URI: http://premium.wpmudev.org/project/anti-splog
 Description: The ultimate plugin and service to stop and kill splogs in WordPress Multisite and BuddyPress
 Author: Aaron Edwards (Incsub)
 Author URI: http://premium.wpmudev.org
-Version: 1.0.6
+Version: 1.0.6.1
 Network: true
 WDP ID: 120
 */
@@ -41,12 +41,6 @@ $ust_api_url = 'http://premium.wpmudev.org/ust-api.php';
 //---Hook-----------------------------------------------------------------//
 
 //------------------------------------------------------------------------//
-
-//force multisite
-if ( !is_multisite() )
-  die( __('Anti-Splog is only compatible with Multisite installs.', 'ust') );
-else if ( version_compare($wp_version, '3.0.9', '<=') )
-  die( __('This version of Anti-Splog is only compatible with WordPress 3.1 and greater.', 'ust') );
 
 //check for activating
 if ($_GET['key'] == '' || $_GET['key'] === '') {
@@ -93,12 +87,24 @@ add_action('muplugins_loaded', 'ust_preview_splog');
 add_action('wp_ajax_ust_ajax', 'ust_do_ajax'); //ajax
 add_filter('site_option_no_anti_spam_nag', create_function('', 'return 1;')); //remove 2.9 spam nag
 
+register_activation_hook( __FILE__, 'ust_activate_check' );
 
 //------------------------------------------------------------------------//
 
 //---Functions------------------------------------------------------------//
 
 //------------------------------------------------------------------------//
+
+function ust_activate_check() {
+	global $wp_version;
+
+	//force multisite
+	if ( !is_multisite() )
+	  die( __('Anti-Splog is only compatible with Multisite installs.', 'ust') );
+	else if ( version_compare($wp_version, '3.0.9', '<=') )
+	  die( __('This version of Anti-Splog is only compatible with WordPress 3.1 and greater.', 'ust') );
+
+}
 
 function ust_admin_url() {
   global $ust_admin_url, $wp_version;
