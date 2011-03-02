@@ -126,7 +126,7 @@ $auto_spammed = get_option('ust_auto_spammed');
     $recaptcha = get_site_option('ust_recaptcha');
     
     if ($recaptcha['privkey']) {
-      require_once('mu-plugins/anti-splog/recaptchalib.php');
+      require_once(WP_PLUGIN_DIR . '/anti-splog/includes/recaptchalib.php');
       
       echo "<script type='text/javascript'>var RecaptchaOptions = { theme : 'white', lang : '{$recaptcha['lang']}' , tabindex : 30 };</script>";
       echo '<p><label>'.__('Human Verification:', 'ust').'</label></p>';
