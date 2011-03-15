@@ -5,7 +5,7 @@ Plugin URI: http://premium.wpmudev.org/project/anti-splog
 Description: The ultimate plugin and service to stop and kill splogs in WordPress Multisite and BuddyPress
 Author: Aaron Edwards (Incsub)
 Author URI: http://premium.wpmudev.org
-Version: 1.0.7
+Version: 1.1
 Network: true
 WDP ID: 120
 */
@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 //------------------------------------------------------------------------//
 
-$ust_current_version = '1.0.7';
+$ust_current_version = '1.1';
 $ust_api_url = 'http://premium.wpmudev.org/ust-api.php';
 
 //------------------------------------------------------------------------//
@@ -69,6 +69,7 @@ add_action('admin_init', 'ust_admin_scripts_init');
 add_action('save_post', 'ust_check_post');
 add_action('admin_menu', 'ust_plug_pages');
 add_action('network_admin_menu', 'ust_plug_pages');
+add_action('admin_notices', 'ust_api_warning');
 add_action('network_admin_notices', 'ust_api_warning');
 add_action('network_admin_notices', 'ust_install_notice');
 add_action('signup_blogform', 'ust_signup_fields', 50);
@@ -269,8 +270,13 @@ function ust_wpsignup_page($wp_query) {
 		//include the signup page
     $wp_query->is_home = false;
     $wp_query->is_page = 1;
-		require_once('includes/ust-wp-signup.php');
-
+    
+    //allow for a custom signup page to override this by placing in wp-content dir
+		if ( file_exists( WP_CONTENT_DIR . '/custom-wpsignup.php' ) ) {
+      require_once( WP_CONTENT_DIR . '/custom-wpsignup.php' );
+		} else {
+			require_once('includes/ust-wp-signup.php');
+		}
 		die();
 	}
 }
@@ -973,8 +979,9 @@ function ust_api_warning() {
     return;
 
   $ust_settings = get_site_option("ust_settings");
-  if (!$ust_settings['api_key'])
-    echo "<div id='ust-warning' class='updated fade'><p><strong>".__('Anti-Splog is almost ready.', 'ust')."</strong> ".sprintf(__('You must <a href="%1$s">enter your WPMU DEV Premium API key</a> for it to work.'), "$ust_admin_url&tab=settings")."</p></div>";
+  $expire = get_site_option("ust_key_dismiss");
+  if (!$ust_settings['api_key'] && !isset($_GET['dismiss']) && !($expire && $expire > time()))
+    echo "<div id='ust-warning' class='error fade'><p>".sprintf(__('Anti-Splog is not fully enabled. You must <a href="%1$s">enter your WPMU DEV Premium API key</a> to enable the powerful blog and signup checking. <a href="%2$s">More info&raquo;</a>', 'ust'), "$ust_admin_url&tab=settings", 'http://premium.wpmudev.org/project/anti-splog'). ' <a style="float:right;" title="'.__('Dismiss this notice for one month', 'ust').'" href="' . $ust_admin_url . '&tab=settings&dismiss=1"><small>'.__('Dismiss', 'ust')."</small></a></p></div>";
 }
 
 function ust_wpsignup_url($echo=true) {
@@ -1211,6 +1218,12 @@ function ust_admin_output() {
 		return;
 	}
 
+	//handle notice dismissal
+	if (isset($_GET['dismiss'])) {
+	  update_site_option( 'ust_key_dismiss', strtotime("+1 month") );
+    ?><div class="updated fade"><p><?php _e('Notice dismissed.', 'ust'); ?></p></div><?php
+	}
+			
 	//process any actions and messages
 	if ( isset($_GET['spam_user']) ) {
 	  //spam a user and all blogs they are associated with
@@ -1298,6 +1311,7 @@ function ust_admin_output() {
 	?>
 
   <div class="wrap">
+  <div class="icon32"><img src="<?php echo plugins_url('/anti-splog/includes/icon-large.png'); ?>" /></div>
   <h2><?php _e('Anti-Splog', 'ust') ?></h2>
 	<ul class="subsubsub">
   <?php
@@ -1334,9 +1348,13 @@ function ust_admin_output() {
 
 		  ?><h3><?php _e('Suspected Blogs', 'ust') ?></h3><?php
 
-		  _e('<p>This is the moderation queue for suspicious blogs. When you are sure a blog is spam, mark it so. If it is definately a valid blog you should "ignore" it. It is best to leave blogs in here until you are sure whether they are spam or not spam, as the system learns from both actions.</p>', 'ust');
+      $ust_settings = get_site_option("ust_settings");
+		  $expire = get_site_option("ust_key_dismiss");
+		  if (!$ust_settings['api_key'])
+		    echo "<div id='ust-warning' class='error fade'><p>".sprintf(__('You must enable the Anti-Splog API by <a href="%1$s">entering your WPMU DEV Premium API key</a> to be able to use this feature of the plugin.', 'ust'), "$ust_admin_url&tab=settings"). "</p></div>";
 
-		  $ust_settings = get_site_option('ust_settings');
+		  _e('<p>This is the moderation queue for suspicious blogs. When you are sure a blog is spam, mark it so. If it is definitely a valid blog you should "ignore" it. It is best to leave blogs in here until you are sure whether they are spam or not spam, as the system learns from both actions.</p>', 'ust');
+
       $apage = isset( $_GET['apage'] ) ? intval( $_GET['apage'] ) : 1;
   		$num = isset( $_GET['num'] ) ? intval( $_GET['num'] ) : $ust_settings['paged_blogs'];
   		$page_link = ($apage > 1) ? '&amp;apage='.$apage : '';
@@ -2222,8 +2240,7 @@ function ust_admin_output() {
 		case "settings":
 
 		  $domain = $current_site->domain;
-      $ip = $_SERVER['SERVER_ADDR'];
-		  $register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;ip=$ip&amp;domain=$domain";
+		  $register_url = "http://premium.wpmudev.org/wp-admin/profile.php?page=ustapi&amp;domain=$domain";
 
 		  function ust_trim_array($input) {
         if (!is_array($input))
@@ -2300,9 +2317,10 @@ function ust_admin_output() {
 			?>
           <form method="post" action="<?php echo $ust_admin_url; ?>&tab=settings">
           <input type="hidden" name="ust_settings" value="1" />
-          <h3><?php _e('Settings', 'ust') ?></h3>
-          <p><?php _e("You must enter an API key and register the WordPress Multisite Domain (<strong>$domain</strong>) of this server to enable live splog checking. <a href='$register_url' target='_blank'>Get your API key and register your server here.</a> You must be a current WPMU DEV Premium subscriber to access our API.", 'ust') ?></p>
-          <table class="form-table">
+          <h3><?php _e('API Settings', 'ust') ?></h3>
+          <p><?php _e("You must enter an API key and register the WordPress Multisite Domain (<strong>$domain</strong>) of this server to enable live splog checking. <a href='$register_url' target='_blank'>Get your API key and register your server here.</a> You must be a current WPMU DEV Premium subscriber to use our API.", 'ust') ?></p>
+  				<p><?php _e("<strong>How It Works</strong> - When a user completes the signup for a blog (email activated) or publishes a blog post it will send all kinds of blog and signup info to our server here where we will rate it based on our secret ever-adjusting logic. Our API will then return a splog Certainty number (0%-100%) to your server. If that number is greater than the sensitivity preference you set in the plugin settings (80% default) then the blog gets auto-spammed. Since the blog was actually created, it will still show up in the site admin (as spammed) so you can unspam later if there was a mistake (and our service will learn from that). The API (especially the post checking part) has proven to be more than 98% effective at removing splogs. Enable it today to save countless hours managing your network!", 'ust') ?></p>
+					<table class="form-table">
               <tr valign="top">
               <th scope="row"><?php _e('API Key', 'ust') ?>*</th>
               <td><input type="text" name="ust[api_key]"<?php echo $style; ?> value="<?php echo stripslashes($ust_settings['api_key']); ?>" /><input type="submit" name="check_key" value="<?php _e('Check Key &raquo;', 'ust') ?>" /></td>
@@ -2333,7 +2351,11 @@ function ust_admin_output() {
               </select>
               <br /><em><?php _e('If a post from a new blog is checked by the API and returns a certainty number greater than or equal to this, it will automatically be marked as spam.', 'ust'); ?></em></td>
               </tr>
-
+						</table>
+						
+						<h3><?php _e('General Settings', 'ust') ?></h3>
+						<span class="description"><?php _e('These protections will work even without an API key.', 'ust') ?></span>
+						<table class="form-table">
               <tr valign="top">
               <th scope="row"><?php _e('Limit Blog Signups Per Day', 'ust') ?></th>
               <td><select name="ust[num_signups]">
@@ -2366,7 +2388,7 @@ function ust_admin_output() {
                 echo '<option value="1"' . ($ust_settings['spam_blog_users'] == 1 ? ' selected="selected"' : '') . '>' . __('Yes', 'ust') . '</option>' . "\n";
                 echo '<option value="0"' . ($ust_settings['spam_blog_users'] != 1 ? ' selected="selected"' : '') . '>' . __('No', 'ust') . '</option>' . "\n";
               ?>
-              </select><br /><em><?php _e("Enable this to spam/unspam all of a blog's users when the blog is spammed/unspammed. Does not spam Site Admins.", 'ust'); ?></em></td>
+              </select><br /><em><?php _e("Enable this to spam/unspam all of a blog's users when the blog is spammed/unspammed. Does not spam Super Admins.", 'ust'); ?></em></td>
               </td>
               </tr>
 
