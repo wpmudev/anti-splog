@@ -5,7 +5,7 @@ Plugin URI: http://premium.wpmudev.org/project/anti-splog
 Description: The ultimate plugin and service to stop and kill splogs in WordPress Multisite and BuddyPress
 Author: Aaron Edwards (Incsub)
 Author URI: http://premium.wpmudev.org
-Version: 1.0.6
+Version: 1.1
 */
 
 //return header to remove from search engines
@@ -34,7 +34,7 @@ if (isset($_POST['spam-submit']) && !get_option('ust_email_sent')) {
   //check reCAPTCHA
   $recaptcha = get_site_option('ust_recaptcha');
   if ($recaptcha['privkey']) {
-  	require_once('mu-plugins/anti-splog/recaptchalib.php');
+   	require_once(WP_PLUGIN_DIR . '/anti-splog/includes/recaptchalib.php');
   	$resp = rp_recaptcha_check_answer($recaptcha['privkey'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
   	
   	if (!$resp->is_valid) {
