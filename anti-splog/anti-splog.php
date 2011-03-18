@@ -333,7 +333,7 @@ function ust_blog_spammed($blog_id) {
     if ($blogusers) {
       foreach ($blogusers as $bloguser) {
         if (!is_super_admin($bloguser->user_login))
-          update_user_status($bloguser->user_id, "spam", '1', 1);
+          update_user_status($bloguser->user_id, "spam", '1');
       }
     }
   }
@@ -397,7 +397,7 @@ function ust_blog_unspammed($blog_id, $ignored=false) {
     $blogusers = get_users_of_blog($blog_id);
     if ($blogusers) {
       foreach ($blogusers as $bloguser) {
-        update_user_status($bloguser->user_id, "spam", '0', 1);
+        update_user_status($bloguser->user_id, "spam", '0');
       }
     }
   }
@@ -468,7 +468,7 @@ function ust_blog_created($blog_id, $user_id) {
   $ust_settings = get_site_option("ust_settings");
   if ($certainty >= $ust_settings['certainty']) {
     update_blog_option($blog_id, 'ust_auto_spammed', 1);
-    update_blog_status($blog_id, "spam", '1', 1);
+    update_blog_status($blog_id, "spam", '1');
   }
 }
 
@@ -524,7 +524,7 @@ function ust_check_post($tmp_post_ID) {
   $ust_settings = get_site_option("ust_settings");
   if ($certainty >= $ust_settings['post_certainty']) {
     update_blog_option($blog_id, 'ust_post_auto_spammed', 1);
-    update_blog_status($blog_id, "spam", '1', 1);
+    update_blog_status($blog_id, "spam", '1');
   }
 }
 
@@ -603,10 +603,10 @@ function ust_do_ajax() {
   		$blogs = get_blogs_of_user( (int)$_GET['spam_user'], true );
   		foreach ( (array) $blogs as $key => $details ) {
   			if ( $details->userblog_id == $current_site->blog_id ) { continue; } // main blog not a spam !
-  			update_blog_status( $details->userblog_id, "spam", '1', 0 );
+  			update_blog_status( $details->userblog_id, "spam", '1' );
   			set_time_limit(60);
   		}
-  		update_user_status( (int)$_GET['spam_user'], "spam", '1', 1 );
+  		update_user_status( (int)$_GET['spam_user'], "spam", '1' );
   	}
 
 	} else if ( isset($_POST['check_ip']) ) {
@@ -645,7 +645,7 @@ function ust_do_ajax() {
   	$blogs = $wpdb->get_results( $query, ARRAY_A );
 		foreach ( (array) $blogs as $blog ) {
       if ( $blog['blog_id'] == $current_site->blog_id ) { continue; } // main blog not a spam !
-			update_blog_status( $blog['blog_id'], "spam", '1', 0 );
+			update_blog_status( $blog['blog_id'], "spam", '1' );
 			set_time_limit(60);
 		}
 
@@ -661,12 +661,12 @@ function ust_do_ajax() {
 
   } else if ( isset($_GET['spam_blog']) ) {
 	  //spam a single blog
-	  update_blog_status( (int)$_GET['id'], "spam", '1', 1 );
+	  update_blog_status( (int)$_GET['id'], "spam", '1' );
 		echo $_GET['id'];
 
 	} else if (isset($_GET['unspam_blog'])) {
 
-    update_blog_status( (int)$_GET['id'], "spam", '0', 1 );
+    update_blog_status( (int)$_GET['id'], "spam", '0' );
     ust_blog_ignore((int)$_GET['id'], false);
     echo $_GET['id'];
 
@@ -682,10 +682,10 @@ function ust_do_ajax() {
 					ust_blog_unignore($val);
 					set_time_limit(60);
 				} else if ( isset($_POST['allblog_spam']) ) {
-					update_blog_status( $val, "spam", '1', 0 );
+					update_blog_status( $val, "spam", '1' );
 					set_time_limit(60);
 				} else if ( isset($_POST['allblog_notspam']) ) {
-					update_blog_status( $val, "spam", '0', 0 );
+					update_blog_status( $val, "spam", '0' );
 					ust_blog_ignore( $val, false );
 					set_time_limit(60);
 				}
@@ -1233,10 +1233,10 @@ function ust_admin_output() {
   		$blogs = get_blogs_of_user( (int)$_GET['spam_user'], true );
   		foreach ( (array) $blogs as $key => $details ) {
   			if ( $details->userblog_id == $current_site->blog_id ) { continue; } // main blog not a spam !
-  			update_blog_status( $details->userblog_id, "spam", '1', 0 );
+  			update_blog_status( $details->userblog_id, "spam", '1' );
   			set_time_limit(60);
   		}
-  		update_user_status( (int)$_GET['spam_user'], "spam", '1', 1 );
+  		update_user_status( (int)$_GET['spam_user'], "spam", '1' );
 		  $_GET['updatedmsg'] = sprintf(__('%s blog(s) spammed for user!', 'ust'), count($blogs));
   	}
 
@@ -1253,7 +1253,7 @@ function ust_admin_output() {
   	$blogs = $wpdb->get_results( $query, ARRAY_A );
 		foreach ( (array) $blogs as $blog ) {
       if ( $blog['blog_id'] == $current_site->blog_id ) { continue; } // main blog not a spam !
-			update_blog_status( $blog['blog_id'], "spam", '1', 0 );
+			update_blog_status( $blog['blog_id'], "spam", '1' );
 			set_time_limit(60);
 		}
 		$_GET['updatedmsg'] = sprintf(__('%s blog(s) spammed for %s!', 'ust'), count($blogs), $spam_ip);
@@ -1268,11 +1268,11 @@ function ust_admin_output() {
 
   } else if ( isset($_GET['spam_blog']) ) {
 	  //spam a single blog
-	  update_blog_status( (int)$_GET['id'], "spam", '1', 1 );
+	  update_blog_status( (int)$_GET['id'], "spam", '1' );
 
 	} else if (isset($_GET['unspam_blog'])) {
 
-    update_blog_status( (int)$_GET['id'], "spam", '0', 1 );
+    update_blog_status( (int)$_GET['id'], "spam", '0' );
     ust_blog_ignore( (int)$_GET['id'], false );
 
   } else if ( $_GET['action'] == 'all_notspam' ) {
@@ -1293,7 +1293,7 @@ function ust_admin_output() {
 					set_time_limit(60);
 				} else if ( isset($_POST['allblog_spam']) ) {
 				  $_GET['updatedmsg'] = __('Blogs marked as spam.', 'ust');
-					update_blog_status( $val, "spam", '1', 0 );
+					update_blog_status( $val, "spam", '1' );
 					set_time_limit(60);
 				}
 			}
