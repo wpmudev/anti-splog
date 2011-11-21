@@ -5,7 +5,7 @@ Plugin URI: http://premium.wpmudev.org/project/anti-splog
 Description: The ultimate plugin and service to stop and kill splogs in WordPress Multisite and BuddyPress
 Author: Aaron Edwards (Incsub)
 Author URI: http://premium.wpmudev.org
-Version: 1.1
+Version: 1.1.1
 */
 
 //return header to remove from search engines
@@ -84,9 +84,7 @@ $auto_spammed = get_option('ust_auto_spammed');
 	<?php
 	}
   //display modified logo if premium Login Image plugin is installed
-  if (function_exists('login_image_stylesheet')) {
-    login_image_stylesheet();
-  }
+  do_action( 'login_head' );
  ?>
   <style type="text/css" media="screen"> 
     #login { width: 340px; }
