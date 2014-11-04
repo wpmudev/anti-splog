@@ -60,8 +60,10 @@ svn propset svn:ignore "deploy.sh
 README.md
 .git
 .gitignore
+.gitmodules
 package.json
-Gruntfile.js" "$SVNPATH/trunk/"
+Gruntfile.js
+includes/dash-notice/wpmudev-dash-notification.php" "$SVNPATH/trunk/"
 
 echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/

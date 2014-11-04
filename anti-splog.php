@@ -5,7 +5,7 @@ Plugin URI: https://premium.wpmudev.org/project/anti-splog/
 Description: The ultimate plugin and service to stop and kill splogs in WordPress Multisite and BuddyPress
 Author: WPMU DEV
 Author URI: http://premium.wpmudev.org/
-Version: 2.1.3
+Version: 2.1.4
 Network: true
 WDP ID: 120
 */
@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 //------------------------------------------------------------------------//
 
-$ust_current_version = '2.1.3';
+$ust_current_version = '2.1.4';
 $ust_api_url         = 'http://premium.wpmudev.org/ust-api.php';
 
 //------------------------------------------------------------------------//
@@ -1762,7 +1762,7 @@ function ust_admin_help() {
               <li><b>Limiting the number of signups per IP per 24 hours</b> (this can slow down human spammers too if the site clientele supports it. Probably not edublogs though as it caters to schools which may need to make a large number of blogs from one IP)</li>
               <li><b>Changing the signup page location every 24 hours</b> - this is one of the most effective yet still user-friendly methods to stop bots dead. </li>
               <li><b>Human tests</b> - answering user defined questions, picking the cat pics, recaptcha, or Are You A Human PlayThru.</li>
-							<li><b>Pattern Matching</b> - checking site domains, titles, emails, or usernames against your defined set of regular expressions.</li>
+				<li><b>Pattern Matching</b> - checking site domains, titles, emails, or usernames against your defined set of regular expressions.</li>
             </ul>
           <li><b>The API</b> - when signup is complete (email activated) and blog is first created, or when a user publishes a new post it will send all kinds of blog and signup info to our premium server where we will rate it based on our secret ever-tweaking logic. Our API will then return a splog Certainty number (0%-100%). If that number is greater than the sensitivity preference you set in the settings (80% default) then the blog gets spammed. Since the blog was actually created, it will show up in the site admin still (as spammed) so you can unspam later if there was a mistake (and our API will learn from that).</li>
           <li><b>The Moderation Queue</b> - for existing blogs or blogs that get past other filters, the queue provides an ongoing way to monitor blogs and spam or flag them as valid (ignore) them more easily as they are updated with new posts. Also if a user tries to visit a blog that has been spammed, it will now show a user-friendly message and form to contact the admin for review if they think it was valid. The email contains links to be able to easily unspam or bring up the last posts. The entire queue is AJAX based so you can moderate blogs with incredible speed.</li>
@@ -1772,7 +1772,7 @@ function ust_admin_help() {
               <li><b>Ignored Blogs</b> - If a valid blog shows up in the suspect list, simply mark it as ignored to get it out of there. It will then show in the ignored list just in case you need to undo.</li>
             </ul>
           </ol>", 'ust' ) .
-		             '<p style="text-align:center;"><img src="' . WP_PLUGIN_URL . '/anti-splog/includes/anti-splog.gif" /></p>'
+		             '<p style="text-align:center;"><img src="' . plugins_url('/includes/anti-splog.gif', __FILE__) . '" /></p>'
 	) );
 
 	$domain       = $current_site->domain;
@@ -1943,15 +1943,17 @@ class UST_Widget extends WP_Widget {
 }
 
 //load dashboard notice
-global $wpmudev_notices;
-$wpmudev_notices[] = array(
-	'id'      => 120,
-	'name'    => 'Anti-Splog',
-	'screens' => array(
-		'toplevel_page_ust-network',
-		'anti-splog_page_ust-stats-network',
-		'anti-splog_page_ust-patterns-network',
-		'anti-splog_page_ust-settings-network'
-	)
-);
-//include_once( dirname( __FILE__ ) . '/includes/wpmudev-dash-notification.php' );
+if ( file_exists( dirname( __FILE__ ) . '/includes/dash-notice/wpmudev-dash-notification.php' ) ) {
+	global $wpmudev_notices;
+	$wpmudev_notices[] = array(
+		'id'      => 120,
+		'name'    => 'Anti-Splog',
+		'screens' => array(
+			'toplevel_page_ust-network',
+			'anti-splog_page_ust-stats-network',
+			'anti-splog_page_ust-patterns-network',
+			'anti-splog_page_ust-settings-network'
+		)
+	);
+	include_once( dirname( __FILE__ ) . '/includes/dash-notice/wpmudev-dash-notification.php' );
+}

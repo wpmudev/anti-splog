@@ -111,7 +111,7 @@ if ( ! $ust_settings['api_key'] ) {
 			<tr valign="top">
 				<th scope="row"><?php _e( 'API Key', 'ust' ) ?>*</th>
 				<td><input type="text" name="ust[api_key]"<?php echo $style; ?> size="45"
-				           value="<?php echo stripslashes( $ust_settings['api_key'] ); ?>"/><input type="submit"
+				           value="<?php echo stripslashes( $ust_settings['api_key'] ); ?>"/><input class="button-secondary" type="submit"
 				                                                                                   name="check_key"
 				                                                                                   value="<?php _e( 'Check Key &raquo;', 'ust' ) ?>"/>
 				</td>
