@@ -94,6 +94,9 @@ We provide comprehensive and guaranteed support on the <a href='http://premium.w
 
 == Changelog ==
 
+= 2.1.5 =
+* Fix: Are You a Human confict with BuddyPress site tracking
+
 = 2.1.4 =
 * Fix: Update blog-suspended.php template to work with ultimate branding logos
 
