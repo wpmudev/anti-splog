@@ -1657,12 +1657,13 @@ function ust_signup_fields_bp() {
 			$salt       = get_site_option( "ust_salt" );
 			$datesalt   = strtotime( date( 'Y-m-d H:00:00' ) );
 			$field_name = 'qa_' . md5( $qkey . $salt . $datesalt );
+			$field_value = isset($_POST[ $field_name ]) ? esc_attr( $_POST[ $field_name ] ) : '';
 
 			echo '<div class="register-section" id="antisplog">';
 			echo '<label>' . __( 'Human Verification:', 'ust' ) . '</label>';
 			do_action( 'bp_qa_errors' );
 			echo stripslashes( $ust_qa[ $qkey ][0] );
-			echo '<br /><input type="text" id="qa" name="' . $field_name . '" value="' . htmlentities( $_POST[ $field_name ] ) . '" />';
+			echo '<br /><input type="text" id="qa" name="' . $field_name . '" value="' . $field_value . '" />';
 			echo '<br /><small>' . __( 'NOTE: Answers are not case sensitive.', 'ust' ) . '</small>';
 			echo '</div>';
 		}
