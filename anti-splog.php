@@ -1588,6 +1588,18 @@ function ust_signup_fields( $errors ) {
 		?>
 		<script type="text/javascript">jQuery(document).ready(function ($) {
 				$('input.submit').attr('name', 'submit_site');
+            <?php
+            //Add a 'submit' input field for compatibility when BP and Site tracking component are active.
+            if(function_exists('bp_is_active') && bp_is_active('blogs')):
+            ?>
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'submit',
+                    name: 'submit'
+                }).appendTo('#setupform');
+                <?php
+                endif;
+                ?>
 			});</script>
 	<?php
 	}
