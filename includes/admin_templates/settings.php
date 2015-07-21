@@ -264,7 +264,7 @@ if ( ! $ust_settings['api_key'] ) {
 				<th scope="row"><?php _e( 'Spam Keyword Search', 'ust' ) ?></th>
 				<td>
 					<em><?php _e( 'Enter one word or phrase per line. Keywords are not case sensitive and may match any part of a word. Example: "Ugg" would match "s<strong>ugg</strong>estion".', 'ust' ); ?></em><br/>
-					<?php if ( ! function_exists( 'post_indexer_post_insert_update' ) ) { ?>
+					<?php if ( !class_exists( 'postindexermodel' ) ) { ?>
 						<p class="error"><?php _e( 'You must install the <a target="_blank" href="http://premium.wpmudev.org/project/post-indexer">Post Indexer</a> plugin to enable keyword flagging.', 'ust' ); ?></p>
 						<textarea name="ust[keywords]" style="width:200px" rows="4"
 						          disabled="disabled"><?php echo stripslashes( implode( "\n", (array) $ust_settings['keywords'] ) ); ?></textarea>
