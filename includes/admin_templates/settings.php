@@ -15,6 +15,13 @@ function ust_trim_array( $input ) {
 	return array_map( 'ust_trim_array', $input );
 }
 
+//handle notice dismissal
+if ( isset( $_GET['dismiss'] ) ) {
+	update_site_option( 'ust_key_dismiss', strtotime( "+1 month" ) );
+	?>
+	<div class="updated fade"><p><?php _e( 'Notice dismissed.', 'ust' ); ?></p></div><?php
+}
+
 //process form
 if ( isset( $_POST['ust_settings'] ) ) {
 
@@ -207,7 +214,7 @@ if ( ! $ust_settings['api_key'] ) {
 					</label>
 					<br/><?php _e( 'Current Signup URL:', 'ust' ) ?> <strong><a target="_blank"
 					                                                            href="<?php ust_wpsignup_url(); ?>"><?php ust_wpsignup_url(); ?></a></strong>
-					<br/><em><?php _e( "Checking this option will disable the wp-signup.php form and change the signup url automatically every 24 hours. It will look something like <strong>http://$domain/signup-XXX/</strong>. To use this you may need to make some slight edits to your main theme's template files. Replace any hardcoded links to wp-signup.php with this function: <strong>&lt;?php ust_wpsignup_url(); ?&gt;</strong> Within post or page content you can insert the <strong>[ust_wpsignup_url]</strong> shortcode, usually in the href of a link. See the install.txt file for more detailed documentation on this function.", 'ust' ); ?></em>
+					<br/><em><?php _e( "Checking this option will disable the wp-signup.php form and change the signup url automatically every 24 hours. It will look something like <strong>http://$domain/signup-XXX/</strong>. To use this you may need to make some slight edits to your main theme's template files. Replace any hardcoded links to wp-signup.php with this function: <strong>&lt;?php ust_wpsignup_url(); ?&gt;</strong> Within post or page content you can insert the <strong>[ust_wpsignup_url]</strong> shortcode, usually in the href of a link.", 'ust' ); ?></em>
 				</td>
 				</td>
 			</tr>
@@ -264,7 +271,7 @@ if ( ! $ust_settings['api_key'] ) {
 				<th scope="row"><?php _e( 'Spam Keyword Search', 'ust' ) ?></th>
 				<td>
 					<em><?php _e( 'Enter one word or phrase per line. Keywords are not case sensitive and may match any part of a word. Example: "Ugg" would match "s<strong>ugg</strong>estion".', 'ust' ); ?></em><br/>
-					<?php if ( !class_exists( 'postindexermodel' ) ) { ?>
+					<?php if ( ! class_exists( 'postindexermodel' ) ) { ?>
 						<p class="error"><?php _e( 'You must install the <a target="_blank" href="http://premium.wpmudev.org/project/post-indexer">Post Indexer</a> plugin to enable keyword flagging.', 'ust' ); ?></p>
 						<textarea name="ust[keywords]" style="width:200px" rows="4"
 						          disabled="disabled"><?php echo stripslashes( implode( "\n", (array) $ust_settings['keywords'] ) ); ?></textarea>

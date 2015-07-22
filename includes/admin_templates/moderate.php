@@ -5,13 +5,6 @@ if ( ! current_user_can( 'manage_sites' ) ) {
 	wp_die( __( 'Nice Try...', 'ust' ) );  //If accessed properly, this message doesn't appear.
 }
 
-//handle notice dismissal
-if ( isset( $_GET['dismiss'] ) ) {
-	update_site_option( 'ust_key_dismiss', strtotime( "+1 month" ) );
-	?>
-	<div class="updated fade"><p><?php _e( 'Notice dismissed.', 'ust' ); ?></p></div><?php
-}
-
 //process any actions and messages
 if ( isset( $_GET['spam_user'] ) ) {
 	//spam a user and all blogs they are associated with
@@ -169,13 +162,13 @@ switch ( $tab ) {
 		}
 
 		//if the Post Indexer plugin is installed and keywords are set
-		if ( function_exists( 'post_indexer_post_insert_update' ) && $keyword_string ) {
+		if ( class_exists( 'postindexermodel' ) && $keyword_string ) {
 
 			$query = "SELECT *
 								FROM {$wpdb->blogs} b
 									JOIN {$wpdb->registration_log} r ON b.blog_id = r.blog_id
 									JOIN {$wpdb->base_prefix}ust u ON b.blog_id = u.blog_id
-									LEFT JOIN (SELECT `blog_id` as bid, COUNT( `site_post_id` ) AS total FROM `{$wpdb->base_prefix}site_posts` WHERE $keyword_string GROUP BY blog_id) as s ON b.blog_id = s.bid
+									LEFT JOIN (SELECT `BLOG_ID` as bid, COUNT( `ID` ) AS total FROM `{$wpdb->base_prefix}network_posts` WHERE $keyword_string GROUP BY BLOG_ID) as s ON b.blog_id = s.bid
 								WHERE b.site_id = '{$wpdb->siteid}'
 									AND b.spam = '0' AND b.deleted = '0' AND b.archived = '0'
 									AND u.`ignore` = '0' AND b.blog_id != '{$current_site->blog_id}'
@@ -186,7 +179,7 @@ switch ( $tab ) {
 																FROM {$wpdb->blogs} b
 																	JOIN {$wpdb->registration_log} r ON b.blog_id = r.blog_id
 																	JOIN {$wpdb->base_prefix}ust u ON b.blog_id = u.blog_id
-																	LEFT JOIN (SELECT `blog_id`, COUNT( `site_post_id` ) AS total FROM `{$wpdb->base_prefix}site_posts` WHERE $keyword_string GROUP BY blog_id) as s ON b.blog_id = s.blog_id
+																	LEFT JOIN (SELECT `BLOG_ID`, COUNT( `ID` ) AS total FROM `{$wpdb->base_prefix}network_posts` WHERE $keyword_string GROUP BY BLOG_ID) as s ON b.blog_id = s.BLOG_ID
 																WHERE b.site_id = '{$wpdb->siteid}'
 																	AND b.spam = '0' AND b.deleted = '0' AND b.archived = '0'
 																	AND u.`ignore` = '0' AND b.blog_id != '{$current_site->blog_id}'
@@ -461,7 +454,7 @@ switch ( $tab ) {
 
 			} else {
 				?>
-				<tr style='background-color: <?php echo $bgcolor; ?>'>
+				<tr>
 					<td colspan="8"><?php _e( 'No blogs found.' ) ?></td>
 				</tr>
 			<?php

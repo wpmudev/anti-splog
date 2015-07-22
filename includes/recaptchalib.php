@@ -103,7 +103,7 @@ function _rp_recaptcha_http_post($host, $path, $data, $port = 80) {
 
  * @return string - The HTML to be embedded in the user's form.
  */
-function rp_recaptcha_get_html ($pubkey, $error = null, $use_ssl = false)
+function rp_recaptcha_get_html ($pubkey, $error = null, $use_ssl = true)
 {
 	if ($pubkey == null || $pubkey == '') {
 		die ("To use reCAPTCHA you must get an API key from <a href='http://recaptcha.net/api/getkey'>http://recaptcha.net/api/getkey</a>");

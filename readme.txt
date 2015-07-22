@@ -94,6 +94,11 @@ We provide comprehensive and guaranteed support on the <a href='http://premium.w
 
 == Changelog ==
 
+= 2.1.6 =
+* Fix: API notice could not be dismissed
+* Fix: Update integration for latest Post Indexer versions
+* Fix: HTTPS issues for reCAPTCHA
+
 = 2.1.5 =
 * Fix: Are You a Human confict with BuddyPress site tracking
 
