@@ -94,6 +94,10 @@ We provide comprehensive and guaranteed support on the <a href='http://premium.w
 
 == Changelog ==
 
+= 2.1.7 =
+* Fix: Update depreciated methods in widget
+*
+
 = 2.1.6 =
 * Fix: API notice could not be dismissed
 * Fix: Update integration for latest Post Indexer versions

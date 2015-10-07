@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 //------------------------------------------------------------------------//
 
-$ust_current_version = '2.1.6';
+$ust_current_version = '2.1.7';
 $ust_api_url         = 'http://premium.wpmudev.org/ust-api.php';
 
 //------------------------------------------------------------------------//
@@ -1905,12 +1905,12 @@ function ust_admin_settings() {
 
 class UST_Widget extends WP_Widget {
 
-	function UST_Widget() {
+	function __construct() {
 		$widget_ops = array(
 			'classname'   => 'ust_widget',
 			'description' => __( 'Displays counts of site blogs and splogs caught by the Anti-Splog.', 'ust' )
 		);
-		$this->WP_Widget( 'ust_widget', __( 'Splog Statistics', 'ust' ), $widget_ops );
+		parent::__construct( 'ust_widget', __( 'Splog Statistics', 'ust' ), $widget_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -1929,7 +1929,7 @@ class UST_Widget extends WP_Widget {
 			<li><?php _e( 'Blogs: ', 'ust' );
 				echo get_blog_count(); ?></li>
 			<li><?php _e( 'Splogs Caught: ', 'ust' );
-				echo get_site_option( 'ust_spam_count' ); ?></li>
+				echo number_format_i18n( (int)get_site_option( 'ust_spam_count' ) ); ?></li>
 		</ul>
 
 		<?php echo $after_widget; ?>
@@ -1950,7 +1950,7 @@ class UST_Widget extends WP_Widget {
 		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'ust' ) ?> <input
 					class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
 					name="<?php echo $this->get_field_name( 'title' ); ?>" type="text"
-					value="<?php echo attribute_escape( $title ); ?>"/></label></p>
+					value="<?php echo esc_attr( $title ); ?>"/></label></p>
 	<?php
 	}
 }
