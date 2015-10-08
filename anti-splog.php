@@ -5,7 +5,7 @@ Plugin URI: https://premium.wpmudev.org/project/anti-splog/
 Description: The ultimate plugin and service to stop and kill splogs in WordPress Multisite and BuddyPress
 Author: WPMU DEV
 Author URI: http://premium.wpmudev.org/
-Version: 2.1.6
+Version: 2.1.7
 Network: true
 WDP ID: 120
 */
@@ -1085,10 +1085,10 @@ function ust_signup_errorcheck( $content ) {
 
 		//check reCAPTCHA
 		$recaptcha = get_site_option( 'ust_recaptcha' );
-		require_once( 'includes/recaptchalib.php' );
-		$resp = rp_recaptcha_check_answer( $recaptcha['privkey'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"] );
 
-		if ( ! $resp->is_valid ) {
+		$resp = ust_recaptcha_check_answer( $recaptcha['privkey'], $_SERVER["REMOTE_ADDR"], $_POST["g-recaptcha-response"] );
+
+		if ( ! $resp ) {
 			$content['errors']->add( 'recaptcha', __( "The reCAPTCHA wasn't entered correctly. Please try again.", 'ust' ) );
 		}
 
@@ -1157,10 +1157,10 @@ function ust_signup_errorcheck_bp() {
 
 		//check reCAPTCHA
 		$recaptcha = get_site_option( 'ust_recaptcha' );
-		require_once( 'includes/recaptchalib.php' );
-		$resp = rp_recaptcha_check_answer( $recaptcha['privkey'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"] );
 
-		if ( ! $resp->is_valid ) {
+		$resp = ust_recaptcha_check_answer( $recaptcha['privkey'], $_SERVER["REMOTE_ADDR"], $_POST["g-recaptcha-response"] );
+
+		if ( ! $resp ) {
 			$bp->signup->errors['recaptcha'] = __( "The reCAPTCHA wasn't entered correctly. Please try again.", 'ust' );
 		}
 
@@ -1501,16 +1501,14 @@ function ust_signup_fields( $errors ) {
 	if ( $ust_settings['signup_protect'] == 'recaptcha' ) {
 
 		$recaptcha = get_site_option( 'ust_recaptcha' );
-		require_once( 'includes/recaptchalib.php' );
 
-		echo "<script type='text/javascript'>var RecaptchaOptions = { theme : '{$recaptcha['theme']}', lang : '{$recaptcha['lang']}' , tabindex : 30 };</script>";
-		echo '<p><label>' . __( 'Human Verification:', 'ust' ) . '</label>';
+		echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
+		echo '<label>' . __( 'Human Verification:', 'ust' ) . '</label>';
 		if ( $errmsg = $errors->get_error_message( 'recaptcha' ) ) {
 			echo '<p class="error">' . $errmsg . '</p>';
 		}
-		echo '<div id="reCAPTCHA">';
-		echo rp_recaptcha_get_html( $recaptcha['pubkey'] );
-		echo '</div></p>&nbsp;<br />';
+		echo '<div class="g-recaptcha" data-sitekey="' . esc_attr( $recaptcha['pubkey'] ) . '" data-theme="' . esc_attr( $recaptcha['theme'] ) . '"></div>';
+		echo '<br />';
 
 	} else if ( $ust_settings['signup_protect'] == 'asirra' ) {
 
@@ -1611,15 +1609,13 @@ function ust_signup_fields_bp() {
 	if ( $ust_settings['signup_protect'] == 'recaptcha' ) {
 
 		$recaptcha = get_site_option( 'ust_recaptcha' );
-		require_once( 'includes/recaptchalib.php' );
+		echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
 
 		echo '<div class="register-section" id="blog-details-section">';
-		echo "<script type='text/javascript'>var RecaptchaOptions = { theme : '{$recaptcha['theme']}', lang : '{$recaptcha['lang']}' , tabindex : 30 };</script>";
 		echo '<label>' . __( 'Human Verification:', 'ust' ) . '</label>';
 		do_action( 'bp_recaptcha_errors' );
-		echo '<div id="reCAPTCHA">';
-		echo rp_recaptcha_get_html( $recaptcha['pubkey'] );
-		echo '</div></div>';
+		echo '<div class="g-recaptcha" data-sitekey="' . esc_attr( $recaptcha['pubkey'] ) . '" data-theme="' . esc_attr( $recaptcha['theme'] ) . '"></div>';
+		echo '</div>';
 
 	} else if ( $ust_settings['signup_protect'] == 'asirra' ) {
 
@@ -1879,6 +1875,27 @@ function ust_test_regex() {
 				'data'   => __( 'Sorry, you may not do live tests on site titles.', 'ust' )
 			) ) );
 	}
+}
+
+function ust_recaptcha_check_answer( $secret_key, $ip, $response ) {
+
+	$body = array( 'secret' => $secret_key,
+	               'remoteip' => $ip,
+	               'response' => $response );
+
+	$result = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify',
+		array( 'body' => $body )
+	);
+
+	if ( is_wp_error( $result ) ) {
+		return false;
+	} else {
+		$result = json_decode( wp_remote_retrieve_body( $result ) );
+		if ( isset( $result->success ) ) {
+			return (bool)$result->success;
+		}
+	}
+	return false;
 }
 
 //------------------------------------------------------------------------//

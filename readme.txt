@@ -2,7 +2,7 @@
 Contributors: WPMUDEV
 Tags: splog, splogs, spam, multisite, buddypress, signup, captcha, wpmu
 Requires at least: 3.8
-Tested up to: 4.2.2
+Tested up to: 4.3.1
 Stable tag: trunk
 
 The ultimate plugin and service to stop and kill splogs in WordPress Multisite and BuddyPress, from WPMU DEV.
@@ -95,8 +95,9 @@ We provide comprehensive and guaranteed support on the <a href='http://premium.w
 == Changelog ==
 
 = 2.1.7 =
-* Fix: Update depreciated methods in widget
-*
+* New: Update to better reCAPTCHA v2
+* Fix: Fix depreciated notices from widget
+* Fix: reCAPTCHA issues in Pro Sites custom signup page
 
 = 2.1.6 =
 * Fix: API notice could not be dismissed

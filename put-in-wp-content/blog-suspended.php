@@ -36,7 +36,7 @@ if (isset($_POST['spam-submit']) && !get_option('ust_email_sent')) {
   $recaptcha = get_site_option('ust_recaptcha');
   if ($recaptcha['privkey']) {
    	require_once(WP_PLUGIN_DIR . '/anti-splog/includes/recaptchalib.php');
-  	$resp = rp_recaptcha_check_answer($recaptcha['privkey'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
+  	$resp = ust_recaptcha_check_answer($recaptcha['privkey'], $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
   	
   	if (!$resp->is_valid) {
   	  $error2 = '<p class="error">'.__("The reCAPTCHA wasn't entered correctly. Please try again.", 'ust').'</p>';

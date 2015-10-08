@@ -224,8 +224,8 @@ if ( ! $ust_settings['api_key'] ) {
 				<td>
 					<select name="ust[spam_blog_users]">
 						<?php
-						echo '<option value="1"' . ( $ust_settings['spam_blog_users'] == 1 ? ' selected="selected"' : '' ) . '>' . __( 'Yes', 'ust' ) . '</option>' . "\n";
-						echo '<option value="0"' . ( $ust_settings['spam_blog_users'] != 1 ? ' selected="selected"' : '' ) . '>' . __( 'No', 'ust' ) . '</option>' . "\n";
+						echo '<option value="1"' . ( isset( $ust_settings['spam_blog_users']) && $ust_settings['spam_blog_users'] == 1 ? ' selected="selected"' : '' ) . '>' . __( 'Yes', 'ust' ) . '</option>' . "\n";
+						echo '<option value="0"' . ( ! isset( $ust_settings['spam_blog_users'] ) || $ust_settings['spam_blog_users'] != 1 ? ' selected="selected"' : '' ) . '>' . __( 'No', 'ust' ) . '</option>' . "\n";
 						?>
 					</select><br/><em><?php _e( "Enable this to spam/unspam all of a blog's users when the blog is spammed/unspammed. Does not spam Super Admins.", 'ust' ); ?></em>
 				</td>
@@ -332,18 +332,18 @@ if ( ! $ust_settings['api_key'] ) {
 			<tr valign="top">
 				<th scope="row"><?php _e( 'Keys', 'ust' ) ?>*</th>
 				<td>
-					<?php _e( 'reCAPTCHA requires an API key for each domain, consisting of a "public" and a "private" key. You can sign up for a <a href="http://recaptcha.net/whyrecaptcha.html" target="_blank">free reCAPTCHA key</a>.', 'ust' ) ?>
+					<?php _e( 'reCAPTCHA requires an API key for each domain, consisting of a "site" and a "secret" key. You can sign up for a <a href="http://recaptcha.net/whyrecaptcha.html" target="_blank">free reCAPTCHA key</a>.', 'ust' ) ?>
 					<br/>
 
 					<p class="re-keys">
 						<!-- reCAPTCHA public key -->
 						<label class="which-key"
-						       for="recaptcha_pubkey"><?php _e( 'Public Key:&nbsp;&nbsp;', 'ust' ) ?></label>
+						       for="recaptcha_pubkey"><?php _e( 'Site Key:&nbsp;&nbsp;', 'ust' ) ?></label>
 						<input name="recaptcha[pubkey]" id="recaptcha_pubkey" size="40"
 						       value="<?php echo stripslashes( $ust_recaptcha['pubkey'] ); ?>"/>
 						<br/>
 						<!-- reCAPTCHA private key -->
-						<label class="which-key" for="recaptcha_privkey"><?php _e( 'Private Key:', 'ust' ) ?></label>
+						<label class="which-key" for="recaptcha_privkey"><?php _e( 'Secret Key:', 'ust' ) ?></label>
 						<input name="recaptcha[privkey]" id="recaptcha_privkey" size="40"
 						       value="<?php echo stripslashes( $ust_recaptcha['privkey'] ); ?>"/>
 					</p>
@@ -355,63 +355,16 @@ if ( ! $ust_settings['api_key'] ) {
 					<!-- The theme selection -->
 					<div class="theme-select">
 						<select name="recaptcha[theme]" id="recaptcha_theme">
-							<option value="red" <?php if ( $ust_recaptcha['theme'] == 'red' ) {
+							<option value="light" <?php if ( $ust_recaptcha['theme'] == 'light' ) {
 								echo 'selected="selected"';
-							} ?>>Red
+							} ?>>Light
 							</option>
-							<option value="white" <?php if ( $ust_recaptcha['theme'] == 'white' ) {
+							<option value="dark" <?php if ( $ust_recaptcha['theme'] == 'dark' ) {
 								echo 'selected="selected"';
-							} ?>>White
-							</option>
-							<option value="blackglass" <?php if ( $ust_recaptcha['theme'] == 'blackglass' ) {
-								echo 'selected="selected"';
-							} ?>>Black Glass
-							</option>
-							<option value="clean" <?php if ( $ust_recaptcha['theme'] == 'clean' ) {
-								echo 'selected="selected"';
-							} ?>>Clean
+							} ?>>Dark
 							</option>
 						</select>
 					</div>
-				</td>
-			</tr>
-			<tr valign="top">
-				<th scope="row"><?php _e( 'Language:', 'ust' ) ?></th>
-				<td>
-					<select name="recaptcha[lang]" id="recaptcha_lang">
-						<option value="en" <?php if ( $ust_recaptcha['lang'] == 'en' ) {
-							echo 'selected="selected"';
-						} ?>>English
-						</option>
-						<option value="nl" <?php if ( $ust_recaptcha['lang'] == 'nl' ) {
-							echo 'selected="selected"';
-						} ?>>Dutch
-						</option>
-						<option value="fr" <?php if ( $ust_recaptcha['lang'] == 'fr' ) {
-							echo 'selected="selected"';
-						} ?>>French
-						</option>
-						<option value="de" <?php if ( $ust_recaptcha['lang'] == 'de' ) {
-							echo 'selected="selected"';
-						} ?>>German
-						</option>
-						<option value="pt" <?php if ( $ust_recaptcha['lang'] == 'pt' ) {
-							echo 'selected="selected"';
-						} ?>>Portuguese
-						</option>
-						<option value="ru" <?php if ( $ust_recaptcha['lang'] == 'ru' ) {
-							echo 'selected="selected"';
-						} ?>>Russian
-						</option>
-						<option value="es" <?php if ( $ust_recaptcha['lang'] == 'es' ) {
-							echo 'selected="selected"';
-						} ?>>Spanish
-						</option>
-						<option value="tr" <?php if ( $ust_recaptcha['lang'] == 'tr' ) {
-							echo 'selected="selected"';
-						} ?>>Turkish
-						</option>
-					</select>
 				</td>
 			</tr>
 		</table>
