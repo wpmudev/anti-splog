@@ -96,6 +96,7 @@ We provide comprehensive and guaranteed support on the <a href='http://premium.w
 
 = 2.1.7 =
 * New: Update to better reCAPTCHA v2
+* New: Move blog suspended file to a place where it can be updated (please manually update the wp-content/blog-suspended.php file!)
 * Fix: Fix depreciated notices from widget
 * Fix: reCAPTCHA issues in Pro Sites custom signup page
 
