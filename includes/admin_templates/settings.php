@@ -375,7 +375,7 @@ if ( ! $ust_settings['api_key'] ) {
 	<h3 class='hndle'><span><?php _e( 'Are You a Human PlayThru', 'ust' ) ?></span></h3>
 
 	<div class="inside">
-		<p><?php _e( 'PlayThru is the next evolution of online human verification and the best CAPTCHA replacement around. It stops bots with fun, by focusing on being simple and intuitive. Stop bots without harassing your users. For details, visit the <a href="http://areyouahuman.com/features" target="_blank">Are You a Human website</a>.', 'ust' ) ?></p>
+		<p><?php _e( 'PlayThru is the next evolution of online human verification and the best CAPTCHA replacement around. It stops bots with fun, by focusing on being simple and intuitive. Stop bots without harassing your users. For details, visit the <a href="http://areyouahuman.com/how" target="_blank">Are You a Human website</a>.', 'ust' ) ?></p>
 		<table class="form-table">
 			<tr valign="top">
 				<th scope="row"><?php _e( 'Site Keys', 'ust' ) ?>*</th>
