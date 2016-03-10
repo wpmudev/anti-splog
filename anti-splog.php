@@ -5,13 +5,13 @@ Plugin URI: https://premium.wpmudev.org/project/anti-splog/
 Description: The ultimate plugin and service to stop and kill splogs in WordPress Multisite and BuddyPress
 Author: WPMU DEV
 Author URI: http://premium.wpmudev.org/
-Version: 2.1.7
+Version: 2.1.8
 Network: true
 WDP ID: 120
 */
 
 /*
-Copyright 2010-2015 Incsub (http://incsub.com)
+Copyright 2010-2016 Incsub (http://incsub.com)
 Author: Aaron Edwards
 
 This program is free software; you can redistribute it and/or modify
@@ -34,8 +34,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 //------------------------------------------------------------------------//
 
-$ust_current_version = '2.1.7';
-$ust_api_url         = 'http://premium.wpmudev.org/ust-api.php';
+$ust_current_version = '2.1.8';
+$ust_api_url         = 'https://premium.wpmudev.org/ust-api.php';
 
 //------------------------------------------------------------------------//
 
@@ -70,7 +70,6 @@ add_action( 'network_admin_menu', 'ust_plug_pages' );
 add_action( 'network_admin_notices', 'ust_api_warning' );
 add_action( 'network_admin_notices', 'ust_install_notice' );
 
-add_action( 'wp_enqueue_scripts', 'ust_signup_js' );
 add_action( 'signup_blogform', 'ust_signup_fields', 50 );
 add_action( 'bp_before_registration_submit_buttons', 'ust_signup_fields_bp', 50 ); //buddypress support
 add_filter( 'wpmu_validate_blog_signup', 'ust_signup_errorcheck' );
@@ -1131,19 +1130,6 @@ function ust_signup_errorcheck( $content ) {
 			}
 		}
 
-	} else if ( $ust_settings['signup_protect'] == 'ayah' ) {
-
-		$ust_ayah = get_site_option( "ust_ayah" );
-		require_once( "includes/ayah.php" );
-		$integration = new AYAH( array(
-				"publisher_key" => @$ust_ayah['pubkey'],
-				"scoring_key"   => @$ust_ayah['privkey']
-			) );
-
-		$score = $integration->scoreResult();
-		if ( ! $score ) {
-			$content['errors']->add( 'ayah', __( "The Are You a Human test wasn't entered correctly. Please try again or contact us if you are still having trouble.", 'ust' ) );
-		}
 	}
 
 	return $content;
@@ -1203,19 +1189,6 @@ function ust_signup_errorcheck_bp() {
 			}
 		}
 
-	} else if ( $ust_settings['signup_protect'] == 'ayah' ) {
-
-		$ust_ayah = get_site_option( "ust_ayah" );
-		require_once( "includes/ayah.php" );
-		$integration = new AYAH( array(
-				"publisher_key" => @$ust_ayah['pubkey'],
-				"scoring_key"   => @$ust_ayah['privkey']
-			) );
-
-		$score = $integration->scoreResult();
-		if ( ! $score ) {
-			$bp->signup->errors['ayah'] = __( "The Are You a Human test wasn't entered correctly. Please try again.", 'ust' );
-		}
 	}
 }
 
@@ -1483,18 +1456,6 @@ function ust_wpsignup_url( $echo = true ) {
 	}
 }
 
-function ust_signup_js() {
-
-	if ( is_admin() || false === strpos( $_SERVER['SCRIPT_NAME'], 'wp-signup.php' ) ) {
-		return false;
-	}
-
-	$ust_settings = get_site_option( "ust_settings" );
-	if ( $ust_settings['signup_protect'] == 'ayah' ) {
-		wp_enqueue_script( 'jquery' );
-	}
-}
-
 function ust_signup_fields( $errors ) {
 	$ust_settings = get_site_option( "ust_settings" );
 
@@ -1568,38 +1529,6 @@ function ust_signup_fields( $errors ) {
 			echo '</p>&nbsp;<br />';
 		}
 
-	} else if ( $ust_settings['signup_protect'] == 'ayah' ) {
-
-		$ust_ayah = get_site_option( "ust_ayah" );
-		require_once( "includes/ayah.php" );
-		$integration = new AYAH( array(
-				"publisher_key" => @$ust_ayah['pubkey'],
-				"scoring_key"   => @$ust_ayah['privkey']
-			) );
-
-		if ( $errmsg = $errors->get_error_message( 'ayah' ) ) {
-			echo '<p class="error">' . $errmsg . '</p>';
-		}
-
-		//have to add some jQuery here to change submit button name to prevent errors
-		echo $integration->getPublisherHTML();
-		?>
-		<script type="text/javascript">jQuery(document).ready(function ($) {
-				$('input.submit').attr('name', 'submit_site');
-            <?php
-            //Add a 'submit' input field for compatibility when BP and Site tracking component are active.
-            if(function_exists('bp_is_active') && bp_is_active('blogs')):
-            ?>
-                $('<input>').attr({
-                    type: 'hidden',
-                    id: 'submit',
-                    name: 'submit'
-                }).appendTo('#setupform');
-                <?php
-                endif;
-                ?>
-			});</script>
-	<?php
 	}
 }
 
@@ -1676,19 +1605,6 @@ function ust_signup_fields_bp() {
 			echo '</div>';
 		}
 
-	} else if ( $ust_settings['signup_protect'] == 'ayah' ) {
-
-		$ust_ayah = get_site_option( "ust_ayah" );
-		require_once( "includes/ayah.php" );
-		$integration = new AYAH( array(
-				"publisher_key" => @$ust_ayah['pubkey'],
-				"scoring_key"   => @$ust_ayah['privkey']
-			) );
-
-		echo '<div class="register-section" id="blog-details-section">';
-		do_action( 'bp_ayah_errors' );
-		echo $integration->getPublisherHTML();
-		echo '</div>';
 	}
 
 }

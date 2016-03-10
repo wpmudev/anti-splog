@@ -49,7 +49,6 @@ if ( isset( $_POST['ust_settings'] ) ) {
 	update_site_option( 'ust_signup', $ust_signup );
 
 	update_site_option( "ust_recaptcha", ust_trim_array( $_POST['recaptcha'] ) );
-	update_site_option( "ust_ayah", ust_trim_array( $_POST['ayah'] ) );
 
 	//process user questions
 	$qa['questions'] = explode( "\n", trim( $_POST['ust_qa']['questions'] ) );
@@ -71,7 +70,6 @@ if ( isset( $_POST['ust_settings'] ) ) {
 $ust_settings  = get_site_option( "ust_settings" );
 $ust_signup    = get_site_option( 'ust_signup' );
 $ust_recaptcha = get_site_option( "ust_recaptcha" );
-$ust_ayah      = get_site_option( "ust_ayah" );
 $ust_qa        = get_site_option( "ust_qa" );
 if ( ! $ust_qa ) {
 	$ust_qa = array(
@@ -129,7 +127,7 @@ if ( ! $ust_settings['api_key'] ) {
 				<td><select name="ust[block_certainty]">
 				<?php
 			for ( $counter = 50; $counter <= 100; $counter += 1 ) {
-				echo '<option value="' . $counter . '"' . ( $ust_settings['block_certainty'] == $counter ? ' selected="selected"' : '' ) . '>' . $counter . '%</option>' . "\n";
+				echo '<option value="' . $counter . '"' . ( ( isset($ust_settings['block_certainty']) && $ust_settings['block_certainty'] == $counter ) ? ' selected="selected"' : '' ) . '>' . $counter . '%</option>' . "\n";
 			}
 			echo '<option value=""' . ( empty( $ust_settings['block_certainty'] ) ? ' selected="selected"' : '' ) . '>' . __( "Don't Block", 'ust' ) . '</option>' . "\n";
 			?>
@@ -299,9 +297,6 @@ if ( ! $ust_settings['api_key'] ) {
 						<option value="recaptcha" <?php if ( $ust_settings['signup_protect'] == 'recaptcha' ) {
 							echo 'selected="selected"';
 						} ?>><?php _e( 'reCAPTCHA - Advanced Captcha', 'ust' ) ?></option>
-						<option value="ayah" <?php if ( $ust_settings['signup_protect'] == 'ayah' ) {
-							echo 'selected="selected"';
-						} ?>><?php _e( 'Are You a Human PlayThru', 'ust' ) ?></option>
 					</select>
 					<br/><em><?php _e( 'These options are designed to prevent automated spam bot signups, so will have limited effect in stopping human sploggers. Be cautious using these options as it is important to find a balance between stopping bots and not annoying your users.', 'ust' ); ?></em>
 				</td>
@@ -365,34 +360,6 @@ if ( ! $ust_settings['api_key'] ) {
 							</option>
 						</select>
 					</div>
-				</td>
-			</tr>
-		</table>
-	</div>
-</div>
-
-<div class="postbox">
-	<h3 class='hndle'><span><?php _e( 'Are You a Human PlayThru', 'ust' ) ?></span></h3>
-
-	<div class="inside">
-		<p><?php _e( 'PlayThru is the next evolution of online human verification and the best CAPTCHA replacement around. It stops bots with fun, by focusing on being simple and intuitive. Stop bots without harassing your users. For details, visit the <a href="http://areyouahuman.com/how" target="_blank">Are You a Human website</a>.', 'ust' ) ?></p>
-		<table class="form-table">
-			<tr valign="top">
-				<th scope="row"><?php _e( 'Site Keys', 'ust' ) ?>*</th>
-				<td>
-					<?php _e( 'These keys are required to get PlayThru up and running. Signup <a href="http://portal.areyouahuman.com/signup" target="_blank">here</a> to get your free keys.', 'ust' ) ?>
-					<br/>
-
-					<p class="re-keys">
-						<label class="which-key" for="ayah_pubkey"><?php _e( 'Publisher Key:', 'ust' ) ?></label>
-						<input name="ayah[pubkey]" id="ayah_pubkey" size="60"
-						       value="<?php echo stripslashes( $ust_ayah['pubkey'] ); ?>"/>
-						<br/>
-						<label class="which-key" for="ayah_privkey"><?php _e( 'Scoring Key:', 'ust' ) ?>
-							&nbsp;&nbsp;</label>
-						<input name="ayah[privkey]" id="ayah_privkey" size="60"
-						       value="<?php echo stripslashes( $ust_ayah['privkey'] ); ?>"/>
-					</p>
 				</td>
 			</tr>
 		</table>
