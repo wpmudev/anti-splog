@@ -1091,14 +1091,6 @@ function ust_signup_errorcheck( $content ) {
 			$content['errors']->add( 'recaptcha', __( "The reCAPTCHA wasn't entered correctly. Please try again.", 'ust' ) );
 		}
 
-	} else if ( $ust_settings['signup_protect'] == 'asirra' ) {
-
-		require_once( 'includes/asirra.php' );
-		$asirra = new AsirraValidator( $_POST['Asirra_Ticket'] );
-		if ( ! $asirra->passed ) {
-			$content['errors']->add( 'asirra', __( "Please try to correctly identify the cats again.", 'ust' ) );
-		}
-
 	} else if ( $ust_settings['signup_protect'] == 'questions' ) {
 
 		$ust_qa = get_site_option( "ust_qa" );
@@ -1148,14 +1140,6 @@ function ust_signup_errorcheck_bp() {
 
 		if ( ! $resp ) {
 			$bp->signup->errors['recaptcha'] = __( "The reCAPTCHA wasn't entered correctly. Please try again.", 'ust' );
-		}
-
-	} else if ( $ust_settings['signup_protect'] == 'asirra' ) {
-
-		require_once( 'includes/asirra.php' );
-		$asirra = new AsirraValidator( $_POST['Asirra_Ticket'] );
-		if ( ! $asirra->passed ) {
-			$bp->signup->errors['asirra'] = __( "Please try to correctly identify the cats again.", 'ust' );
 		}
 
 	} else if ( $ust_settings['signup_protect'] == 'questions' ) {

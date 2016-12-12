@@ -285,18 +285,9 @@ if ( ! $ust_settings['api_key'] ) {
 				<th scope="row"><?php _e( 'Additional Signup Protection', 'ust' ) ?></th>
 				<td>
 					<select name="ust[signup_protect]" id="ust_signup_protect">
-						<option value="none" <?php if ( $ust_settings['signup_protect'] == 'none' ) {
-							echo 'selected="selected"';
-						} ?>><?php _e( 'None', 'ust' ) ?></option>
-						<option value="questions" <?php if ( $ust_settings['signup_protect'] == 'questions' ) {
-							echo 'selected="selected"';
-						} ?>><?php _e( 'Admin Defined Questions', 'ust' ) ?></option>
-						<option value="asirra" <?php if ( $ust_settings['signup_protect'] == 'asirra' ) {
-							echo 'selected="selected"';
-						} ?>><?php _e( 'ASIRRA - Pick the Cats', 'ust' ) ?></option>
-						<option value="recaptcha" <?php if ( $ust_settings['signup_protect'] == 'recaptcha' ) {
-							echo 'selected="selected"';
-						} ?>><?php _e( 'reCAPTCHA - Advanced Captcha', 'ust' ) ?></option>
+						<option value="none" <?php selected( $ust_settings['signup_protect'], 'none' ); ?>><?php _e( 'None', 'ust' ) ?></option>
+                        <option value="recaptcha" <?php selected( $ust_settings['signup_protect'], 'recaptcha' ); ?>><?php _e( 'reCAPTCHA - Advanced Captcha', 'ust' ) ?></option>
+						<option value="questions" <?php selected( $ust_settings['signup_protect'], 'questions' ); ?>><?php _e( 'Admin Defined Questions', 'ust' ) ?></option>
 					</select>
 					<br/><em><?php _e( 'These options are designed to prevent automated spam bot signups, so will have limited effect in stopping human sploggers. Be cautious using these options as it is important to find a balance between stopping bots and not annoying your users.', 'ust' ); ?></em>
 				</td>
@@ -305,14 +296,6 @@ if ( ! $ust_settings['api_key'] ) {
 
 			<?php do_action( 'ust_settings' ); ?>
 		</table>
-	</div>
-</div>
-
-<div class="postbox">
-	<h3 class='hndle'><span><?php _e( 'Assira', 'ust' ) ?></span></h3>
-
-	<div class="inside">
-		<p><?php _e( 'Asirra works by asking users to identify photographs of cats and dogs. This task is difficult for computers, but user studies have shown that people can accomplish it quickly and accurately. Many even think it\'s fun!. <a href="http://research.microsoft.com/en-us/um/redmond/projects/asirra/default.aspx" target="_blank">Read more and try a demo here.</a> You must have the cURL extension enabled in PHP to use this. There are no configuration options for Assira.', 'ust' ) ?></p>
 	</div>
 </div>
 
