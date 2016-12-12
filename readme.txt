@@ -2,7 +2,7 @@
 Contributors: WPMUDEV
 Tags: splog, splogs, spam, multisite, buddypress, signup, captcha, wpmu
 Requires at least: 3.8
-Tested up to: 4.4.2
+Tested up to: 4.7
 Stable tag: trunk
 
 The ultimate plugin and service to stop and kill splogs in WordPress Multisite and BuddyPress, from WPMU DEV.
@@ -65,7 +65,6 @@ Here are some of the signup protection features you don't need an API key for:
 * Limiting the number of signups per IP
 * Changing the signup page location
 * Random user defined questions
-* ASSIRA - picking the cat pictures
 * reCAPTCHA
 * Moderation Queues
 
@@ -81,7 +80,7 @@ We provide comprehensive and guaranteed support on the <a href='http://premium.w
 2. Limiting the number of signups per IP
 3. Changing the signup page location every 24 hours
 4. Random user defined questions
-5. ASSIRA - picking the cat pictures
+5. ASSIRA - no longer available
 6. reCAPTCHA protection
 7. Recent splogs queue, notice all the instant actions!
 8. Suspected Blogs queue
@@ -93,6 +92,11 @@ We provide comprehensive and guaranteed support on the <a href='http://premium.w
 14. Site/Splog creation statistics
 
 == Changelog ==
+
+= 2.2 =
+* Remove Assira signup protection option that has been discontinued by Microsoft
+* Fix spammed site form not sending reviews
+* Fix missing styles on spammed site form in subdir installs
 
 = 2.1.8 =
 * New: Change API url to use HTTPS for privacy
