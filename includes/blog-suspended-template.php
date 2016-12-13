@@ -134,9 +134,7 @@ if ( empty( $wp_error ) ) {
 	if ( $interim_login ) {
 		$classes[] = 'interim-login';
 		?>
-        <style type="text/css">html {
-                background-color: transparent;
-            }</style>
+
 		<?php
 
 		if ( 'success' === $interim_login ) {
@@ -156,6 +154,7 @@ if ( empty( $wp_error ) ) {
 	$classes = apply_filters( 'login_body_class', $classes, $action );
 
 	?>
+    <style type="text/css">#login { width: 350px; }</style>
 </head>
 <body class="login <?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 <div id="login">
