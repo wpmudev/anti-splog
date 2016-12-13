@@ -265,7 +265,6 @@ foreach ( $history as $stat ) {
 	});
 </script>
 <div class="wrap">
-	<div class="icon32"><img src="<?php echo plugins_url( '/anti-splog/includes/icon-large.png' ); ?>"/></div>
 	<h2><?php _e( 'Anti-Splog Statistics', 'ust' ) ?></h2>
 
 	<p><?php _e( "These are site creation statistics for your multisite install.", 'ust' ) ?></p>

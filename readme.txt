@@ -97,6 +97,7 @@ We provide comprehensive and guaranteed support on the <a href='http://premium.w
 * Remove Assira signup protection option that has been discontinued by Microsoft
 * Fix spammed site form not sending reviews
 * Fix missing styles on spammed site form in subdir installs
+* Remove invalid unspam link from review emails
 
 = 2.1.8 =
 * New: Change API url to use HTTPS for privacy

@@ -79,7 +79,6 @@ $pattern_navigation = paginate_links( array(
 $page_link          = ( $apage > 1 ) ? '&amp;apage=' . $apage : '';
 ?>
 <div class="wrap">
-<div class="icon32"><img src="<?php echo plugins_url( '/anti-splog/includes/icon-large.png' ); ?>"/></div>
 <h2><?php _e( 'Anti-Splog Pattern Matching', 'ust' ) ?></h2>
 
 <form method="post" action="">

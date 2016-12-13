@@ -98,7 +98,6 @@ if ( ! $ust_settings['api_key'] ) {
 
 ?>
 <div class="wrap">
-<div class="icon32"><img src="<?php echo plugins_url( '/anti-splog/includes/icon-large.png' ); ?>"/></div>
 <h2><?php _e( 'Anti-Splog Settings', 'ust' ) ?></h2>
 
 <div id="poststuff" class="metabox-holder">

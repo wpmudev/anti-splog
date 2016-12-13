@@ -97,7 +97,6 @@ if ( isset( $_GET['updated'] ) && $_GET['updatedmsg'] ) {
 ?>
 
 <div class="wrap">
-	<div class="icon32"><img src="<?php echo plugins_url( '/anti-splog/includes/icon-large.png' ); ?>"/></div>
 	<h2><?php _e( 'Anti-Splog', 'ust' ) ?></h2>
 	<h3 class="nav-tab-wrapper">
 		<?php
