@@ -5,13 +5,13 @@ Plugin URI: https://premium.wpmudev.org/project/anti-splog/
 Description: The ultimate plugin and service to stop and kill splogs in WordPress Multisite and BuddyPress
 Author: WPMU DEV
 Author URI: http://premium.wpmudev.org/
-Version: 2.2
+Version: 2.2.1
 Network: true
 WDP ID: 120
 */
 
 /*
-Copyright 2010-2016 Incsub (http://incsub.com)
+Copyright 2010-2017 Incsub (http://incsub.com)
 Author: Aaron Edwards
 
 This program is free software; you can redistribute it and/or modify

@@ -1,178 +1,165 @@
-# Copyright (C) 2015 Anti-Splog
+# Copyright (C) 2017 Anti-Splog
 # This file is distributed under the same license as the Anti-Splog package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Anti-Splog 2.1.7\n"
-"Report-Msgid-Bugs-To: http://premium.wpmudev.org/\n"
-"POT-Creation-Date: 2015-10-08 00:39:33+00:00\n"
+"Project-Id-Version: Anti-Splog 2.2\n"
+"Report-Msgid-Bugs-To: https://premium.wpmudev.org/\n"
+"POT-Creation-Date: 2017-02-25 00:47:42+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: anti-splog.php:107
+#: anti-splog.php:106
 msgid "Anti-Splog is only compatible with Multisite installs."
 msgstr ""
 
-#: anti-splog.php:109
+#: anti-splog.php:108
 msgid "This version of Anti-Splog is only compatible with WordPress 3.2 and greater."
 msgstr ""
 
-#: anti-splog.php:129
+#: anti-splog.php:128
 msgid "Please move the blog-suspended.php file from the Anti-Splog plugin to the /wp-content/ directory."
 msgstr ""
 
-#: anti-splog.php:167
+#: anti-splog.php:166
 msgid "Match domains with digits between words like \"some45blog\""
 msgstr ""
 
-#: anti-splog.php:175
+#: anti-splog.php:174
 msgid "Block popular spam words"
 msgstr ""
 
-#: anti-splog.php:183
+#: anti-splog.php:182
 msgid "Block domains with only numbers in domain."
 msgstr ""
 
-#: anti-splog.php:191
+#: anti-splog.php:190
 msgid "Check for full words only"
 msgstr ""
 
-#: anti-splog.php:199
+#: anti-splog.php:198
 msgid "Match usernames with digits between words like \"some45blog\""
 msgstr ""
 
-#: anti-splog.php:285 anti-splog.php:862
-#: includes/admin_templates/moderate.php:101
+#: anti-splog.php:284 anti-splog.php:861
+#: includes/admin_templates/moderate.php:100
 msgid "Anti-Splog"
 msgstr ""
 
-#: anti-splog.php:291
+#: anti-splog.php:290
 msgid "Unsplog"
 msgstr ""
 
-#: anti-splog.php:291
+#: anti-splog.php:290
 msgid "Splog"
 msgstr ""
 
-#: anti-splog.php:292
+#: anti-splog.php:291
 msgid "Unarchive"
 msgstr ""
 
-#: anti-splog.php:292
+#: anti-splog.php:291
 msgid "Archive"
 msgstr ""
 
-#: anti-splog.php:306
+#: anti-splog.php:305
 msgid "Splog IP: %s"
 msgstr ""
 
-#: anti-splog.php:335
+#: anti-splog.php:334
 msgid "Whoops, Something went wrong"
 msgstr ""
 
-#: anti-splog.php:336
+#: anti-splog.php:335
 msgid "Working..."
 msgstr ""
 
-#: anti-splog.php:337
+#: anti-splog.php:336
 msgid "Done! Reloading..."
 msgstr ""
 
-#: anti-splog.php:528
+#: anti-splog.php:527
 msgid "The signup page location has been changed."
 msgstr ""
 
-#: anti-splog.php:863
+#: anti-splog.php:862
 msgid "Site Moderation"
 msgstr ""
 
-#: anti-splog.php:863
+#: anti-splog.php:862
 msgid "Moderation"
 msgstr ""
 
-#: anti-splog.php:870 includes/admin_templates/stats.php:269
+#: anti-splog.php:869 includes/admin_templates/stats.php:268
 msgid "Anti-Splog Statistics"
 msgstr ""
 
-#: anti-splog.php:870
+#: anti-splog.php:869
 msgid "Statistics"
 msgstr ""
 
-#: anti-splog.php:874 includes/admin_templates/patterns.php:83
+#: anti-splog.php:873 includes/admin_templates/patterns.php:82
 msgid "Anti-Splog Pattern Matching"
 msgstr ""
 
-#: anti-splog.php:874
+#: anti-splog.php:873
 msgid "Pattern Matching"
 msgstr ""
 
-#: anti-splog.php:878 includes/admin_templates/settings.php:104
+#: anti-splog.php:877 includes/admin_templates/settings.php:101
 msgid "Anti-Splog Settings"
 msgstr ""
 
-#: anti-splog.php:878
+#: anti-splog.php:877
 msgid "Settings"
 msgstr ""
 
-#: anti-splog.php:997
+#: anti-splog.php:996
 msgid "Selected blogs processed"
 msgstr ""
 
-#: anti-splog.php:1065
+#: anti-splog.php:1064
 msgid "A problem with your Anti-Splog plugin"
 msgstr ""
 
-#: anti-splog.php:1092 anti-splog.php:1164
-#: includes/blog-suspended-template.php:33
+#: anti-splog.php:1091 anti-splog.php:1142
+#: includes/blog-suspended-template.php:36
 msgid "The reCAPTCHA wasn't entered correctly. Please try again."
 msgstr ""
 
-#: anti-splog.php:1100 anti-splog.php:1172 anti-splog.php:1540
-#: anti-splog.php:1645
-msgid "Please try to correctly identify the cats again."
-msgstr ""
-
-#: anti-splog.php:1115 anti-splog.php:1127 anti-splog.php:1187
-#: anti-splog.php:1199
+#: anti-splog.php:1106 anti-splog.php:1118 anti-splog.php:1157
+#: anti-splog.php:1169
 msgid "Incorrect Answer. Please try again."
 msgstr ""
 
-#: anti-splog.php:1145
-msgid "The Are You a Human test wasn't entered correctly. Please try again or contact us if you are still having trouble."
-msgstr ""
-
-#: anti-splog.php:1217
-msgid "The Are You a Human test wasn't entered correctly. Please try again."
-msgstr ""
-
-#: anti-splog.php:1234 anti-splog.php:1296 anti-splog.php:1362
+#: anti-splog.php:1191 anti-splog.php:1253 anti-splog.php:1319
 msgid "If you are not a spammer please try again with a different username."
 msgstr ""
 
-#: anti-splog.php:1239 anti-splog.php:1301 anti-splog.php:1367
+#: anti-splog.php:1196 anti-splog.php:1258 anti-splog.php:1324
 msgid "We think you might be a spambot. If you are not a spammer please contact us or use a different email address."
 msgstr ""
 
-#: anti-splog.php:1264 anti-splog.php:1325
+#: anti-splog.php:1221 anti-splog.php:1282
 msgid "A limited number of signups can be done in a short period of time from your Internet connection. If you are not a spammer please try again in 24 hours."
 msgstr ""
 
-#: anti-splog.php:1272 anti-splog.php:1333
+#: anti-splog.php:1229 anti-splog.php:1290
 msgid "Our automated systems think you might be a spambot. If you are not a spammer please contact us and give us this IP: "
 msgstr ""
 
-#: anti-splog.php:1286 anti-splog.php:1352
+#: anti-splog.php:1243 anti-splog.php:1309
 msgid "If you are not a spammer please try again with a different domain."
 msgstr ""
 
-#: anti-splog.php:1291 anti-splog.php:1357
+#: anti-splog.php:1248 anti-splog.php:1314
 msgid "If you are not a spammer please try again with a different title."
 msgstr ""
 
-#: anti-splog.php:1419
+#: anti-splog.php:1376
 msgid ""
 "New Blog: %1s\n"
 "URL: %2s\n"
@@ -184,37 +171,41 @@ msgid ""
 "Disable these notifications: %6s"
 msgstr ""
 
-#: anti-splog.php:1429
+#: anti-splog.php:1386
 msgid "New Blog Registration: %s"
 msgstr ""
 
-#: anti-splog.php:1460
+#: anti-splog.php:1417
 msgid "Anti-Splog is not fully enabled. You must <a href=\"%1$s\">enter your WPMU DEV Premium API key</a> to enable the powerful blog and signup checking. <a href=\"%2$s\">More info&raquo;</a>"
 msgstr ""
 
-#: anti-splog.php:1460
+#: anti-splog.php:1417
 msgid "Dismiss this notice for one month"
 msgstr ""
 
-#: anti-splog.php:1460
+#: anti-splog.php:1417 includes/dash-notice/wpmudev-dash-notification.php:243
+#: includes/dash-notice/wpmudev-dash-notification.php:284
 msgid "Dismiss"
 msgstr ""
 
-#: anti-splog.php:1506 anti-splog.php:1515 anti-splog.php:1561
-#: anti-splog.php:1615 anti-splog.php:1623 anti-splog.php:1671
-#: includes/blog-suspended-template.php:289
+#: anti-splog.php:1451 anti-splog.php:1460 anti-splog.php:1506
+#: anti-splog.php:1528 anti-splog.php:1536 anti-splog.php:1584
 msgid "Human Verification:"
 msgstr ""
 
-#: anti-splog.php:1567 anti-splog.php:1675
+#: anti-splog.php:1485 anti-splog.php:1558
+msgid "Please try to correctly identify the cats again."
+msgstr ""
+
+#: anti-splog.php:1512 anti-splog.php:1588
 msgid "NOTE: Answers are not case sensitive."
 msgstr ""
 
-#: anti-splog.php:1766
+#: anti-splog.php:1666
 msgid "Overview"
 msgstr ""
 
-#: anti-splog.php:1767
+#: anti-splog.php:1667
 msgid ""
 "<h3>The plugin works in 3 phases:</h3>\n"
 "          <ol>\n"
@@ -235,59 +226,59 @@ msgid ""
 "          </ol>"
 msgstr ""
 
-#: anti-splog.php:1791
+#: anti-splog.php:1691
 msgid "For more information:"
 msgstr ""
 
-#: anti-splog.php:1792
+#: anti-splog.php:1692
 msgid "Usage Instructions"
 msgstr ""
 
-#: anti-splog.php:1793
+#: anti-splog.php:1693
 msgid "Register Site"
 msgstr ""
 
-#: anti-splog.php:1805 includes/admin_templates/patterns.php:30
+#: anti-splog.php:1705 includes/admin_templates/patterns.php:30
 msgid "Please enter a valid PCRE Regular Expression with delimiters."
 msgstr ""
 
-#: anti-splog.php:1818 anti-splog.php:1839 anti-splog.php:1860
+#: anti-splog.php:1718 anti-splog.php:1739 anti-splog.php:1760
 msgid "%s results not shown..."
 msgstr ""
 
-#: anti-splog.php:1826
+#: anti-splog.php:1726
 msgid "Your test search returned no results out of the last 10,000 registered domains."
 msgstr ""
 
-#: anti-splog.php:1847 anti-splog.php:1868
+#: anti-splog.php:1747 anti-splog.php:1768
 msgid "Your test search returned no results out of the last 10,000 registered users."
 msgstr ""
 
-#: anti-splog.php:1875
+#: anti-splog.php:1775
 msgid "Sorry, you may not do live tests on site titles."
 msgstr ""
 
-#: anti-splog.php:1928
+#: anti-splog.php:1828
 msgid "Displays counts of site blogs and splogs caught by the Anti-Splog."
 msgstr ""
 
-#: anti-splog.php:1930 anti-splog.php:1964
+#: anti-splog.php:1830 anti-splog.php:1864
 msgid "Splog Statistics"
 msgstr ""
 
-#: anti-splog.php:1937
+#: anti-splog.php:1837
 msgid "m/d/Y g:ia"
 msgstr ""
 
-#: anti-splog.php:1946
+#: anti-splog.php:1846
 msgid "Blogs: "
 msgstr ""
 
-#: anti-splog.php:1948
+#: anti-splog.php:1848
 msgid "Splogs Caught: "
 msgstr ""
 
-#: anti-splog.php:1967
+#: anti-splog.php:1867
 msgid "Title:"
 msgstr ""
 
@@ -320,302 +311,302 @@ msgid "Blogs marked as spam."
 msgstr ""
 
 #: includes/admin_templates/moderate.php:89
-#: includes/admin_templates/moderate.php:633
+#: includes/admin_templates/moderate.php:632
 msgid "Blog Deleted!"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:107
-#: includes/admin_templates/moderate.php:511
+#: includes/admin_templates/moderate.php:106
+#: includes/admin_templates/moderate.php:510
 msgid "Recent Splogs"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:108
-#: includes/admin_templates/moderate.php:845
+#: includes/admin_templates/moderate.php:107
+#: includes/admin_templates/moderate.php:844
 msgid "Ignored Blogs"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:116
-#: includes/admin_templates/moderate.php:132
+#: includes/admin_templates/moderate.php:115
+#: includes/admin_templates/moderate.php:131
 msgid "Suspected Blogs"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:137
+#: includes/admin_templates/moderate.php:136
 msgid "You must enable the Anti-Splog API by <a href=\"%1$s\">entering your WPMU DEV Premium API key</a> to be able to use this feature of the plugin."
 msgstr ""
 
-#: includes/admin_templates/moderate.php:140
+#: includes/admin_templates/moderate.php:139
 msgid "<p>This is the moderation queue for suspicious blogs. When you are sure a blog is spam, mark it so. If it is definitely a valid blog you should \"ignore\" it. It is best to leave blogs in here until you are sure whether they are spam or not spam, as the system learns from both actions.</p>"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:154
-#: includes/admin_templates/moderate.php:572
-#: includes/admin_templates/moderate.php:903
+#: includes/admin_templates/moderate.php:153
+#: includes/admin_templates/moderate.php:571
+#: includes/admin_templates/moderate.php:902
 msgid "Domain"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:154
-#: includes/admin_templates/moderate.php:572
-#: includes/admin_templates/moderate.php:903
+#: includes/admin_templates/moderate.php:153
+#: includes/admin_templates/moderate.php:571
+#: includes/admin_templates/moderate.php:902
 msgid "Path"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:189
-#: includes/admin_templates/moderate.php:222
-#: includes/admin_templates/moderate.php:574
-#: includes/admin_templates/moderate.php:905
+#: includes/admin_templates/moderate.php:188
+#: includes/admin_templates/moderate.php:221
+#: includes/admin_templates/moderate.php:573
+#: includes/admin_templates/moderate.php:904
 msgid "ID"
+msgstr ""
+
+#: includes/admin_templates/moderate.php:190
+#: includes/admin_templates/moderate.php:223
+#: includes/admin_templates/moderate.php:575
+#: includes/admin_templates/moderate.php:906
+msgid "IPs"
 msgstr ""
 
 #: includes/admin_templates/moderate.php:191
 #: includes/admin_templates/moderate.php:224
 #: includes/admin_templates/moderate.php:576
 #: includes/admin_templates/moderate.php:907
-msgid "IPs"
-msgstr ""
-
-#: includes/admin_templates/moderate.php:192
-#: includes/admin_templates/moderate.php:225
-#: includes/admin_templates/moderate.php:577
-#: includes/admin_templates/moderate.php:908
 msgid "Blog Users"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:193
+#: includes/admin_templates/moderate.php:192
 msgid "Keywords"
+msgstr ""
+
+#: includes/admin_templates/moderate.php:193
+#: includes/admin_templates/moderate.php:225
+#: includes/admin_templates/moderate.php:577
+#: includes/admin_templates/moderate.php:908
+msgid "Splog Certainty"
 msgstr ""
 
 #: includes/admin_templates/moderate.php:194
 #: includes/admin_templates/moderate.php:226
-#: includes/admin_templates/moderate.php:578
 #: includes/admin_templates/moderate.php:909
-msgid "Splog Certainty"
+msgid "Last Updated"
 msgstr ""
 
 #: includes/admin_templates/moderate.php:195
 #: includes/admin_templates/moderate.php:227
+#: includes/admin_templates/moderate.php:580
 #: includes/admin_templates/moderate.php:910
-msgid "Last Updated"
+msgid "Registered"
 msgstr ""
 
 #: includes/admin_templates/moderate.php:196
 #: includes/admin_templates/moderate.php:228
-#: includes/admin_templates/moderate.php:581
 #: includes/admin_templates/moderate.php:911
-msgid "Registered"
-msgstr ""
-
-#: includes/admin_templates/moderate.php:197
-#: includes/admin_templates/moderate.php:229
-#: includes/admin_templates/moderate.php:912
 msgid "Recent Posts"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:257
-#: includes/admin_templates/moderate.php:312
-#: includes/admin_templates/moderate.php:483
+#: includes/admin_templates/moderate.php:256
+#: includes/admin_templates/moderate.php:311
+#: includes/admin_templates/moderate.php:482
 msgid "Ignore"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:259
-#: includes/admin_templates/moderate.php:485
-#: includes/admin_templates/moderate.php:893
-#: includes/admin_templates/moderate.php:1127
+#: includes/admin_templates/moderate.php:258
+#: includes/admin_templates/moderate.php:484
+#: includes/admin_templates/moderate.php:892
+#: includes/admin_templates/moderate.php:1126
 msgid "Mark as Spam"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:306
-#: includes/admin_templates/moderate.php:626
-#: includes/admin_templates/moderate.php:956
+#: includes/admin_templates/moderate.php:305
+#: includes/admin_templates/moderate.php:625
+#: includes/admin_templates/moderate.php:955
 msgid "Preview"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:312
+#: includes/admin_templates/moderate.php:311
 msgid "Blog Ignored!"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:314
-#: includes/admin_templates/moderate.php:964
+#: includes/admin_templates/moderate.php:313
+#: includes/admin_templates/moderate.php:963
 msgid "Blog marked as spam!"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:314
-#: includes/admin_templates/moderate.php:331
-#: includes/admin_templates/moderate.php:343
-#: includes/admin_templates/moderate.php:353
-#: includes/admin_templates/moderate.php:377
-#: includes/admin_templates/moderate.php:656
-#: includes/admin_templates/moderate.php:668
-#: includes/admin_templates/moderate.php:678
-#: includes/admin_templates/moderate.php:702
-#: includes/admin_templates/moderate.php:964
-#: includes/admin_templates/moderate.php:981
-#: includes/admin_templates/moderate.php:993
-#: includes/admin_templates/moderate.php:1003
-#: includes/admin_templates/moderate.php:1027
+#: includes/admin_templates/moderate.php:313
+#: includes/admin_templates/moderate.php:330
+#: includes/admin_templates/moderate.php:342
+#: includes/admin_templates/moderate.php:352
+#: includes/admin_templates/moderate.php:376
+#: includes/admin_templates/moderate.php:655
+#: includes/admin_templates/moderate.php:667
+#: includes/admin_templates/moderate.php:677
+#: includes/admin_templates/moderate.php:701
+#: includes/admin_templates/moderate.php:963
+#: includes/admin_templates/moderate.php:980
+#: includes/admin_templates/moderate.php:992
+#: includes/admin_templates/moderate.php:1002
+#: includes/admin_templates/moderate.php:1026
 msgid "Spam"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:326
-#: includes/admin_templates/moderate.php:348
-#: includes/admin_templates/moderate.php:651
-#: includes/admin_templates/moderate.php:673
-#: includes/admin_templates/moderate.php:976
-#: includes/admin_templates/moderate.php:998
+#: includes/admin_templates/moderate.php:325
+#: includes/admin_templates/moderate.php:347
+#: includes/admin_templates/moderate.php:650
+#: includes/admin_templates/moderate.php:672
+#: includes/admin_templates/moderate.php:975
+#: includes/admin_templates/moderate.php:997
 msgid "Search for IP"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:330
-#: includes/admin_templates/moderate.php:352
-#: includes/admin_templates/moderate.php:655
-#: includes/admin_templates/moderate.php:677
-#: includes/admin_templates/moderate.php:980
-#: includes/admin_templates/moderate.php:1002
+#: includes/admin_templates/moderate.php:329
+#: includes/admin_templates/moderate.php:351
+#: includes/admin_templates/moderate.php:654
+#: includes/admin_templates/moderate.php:676
+#: includes/admin_templates/moderate.php:979
+#: includes/admin_templates/moderate.php:1001
 msgid "Spam all blogs tied to this IP"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:337
-#: includes/admin_templates/moderate.php:662
-#: includes/admin_templates/moderate.php:987
+#: includes/admin_templates/moderate.php:336
+#: includes/admin_templates/moderate.php:661
+#: includes/admin_templates/moderate.php:986
 msgid "Search for User Blogs"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:342
-#: includes/admin_templates/moderate.php:377
-#: includes/admin_templates/moderate.php:667
-#: includes/admin_templates/moderate.php:702
-#: includes/admin_templates/moderate.php:992
-#: includes/admin_templates/moderate.php:1027
+#: includes/admin_templates/moderate.php:341
+#: includes/admin_templates/moderate.php:376
+#: includes/admin_templates/moderate.php:666
+#: includes/admin_templates/moderate.php:701
+#: includes/admin_templates/moderate.php:991
+#: includes/admin_templates/moderate.php:1026
 msgid "Spam all blogs tied to this User"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:370
-#: includes/admin_templates/moderate.php:695
-#: includes/admin_templates/moderate.php:1020
+#: includes/admin_templates/moderate.php:369
+#: includes/admin_templates/moderate.php:694
+#: includes/admin_templates/moderate.php:1019
 msgid "Only showing first 5 users."
 msgstr ""
 
-#: includes/admin_templates/moderate.php:370
-#: includes/admin_templates/moderate.php:695
-#: includes/admin_templates/moderate.php:1020
+#: includes/admin_templates/moderate.php:369
+#: includes/admin_templates/moderate.php:694
+#: includes/admin_templates/moderate.php:1019
 msgid "More"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:375
-#: includes/admin_templates/moderate.php:700
-#: includes/admin_templates/moderate.php:1025
+#: includes/admin_templates/moderate.php:374
+#: includes/admin_templates/moderate.php:699
+#: includes/admin_templates/moderate.php:1024
 msgid "All Blogs of User"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:375
-#: includes/admin_templates/moderate.php:700
-#: includes/admin_templates/moderate.php:1025
+#: includes/admin_templates/moderate.php:374
+#: includes/admin_templates/moderate.php:699
+#: includes/admin_templates/moderate.php:1024
 msgid "Blogs"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:409
-#: includes/admin_templates/moderate.php:742
-#: includes/admin_templates/moderate.php:1051
+#: includes/admin_templates/moderate.php:408
+#: includes/admin_templates/moderate.php:741
+#: includes/admin_templates/moderate.php:1050
 msgid "Never"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:409
-#: includes/admin_templates/moderate.php:417
-#: includes/admin_templates/moderate.php:742
-#: includes/admin_templates/moderate.php:750
-#: includes/admin_templates/moderate.php:1051
-#: includes/admin_templates/moderate.php:1059
+#: includes/admin_templates/moderate.php:408
+#: includes/admin_templates/moderate.php:416
+#: includes/admin_templates/moderate.php:741
+#: includes/admin_templates/moderate.php:749
+#: includes/admin_templates/moderate.php:1050
+#: includes/admin_templates/moderate.php:1058
 msgid "Y-m-d \\<\\b\\r \\/\\> g:i:s a"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:433
-#: includes/admin_templates/moderate.php:766
-#: includes/admin_templates/moderate.php:1075
+#: includes/admin_templates/moderate.php:432
+#: includes/admin_templates/moderate.php:765
+#: includes/admin_templates/moderate.php:1074
 msgid "No Title"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:437
-#: includes/admin_templates/moderate.php:770
-#: includes/admin_templates/moderate.php:1079
+#: includes/admin_templates/moderate.php:436
+#: includes/admin_templates/moderate.php:769
+#: includes/admin_templates/moderate.php:1078
 msgid "Y-m-d g:i:sa - "
 msgstr ""
 
-#: includes/admin_templates/moderate.php:441
-#: includes/admin_templates/moderate.php:774
-#: includes/admin_templates/moderate.php:1083
+#: includes/admin_templates/moderate.php:440
+#: includes/admin_templates/moderate.php:773
+#: includes/admin_templates/moderate.php:1082
 msgid "No Posts"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:458
-#: includes/admin_templates/moderate.php:790
-#: includes/admin_templates/moderate.php:1100
+#: includes/admin_templates/moderate.php:457
+#: includes/admin_templates/moderate.php:789
+#: includes/admin_templates/moderate.php:1099
 msgid "No blogs found."
 msgstr ""
 
-#: includes/admin_templates/moderate.php:513
+#: includes/admin_templates/moderate.php:512
 msgid "<p>These are all the blogs that have been marked as spam in order of when they were spammed. You can instantly preview any of these splogs or their last posts, and unspam them if there has been a mistake.</p>"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:557
-#: includes/admin_templates/moderate.php:816
+#: includes/admin_templates/moderate.php:556
+#: includes/admin_templates/moderate.php:815
 msgid "Bulk Actions"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:558
-#: includes/admin_templates/moderate.php:633
-#: includes/admin_templates/moderate.php:817
-#: includes/admin_templates/patterns.php:95
+#: includes/admin_templates/moderate.php:557
+#: includes/admin_templates/moderate.php:632
+#: includes/admin_templates/moderate.php:816
+#: includes/admin_templates/patterns.php:94
 msgid "Delete"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:559
-#: includes/admin_templates/moderate.php:632
-#: includes/admin_templates/moderate.php:818
+#: includes/admin_templates/moderate.php:558
+#: includes/admin_templates/moderate.php:631
+#: includes/admin_templates/moderate.php:817
 msgid "Not Spam"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:579
+#: includes/admin_templates/moderate.php:578
 msgid "Method"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:580
+#: includes/admin_templates/moderate.php:579
 msgid "Spammed"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:582
+#: includes/admin_templates/moderate.php:581
 msgid "Last Posts"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:632
+#: includes/admin_templates/moderate.php:631
 msgid "Blog marked as not spam!"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:633
+#: includes/admin_templates/moderate.php:632
 msgid "You are about to delete the blog %s"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:728
+#: includes/admin_templates/moderate.php:727
 msgid "Auto: Signup"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:730
+#: includes/admin_templates/moderate.php:729
 msgid "Auto: Post"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:732
+#: includes/admin_templates/moderate.php:731
 msgid "Manual"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:847
+#: includes/admin_templates/moderate.php:846
 msgid "<p>These are suspicious blogs that you have decided are valid. If you have made a mistake you can send them back to the Suspected Blogs queue or spam them.</p>"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:891
-#: includes/admin_templates/moderate.php:962
-#: includes/admin_templates/moderate.php:1125
+#: includes/admin_templates/moderate.php:890
+#: includes/admin_templates/moderate.php:961
+#: includes/admin_templates/moderate.php:1124
 msgid "Un-ignore"
 msgstr ""
 
-#: includes/admin_templates/moderate.php:962
+#: includes/admin_templates/moderate.php:961
 msgid "Blog Un-ignored!"
 msgstr ""
 
@@ -627,97 +618,97 @@ msgstr ""
 msgid "Pattern successfully saved."
 msgstr ""
 
-#: includes/admin_templates/patterns.php:87
+#: includes/admin_templates/patterns.php:86
 msgid "Pattern matching is an advanced feature that allows you to create powerful custom rules to foil spam bots. In almost all cases when you are getting a series of splogs created by a bot, it is possible to recognize patterns in their chosen domains, site titles, emails, or usernames. You can then write and instantly test regular expressions here to block future signups that match those patterns."
 msgstr ""
 
-#: includes/admin_templates/patterns.php:106
-#: includes/admin_templates/patterns.php:258
+#: includes/admin_templates/patterns.php:105
+#: includes/admin_templates/patterns.php:257
 msgid "Regular Expression"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:107
-#: includes/admin_templates/patterns.php:264
+#: includes/admin_templates/patterns.php:106
+#: includes/admin_templates/patterns.php:263
 msgid "Check"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:108
-#: includes/admin_templates/patterns.php:267
+#: includes/admin_templates/patterns.php:107
+#: includes/admin_templates/patterns.php:266
 msgid "Action"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:109
+#: includes/admin_templates/patterns.php:108
 msgid "Matched"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:110
-#: includes/admin_templates/patterns.php:186
+#: includes/admin_templates/patterns.php:109
+#: includes/admin_templates/patterns.php:185
 msgid "Edit"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:154
-#: includes/admin_templates/patterns.php:285
+#: includes/admin_templates/patterns.php:153
+#: includes/admin_templates/patterns.php:284
 msgid "Site Title"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:156
-#: includes/admin_templates/patterns.php:287
+#: includes/admin_templates/patterns.php:155
+#: includes/admin_templates/patterns.php:286
 msgid "Username"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:158
-#: includes/admin_templates/patterns.php:289
+#: includes/admin_templates/patterns.php:157
+#: includes/admin_templates/patterns.php:288
 msgid "Email"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:160
-#: includes/admin_templates/patterns.php:283
+#: includes/admin_templates/patterns.php:159
+#: includes/admin_templates/patterns.php:282
 msgid "Site Domain"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:170
-#: includes/admin_templates/patterns.php:297
+#: includes/admin_templates/patterns.php:169
+#: includes/admin_templates/patterns.php:296
 msgid "Block Signup"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:170
-#: includes/admin_templates/patterns.php:295
+#: includes/admin_templates/patterns.php:169
+#: includes/admin_templates/patterns.php:294
 msgid "Mark as Splog"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:200
+#: includes/admin_templates/patterns.php:199
 msgid "No patterns yet."
 msgstr ""
 
-#: includes/admin_templates/patterns.php:231
+#: includes/admin_templates/patterns.php:230
 msgid "Edit Pattern"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:233
+#: includes/admin_templates/patterns.php:232
 msgid "Add Pattern"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:261
+#: includes/admin_templates/patterns.php:260
 msgid "Description"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:302
+#: includes/admin_templates/patterns.php:301
 msgid "Test &raquo;"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:308
+#: includes/admin_templates/patterns.php:307
 msgid "Regular Expressions must be in a <a href=\"http://php.net/manual/en/book.pcre.php\" target=\"_blank\">valid delimited PCRE format</a>. Regex can be very complicated, so it's recommended to use an online tool like <a href=\"http://gskinner.com/RegExr/\" target=\"_blank\">RegExr</a> to build and test them. It is also recommended in most cases to use the \"Mark as Splog\" action rather than block. This will make it much harder for spammers to learn how to get around your pattern rules, and will also allow the Anti-Splog API to learn from these detected spammers."
 msgstr ""
 
-#: includes/admin_templates/patterns.php:312
+#: includes/admin_templates/patterns.php:311
 msgid "Save Pattern"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:318
+#: includes/admin_templates/patterns.php:317
 msgid "Test Results:"
 msgstr ""
 
-#: includes/admin_templates/patterns.php:323
+#: includes/admin_templates/patterns.php:322
 msgid "Loading..."
 msgstr ""
 
@@ -729,322 +720,282 @@ msgstr ""
 msgid "There was a problem connecting to the API server. Please try again later."
 msgstr ""
 
-#: includes/admin_templates/settings.php:68
+#: includes/admin_templates/settings.php:67
 msgid "Settings Saved!"
 msgstr ""
 
-#: includes/admin_templates/settings.php:111
+#: includes/admin_templates/settings.php:108
 msgid "API Settings"
 msgstr ""
 
-#: includes/admin_templates/settings.php:116
+#: includes/admin_templates/settings.php:113
 msgid "<strong>How It Works</strong> - When a user completes the signup for a blog (email activated) or publishes a blog post it will send all kinds of blog and signup info to our server here where we will rate it based on our secret ever-adjusting logic. Our API will then return a splog Certainty number (0%-100%) to your server. If that number is greater than the sensitivity preference you set in the plugin settings (80% default) then the blog gets auto-spammed. Since the blog was actually created, it will still show up in the site admin (as spammed) so you can unspam later if there was a mistake (and our service will learn from that). The API (especially the post checking part) has proven to be more than 98% effective at removing splogs. Enable it today to save countless hours managing your network!"
 msgstr ""
 
-#: includes/admin_templates/settings.php:119
+#: includes/admin_templates/settings.php:116
 msgid "API Key"
 msgstr ""
 
-#: includes/admin_templates/settings.php:123
+#: includes/admin_templates/settings.php:120
 msgid "Check Key &raquo;"
 msgstr ""
 
-#: includes/admin_templates/settings.php:128
+#: includes/admin_templates/settings.php:125
 msgid "Blog Signup Blocking Certainty"
 msgstr ""
 
-#: includes/admin_templates/settings.php:134
+#: includes/admin_templates/settings.php:131
 msgid "Don't Block"
 msgstr ""
 
-#: includes/admin_templates/settings.php:137
+#: includes/admin_templates/settings.php:134
 msgid "Blog signups that return a certainty number greater than or equal to this will be blocked from being able to be created. Use carefully!"
 msgstr ""
 
-#: includes/admin_templates/settings.php:141
+#: includes/admin_templates/settings.php:138
 msgid "Blog Signup Splog Certainty"
 msgstr ""
 
-#: includes/admin_templates/settings.php:147
-#: includes/admin_templates/settings.php:161
+#: includes/admin_templates/settings.php:144
+#: includes/admin_templates/settings.php:158
 msgid "Don't Spam"
 msgstr ""
 
-#: includes/admin_templates/settings.php:150
+#: includes/admin_templates/settings.php:147
 msgid "Blog signups that return a certainty number greater than or equal to this will automatically be marked as spam."
 msgstr ""
 
-#: includes/admin_templates/settings.php:155
+#: includes/admin_templates/settings.php:152
 msgid "Posting Splog Certainty"
 msgstr ""
 
-#: includes/admin_templates/settings.php:164
+#: includes/admin_templates/settings.php:161
 msgid "If a post from a new blog is checked by the API and returns a certainty number greater than or equal to this, it will automatically be marked as spam."
 msgstr ""
 
-#: includes/admin_templates/settings.php:172
+#: includes/admin_templates/settings.php:169
 msgid "General Settings"
 msgstr ""
 
-#: includes/admin_templates/settings.php:173
+#: includes/admin_templates/settings.php:170
 msgid "These protections will work even without an API key."
 msgstr ""
 
-#: includes/admin_templates/settings.php:178
+#: includes/admin_templates/settings.php:175
 msgid "Limit Blog Signups Per Day"
 msgstr ""
 
-#: includes/admin_templates/settings.php:184
+#: includes/admin_templates/settings.php:181
 msgid "Unlimited"
 msgstr ""
 
-#: includes/admin_templates/settings.php:187
+#: includes/admin_templates/settings.php:184
 msgid "Splog bots and users often register a large number of blogs in a short amount of time. This setting will limit the number of blog signups per 24 hours per IP, which can drastically reduce the splogs you have to deal with if they get past other filters (human sploggers). Remember that an IP is not necessarily tied to a single user. For example employees behind a company firewall may share a single IP."
 msgstr ""
 
-#: includes/admin_templates/settings.php:192
+#: includes/admin_templates/settings.php:189
 msgid "Blacklist Splogger IPs"
 msgstr ""
 
-#: includes/admin_templates/settings.php:195
+#: includes/admin_templates/settings.php:192
 msgid "Never Block"
 msgstr ""
 
-#: includes/admin_templates/settings.php:201
+#: includes/admin_templates/settings.php:198
 msgid "This setting will block signups from IPs that are associated with blog signups you have marked as spam. A strict setting of \"1\" is usually ok, unless you want to weaken the check in case of false spam marking. Remember that an IP is not necessarily tied to a single user. For example employees behind a company firewall may share a single IP."
 msgstr ""
 
-#: includes/admin_templates/settings.php:206
+#: includes/admin_templates/settings.php:203
 msgid "Rename wp-signup.php"
 msgstr ""
 
-#: includes/admin_templates/settings.php:208
+#: includes/admin_templates/settings.php:205
 msgid "(Not Buddypress compatible)"
 msgstr ""
 
-#: includes/admin_templates/settings.php:213
+#: includes/admin_templates/settings.php:210
 msgid "Move wp-signup.php"
 msgstr ""
 
-#: includes/admin_templates/settings.php:215
+#: includes/admin_templates/settings.php:212
 msgid "Current Signup URL:"
 msgstr ""
 
-#: includes/admin_templates/settings.php:223
+#: includes/admin_templates/settings.php:220
 msgid "Spam/Unspam Blog Users"
 msgstr ""
 
-#: includes/admin_templates/settings.php:227
-#: includes/admin_templates/settings.php:247 includes/ust-wp-signup.php:107
+#: includes/admin_templates/settings.php:224
+#: includes/admin_templates/settings.php:244 includes/ust-wp-signup.php:107
 msgid "Yes"
 msgstr ""
 
-#: includes/admin_templates/settings.php:228
-#: includes/admin_templates/settings.php:248 includes/ust-wp-signup.php:111
+#: includes/admin_templates/settings.php:225
+#: includes/admin_templates/settings.php:245 includes/ust-wp-signup.php:111
 msgid "No"
 msgstr ""
 
-#: includes/admin_templates/settings.php:230
+#: includes/admin_templates/settings.php:227
 msgid "Enable this to spam/unspam all of a blog's users when the blog is spammed/unspammed. Does not spam Super Admins."
 msgstr ""
 
-#: includes/admin_templates/settings.php:235
+#: includes/admin_templates/settings.php:232
 msgid "Hide Admin Bar Button"
 msgstr ""
 
-#: includes/admin_templates/settings.php:238
+#: includes/admin_templates/settings.php:235
 msgid "Remove the Anti-Splog actions menu button from the admin bar"
 msgstr ""
 
-#: includes/admin_templates/settings.php:242
+#: includes/admin_templates/settings.php:239
 msgid "Queue Display Preferences"
 msgstr ""
 
-#: includes/admin_templates/settings.php:244
+#: includes/admin_templates/settings.php:241
 msgid "Strip Images From Post Previews:"
 msgstr ""
 
-#: includes/admin_templates/settings.php:251
+#: includes/admin_templates/settings.php:248
 msgid "Blogs Per Page:"
 msgstr ""
 
-#: includes/admin_templates/settings.php:259
+#: includes/admin_templates/settings.php:256
 msgid "Post Previews Per Blog:"
 msgstr ""
 
-#: includes/admin_templates/settings.php:271
+#: includes/admin_templates/settings.php:268
 msgid "Spam Keyword Search"
 msgstr ""
 
-#: includes/admin_templates/settings.php:273
+#: includes/admin_templates/settings.php:270
 msgid "Enter one word or phrase per line. Keywords are not case sensitive and may match any part of a word. Example: \"Ugg\" would match \"s<strong>ugg</strong>estion\"."
 msgstr ""
 
-#: includes/admin_templates/settings.php:275
+#: includes/admin_templates/settings.php:272
 msgid "You must install the <a target=\"_blank\" href=\"http://premium.wpmudev.org/project/post-indexer\">Post Indexer</a> plugin to enable keyword flagging."
 msgstr ""
 
-#: includes/admin_templates/settings.php:282
+#: includes/admin_templates/settings.php:279
 msgid "This feature is designed to work in conjunction with our Post Indexer plugin to help you find old and inactive splogs that the API service would no longer catch. Blogs that have these keywords in posts will be temporarily flagged and added to the potential splogs queue. Keywords should only be added here temporarily while searching for splogs. CAUTION: Do not enter more than a few (2-4) keywords at a time or it may slow down or timeout the Suspected Blogs page depending on the number of site-wide posts and server speed."
 msgstr ""
 
-#: includes/admin_templates/settings.php:287
+#: includes/admin_templates/settings.php:284
 msgid "Additional Signup Protection"
 msgstr ""
 
-#: includes/admin_templates/settings.php:292
+#: includes/admin_templates/settings.php:287
 msgid "None"
 msgstr ""
 
-#: includes/admin_templates/settings.php:295
-msgid "Admin Defined Questions"
-msgstr ""
-
-#: includes/admin_templates/settings.php:298
-msgid "ASIRRA - Pick the Cats"
-msgstr ""
-
-#: includes/admin_templates/settings.php:301
+#: includes/admin_templates/settings.php:288
 msgid "reCAPTCHA - Advanced Captcha"
 msgstr ""
 
-#: includes/admin_templates/settings.php:304
-#: includes/admin_templates/settings.php:375
-msgid "Are You a Human PlayThru"
+#: includes/admin_templates/settings.php:289
+msgid "Admin Defined Questions"
 msgstr ""
 
-#: includes/admin_templates/settings.php:306
+#: includes/admin_templates/settings.php:291
 msgid "These options are designed to prevent automated spam bot signups, so will have limited effect in stopping human sploggers. Be cautious using these options as it is important to find a balance between stopping bots and not annoying your users."
 msgstr ""
 
-#: includes/admin_templates/settings.php:317
-msgid "Assira"
-msgstr ""
-
-#: includes/admin_templates/settings.php:320
-msgid "Asirra works by asking users to identify photographs of cats and dogs. This task is difficult for computers, but user studies have shown that people can accomplish it quickly and accurately. Many even think it's fun!. <a href=\"http://research.microsoft.com/en-us/um/redmond/projects/asirra/default.aspx\" target=\"_blank\">Read more and try a demo here.</a> You must have the cURL extension enabled in PHP to use this. There are no configuration options for Assira."
-msgstr ""
-
-#: includes/admin_templates/settings.php:325
+#: includes/admin_templates/settings.php:302
 msgid "reCAPTCHA Options"
 msgstr ""
 
-#: includes/admin_templates/settings.php:328
-msgid "reCAPTCHA asks someone to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot while also correcting the automatic scans of old books. So you get less spam, and the world gets accurately digitized books. Everybody wins! For details, visit the <a href=\"http://recaptcha.net/\">reCAPTCHA website</a>."
+#: includes/admin_templates/settings.php:305
+msgid "reCAPTCHA asks someone to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot while also correcting the automatic scans of old books. So you get less spam, and the world gets accurately digitized books. Everybody wins! For details, visit the <a href=\"https://www.google.com/recaptcha/intro/\">reCAPTCHA website</a>."
 msgstr ""
 
-#: includes/admin_templates/settings.php:330
+#: includes/admin_templates/settings.php:307
 msgid "<strong>NOTE</strong>: Even if you don't use reCAPTCHA on the signup form, you should setup an API key anyway to prevent spamming from the splog review forms."
 msgstr ""
 
-#: includes/admin_templates/settings.php:333
+#: includes/admin_templates/settings.php:310
 msgid "Keys"
 msgstr ""
 
-#: includes/admin_templates/settings.php:335
-msgid "reCAPTCHA requires an API key for each domain, consisting of a \"site\" and a \"secret\" key. You can sign up for a <a href=\"http://recaptcha.net/whyrecaptcha.html\" target=\"_blank\">free reCAPTCHA key</a>."
+#: includes/admin_templates/settings.php:312
+msgid "reCAPTCHA requires an API key for each domain, consisting of a \"site\" and a \"secret\" key. You can sign up for a <a href=\"https://www.google.com/recaptcha/admin\" target=\"_blank\">free reCAPTCHA key</a>."
 msgstr ""
 
-#: includes/admin_templates/settings.php:341
+#: includes/admin_templates/settings.php:318
 msgid "Site Key:&nbsp;&nbsp;"
 msgstr ""
 
-#: includes/admin_templates/settings.php:346
+#: includes/admin_templates/settings.php:323
 msgid "Secret Key:"
 msgstr ""
 
-#: includes/admin_templates/settings.php:353
+#: includes/admin_templates/settings.php:330
 msgid "Theme:"
 msgstr ""
 
-#: includes/admin_templates/settings.php:378
-msgid "PlayThru is the next evolution of online human verification and the best CAPTCHA replacement around. It stops bots with fun, by focusing on being simple and intuitive. Stop bots without harassing your users. For details, visit the <a href=\"http://areyouahuman.com/features\" target=\"_blank\">Are You a Human website</a>."
-msgstr ""
-
-#: includes/admin_templates/settings.php:381
-msgid "Site Keys"
-msgstr ""
-
-#: includes/admin_templates/settings.php:383
-msgid "These keys are required to get PlayThru up and running. Signup <a href=\"http://portal.areyouahuman.com/signup\" target=\"_blank\">here</a> to get your free keys."
-msgstr ""
-
-#: includes/admin_templates/settings.php:387
-msgid "Publisher Key:"
-msgstr ""
-
-#: includes/admin_templates/settings.php:391
-msgid "Scoring Key:"
-msgstr ""
-
-#: includes/admin_templates/settings.php:403
+#: includes/admin_templates/settings.php:352
 msgid "Defined Questions Options"
 msgstr ""
 
-#: includes/admin_templates/settings.php:406
+#: includes/admin_templates/settings.php:355
 msgid "Displays a random question from the list, and the user must enter the correct answer. It is best to create a large pool of questions that have one-word answers. Answers are not case-sensitive."
 msgstr ""
 
-#: includes/admin_templates/settings.php:409
+#: includes/admin_templates/settings.php:358
 msgid "Questions and Answers"
 msgstr ""
 
-#: includes/admin_templates/settings.php:414
+#: includes/admin_templates/settings.php:363
 msgid "Questions (one per row)"
 msgstr ""
 
-#: includes/admin_templates/settings.php:419
+#: includes/admin_templates/settings.php:368
 msgid "Answers (one per row)"
 msgstr ""
 
-#: includes/admin_templates/settings.php:432
+#: includes/admin_templates/settings.php:381
 msgid "Save Changes"
 msgstr ""
 
-#: includes/admin_templates/stats.php:271
+#: includes/admin_templates/stats.php:270
 msgid "These are site creation statistics for your multisite install."
 msgstr ""
 
-#: includes/admin_templates/stats.php:276
+#: includes/admin_templates/stats.php:275
 msgid "Week Activity Summary"
 msgstr ""
 
-#: includes/admin_templates/stats.php:280
-#: includes/admin_templates/stats.php:289
-#: includes/admin_templates/stats.php:298
-#: includes/admin_templates/stats.php:307
+#: includes/admin_templates/stats.php:279
+#: includes/admin_templates/stats.php:288
+#: includes/admin_templates/stats.php:297
+#: includes/admin_templates/stats.php:306
 msgid "No data available yet"
 msgstr ""
 
-#: includes/admin_templates/stats.php:285
+#: includes/admin_templates/stats.php:284
 msgid "Month Activity Summary"
 msgstr ""
 
-#: includes/admin_templates/stats.php:294
+#: includes/admin_templates/stats.php:293
 msgid "Year Activity Summary"
 msgstr ""
 
-#: includes/admin_templates/stats.php:303
+#: includes/admin_templates/stats.php:302
 msgid "Hourly Averages (over the last month)"
 msgstr ""
 
-#: includes/blog-suspended-template.php:7
-msgid "This blog has been archived."
+#: includes/blog-suspended-template.php:10
+#: put-in-wp-content/blog-suspended.php:12
+msgid "This site has been archived or suspended."
 msgstr ""
 
-#: includes/blog-suspended-template.php:25
+#: includes/blog-suspended-template.php:28
 msgid "Please enter a valid reason."
 msgstr ""
 
-#: includes/blog-suspended-template.php:42
-msgid "You are about to unspam the blog %s"
-msgstr ""
-
-#: includes/blog-suspended-template.php:44
+#: includes/blog-suspended-template.php:46
 msgid "Splog Review Request: %s"
 msgstr ""
 
-#: includes/blog-suspended-template.php:45
+#: includes/blog-suspended-template.php:47
 msgid ""
 "Someone is disputing the spam status for the blog %s (%s).\n"
 "Here is their reason:\n"
@@ -1055,52 +1006,129 @@ msgid ""
 "_______________________\n"
 msgstr ""
 
-#: includes/blog-suspended-template.php:46
+#: includes/blog-suspended-template.php:48
 msgid "Review: %s\n"
 msgstr ""
 
-#: includes/blog-suspended-template.php:47
-msgid "Unspam: %s\n"
-msgstr ""
-
-#: includes/blog-suspended-template.php:112
+#: includes/blog-suspended-template.php:120
 msgid "https://wordpress.org/"
 msgstr ""
 
-#: includes/blog-suspended-template.php:113
+#: includes/blog-suspended-template.php:121
 msgid "Powered by WordPress"
 msgstr ""
 
-#: includes/blog-suspended-template.php:241
+#: includes/blog-suspended-template.php:248
 msgid "Blog Spammed"
 msgstr ""
 
-#: includes/blog-suspended-template.php:265
+#: includes/blog-suspended-template.php:272
 msgid "Your message has been sent. We will review it shortly."
 msgstr ""
 
-#: includes/blog-suspended-template.php:269
+#: includes/blog-suspended-template.php:276
 msgid "Our automated filters have determined that this blog signup looks like it could be by a spammer. Because of this, to complete you registration please describe in one or two sentences what you intend to use this blog for in the form below and we will review your request. Thank you for your cooperation!"
 msgstr ""
 
-#: includes/blog-suspended-template.php:271
+#: includes/blog-suspended-template.php:278
 msgid "Sorry, but this blog has been marked as spam as defined in our Terms of Service."
 msgstr ""
 
-#: includes/blog-suspended-template.php:276
+#: includes/blog-suspended-template.php:283
 msgid "If you believe this decision was made in error you may contact us with your <strong>detailed</strong> reasons using the form below:"
 msgstr ""
 
-#: includes/blog-suspended-template.php:280
+#: includes/blog-suspended-template.php:287
 msgid "Reason:"
 msgstr ""
 
-#: includes/blog-suspended-template.php:298
+#: includes/blog-suspended-template.php:304
 msgid "Submit"
 msgstr ""
 
-#: includes/blog-suspended-template.php:300
+#: includes/blog-suspended-template.php:306
 msgid "The admin has already been contacted to review."
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:218
+msgid "install"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:225
+msgid "Important updates are available for <strong>%s</strong>. Install the free WPMU DEV Dashboard plugin now for updates and support!"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:227
+msgid "<strong>%s</strong> is almost ready - install the free WPMU DEV Dashboard plugin for updates and support!"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:231
+msgid "Important updates are available for your WPMU DEV plugins/themes. Install the free WPMU DEV Dashboard plugin now for updates and support!"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:233
+msgid "Almost ready - install the free WPMU DEV Dashboard plugin for updates and support!"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:239
+msgid "Install Plugin"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:242
+#: includes/dash-notice/wpmudev-dash-notification.php:283
+msgid "Saving..."
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:259
+msgid "activate"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:266
+msgid "Important updates are available for <strong>%s</strong>. Activate the WPMU DEV Dashboard to update now!"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:268
+msgid "Just one more step to enable updates and support for <strong>%s</strong>!"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:272
+msgid "Important updates are available for your WPMU DEV plugins/themes. Activate the WPMU DEV Dashboard to update now!"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:274
+msgid "Just one more step - activate the WPMU DEV Dashboard plugin and you're all done!"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:280
+msgid "Activate WPMU DEV Dashboard"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:947
+msgid "We did not find any data for this plugin or theme..."
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:1126
+msgid "%s changelog"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:1156
+msgid "Current"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:1162
+msgid "New"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:1179
+msgid "Version %s"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:1197
+msgid "Show all changes"
+msgstr ""
+
+#: includes/dash-notice/wpmudev-dash-notification.php:1198
+msgid "Hide details"
 msgstr ""
 
 #: includes/ust-wp-signup.php:70
@@ -1313,10 +1341,6 @@ msgstr ""
 
 #: includes/ust-wp-signup.php:446
 msgid "<p><em>The site you were looking for, <strong>%s</strong>, does not exist.</em></p>"
-msgstr ""
-
-#: put-in-wp-content/blog-suspended.php:12
-msgid "This site has been archived or suspended."
 msgstr ""
 #. Plugin Name of the plugin/theme
 msgid "Anti-Splog"

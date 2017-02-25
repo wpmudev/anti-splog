@@ -302,14 +302,14 @@ if ( ! $ust_settings['api_key'] ) {
 	<h3 class='hndle'><span><?php _e( 'reCAPTCHA Options', 'ust' ) ?></span></h3>
 
 	<div class="inside">
-		<p><?php _e( 'reCAPTCHA asks someone to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot while also correcting the automatic scans of old books. So you get less spam, and the world gets accurately digitized books. Everybody wins! For details, visit the <a href="http://recaptcha.net/">reCAPTCHA website</a>.', 'ust' ) ?></p>
+		<p><?php _e( 'reCAPTCHA asks someone to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot while also correcting the automatic scans of old books. So you get less spam, and the world gets accurately digitized books. Everybody wins! For details, visit the <a href="https://www.google.com/recaptcha/intro/">reCAPTCHA website</a>.', 'ust' ) ?></p>
 
 		<p><?php _e( '<strong>NOTE</strong>: Even if you don\'t use reCAPTCHA on the signup form, you should setup an API key anyway to prevent spamming from the splog review forms.', 'ust' ) ?></p>
 		<table class="form-table">
 			<tr valign="top">
 				<th scope="row"><?php _e( 'Keys', 'ust' ) ?>*</th>
 				<td>
-					<?php _e( 'reCAPTCHA requires an API key for each domain, consisting of a "site" and a "secret" key. You can sign up for a <a href="http://recaptcha.net/whyrecaptcha.html" target="_blank">free reCAPTCHA key</a>.', 'ust' ) ?>
+					<?php _e( 'reCAPTCHA requires an API key for each domain, consisting of a "site" and a "secret" key. You can sign up for a <a href="https://www.google.com/recaptcha/admin" target="_blank">free reCAPTCHA key</a>.', 'ust' ) ?>
 					<br/>
 
 					<p class="re-keys">
