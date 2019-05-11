@@ -316,9 +316,7 @@ Hovering your mouse over the domain or Blog User brings up the **Spam** and **Ig
 
  **Here is a flowchart to trace the functionality of Anti-Splog:** The Anti-Splog Process Diagram (**Click on Image to Zoom In** for a closer look at each step)
 
-[
-
-![The Anti-Splog Process Diagram](http://wpmu.org/wp-content/uploads/2010/01/Anti-Splog.gif "Anti-Splog")](http://wpmu.org/wp-content/uploads/2010/01/Anti-Splog.gif "Anti-Splog")
+![The Anti-Splog Process Diagram](http://wpmu.org/wp-content/uploads/2010/01/Anti-Splog.gif)
 
 **How To Spam Blogs** Some splogs are obvious from the username, blog URL or post titles they use-- if you are confident that they are a splog you can choose to either: **a) Spam their URL** by clicking on **Spam** action link under their domain
 
