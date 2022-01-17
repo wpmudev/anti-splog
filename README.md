@@ -175,7 +175,7 @@ Because Anti-Splog features need the WPMU DEV super servers to function, access 
 
 ### To install
 
-For help with installing plugins please see our [Plugin installation guide](https://premium.wpmudev.org/wpmu-manual/installing-regular-plugins-on-wpmu/). Once installed log into to your admin panel, visit **Network Admin -> Plugins** and **Network Activate** the plugin. Please move the blog-suspended.php file from the Anti-Splog plugin to the /wp-content/ directory ([using FTP](https://premium.wpmudev.org/wpmu-manual/introduction-to-ftp-and-using-ftp-clients/)). **Please Note:**
+For help with installing plugins please see our [Plugin installation guide](https://wpmudev.com/docs/using-wordpress/installing-wordpress-plugins/). Once installed log into to your admin panel, visit **Network Admin -> Plugins** and **Network Activate** the plugin. Please move the blog-suspended.php file from the Anti-Splog plugin to the /wp-content/ directory ([using FTP](https://premium.wpmudev.org/wpmu-manual/introduction-to-ftp-and-using-ftp-clients/)). **Please Note:**
 
 *   In the rare occurrence the auto-install does not add the db table(s) and fill them for you then run the sql code in "sql.txt" on your wpmu db IN ORDER!
 *   blog-suspended.php shows the user friendly spammed page with the review form so that users can request their blog to be unspammed
