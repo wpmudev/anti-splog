@@ -365,7 +365,7 @@ The blog-suspended.php is used to show the user friendly spammed page with the r
 
 ![The Splog Review form](https://premium.wpmudev.org/wp-content/uploads/2010/03/antisp21.jpg)
 
- The Splog Review Request Form is submitted to the email address listed in **Network Admin > Settings** -- make sure you have changed the email address or [set up your email account](https://premium.wpmudev.org/wpmu-manual/setting-up-your-support-email-account/). 
+ The Splog Review Request Form is submitted to the email address listed in **Network Admin > Settings** -- make sure you have changed the email address or set up your email account. 
 
 ![Site Admin > Options Email address](https://premium.wpmudev.org/wp-content/uploads/2010/03/antisp20.jpg)
 
